@@ -102,11 +102,22 @@ brown.
 
 ## Design
 
+The game will mostly feel like Dune 2. Simple pixel art will go well with
+this style. Colors will first be similar to those found in nature and they will
+eventually change to colors that look dry and dead. Machines will have
+a slightly futuristic design and modern colors.
+
 # Audio
 
 ## Music
 
+TBD
+
 ## Sound Effects
+
+Actions like selecting units or interacting with a building will have
+a unique sound that plays when done. Timers finishing have small bells to
+indicate them finishing.
 
 # Game Experience
 
