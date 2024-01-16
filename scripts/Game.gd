@@ -1,8 +1,13 @@
 extends Node2D
 
 @onready var pause_menu = $Camera/PauseMenu
+@onready var camera = $Camera
+
+const GRID_WIDTH = 128
+const GRID_HEIGHT = 128
 
 var paused = false
+var grid = {}
 
 func toggle_pause():
 	if paused:

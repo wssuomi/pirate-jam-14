@@ -1,0 +1,120 @@
+[gd_scene load_steps=9 format=3 uid="uid://d1g8h4k2j5ha5"]
+
+[ext_resource type="Script" path="res://scripts/editor.gd" id="1_laujs"]
+[ext_resource type="Texture2D" uid="uid://baisqivjm17e3" path="res://assets/unit-spritesheet.png" id="2_84ww7"]
+[ext_resource type="Script" path="res://scripts/Camera.gd" id="2_cr33f"]
+[ext_resource type="Texture2D" uid="uid://jm1bhhp8ffsb" path="res://assets/map_tiles.png" id="4_5ckh7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1p6q8"]
+atlas = ExtResource("2_84ww7")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1atof"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1p6q8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cdnmy"]
+texture = ExtResource("4_5ckh7")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+0:4/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_116sg"]
+sources/0 = SubResource("TileSetAtlasSource_cdnmy")
+
+[node name="Editor" type="Node2D"]
+script = ExtResource("1_laujs")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer"]
+layout_mode = 2
+
+[node name="Save" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Save"
+
+[node name="Quit" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[node name="Ground" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Ground"
+
+[node name="Resource" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Resources"
+
+[node name="Decoration" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Decorations"
+
+[node name="Building" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Buildings"
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(576, 324)
+script = ExtResource("2_cr33f")
+
+[node name="TestUnit" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(576, 324)
+sprite_frames = SubResource("SpriteFrames_1atof")
+autoplay = "default"
+
+[node name="MapTiles" type="TileMap" parent="."]
+texture_filter = 1
+tile_set = SubResource("TileSet_116sg")
+format = 2
+layer_0/name = "ground"
+layer_1/name = "decoration"
+layer_1/tile_data = PackedInt32Array()
+layer_2/name = "resource"
+layer_2/tile_data = PackedInt32Array()
+layer_3/name = "building"
+layer_3/tile_data = PackedInt32Array()
+
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

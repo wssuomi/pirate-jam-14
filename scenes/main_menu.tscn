@@ -23,9 +23,14 @@ layout_mode = 2
 layout_mode = 2
 text = "Play"
 
+[node name="Editor" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Editor"
+
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Editor" to="." method="_on_editor_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
