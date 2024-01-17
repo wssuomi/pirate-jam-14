@@ -2,43 +2,43 @@ extends Node2D
 
 @onready var map: TileMap = $Map
 @onready var preview_tile: TextureRect = $PreviewTile
-@onready var selected_tile_tex = $CanvasLayer/Control/SelectedTile
+@onready var selected_tile_tex: TextureRect = $CanvasLayer/Control/SelectedTile
 
 const Tile = preload("res://scripts/Tile.gd").Tile
-const GRID_WIDTH = 128
-const GRID_HEIGHT = 128
+const GRID_WIDTH: int = 128
+const GRID_HEIGHT: int = 128
 
 var rng = RandomNumberGenerator.new()
 var tiles: Dictionary = {}
 var tiles_texture = preload("res://assets/map_tiles.png")
 var atlas: AtlasTexture = AtlasTexture.new()
-var current_tile = 0
-var mouse_on_ui = false
-var ground_layer = 0
-var decoration_layer = 1
-var resource_layer = 2
-var buillding_layer = 3
-var current_layer = ground_layer
-var ground_tiles = [
+var current_tile: int = 0
+var mouse_on_ui: bool = false
+var ground_layer: int = 0
+var decoration_layer: int = 1
+var resource_layer: int = 2
+var buillding_layer: int = 3
+var current_layer: int = ground_layer
+var ground_tiles: Array[Vector2i] = [
 	Vector2i(0,0),Vector2i(1,0),Vector2i(2,0),Vector2i(3,0),
 	Vector2i(0,1),Vector2i(1,1),Vector2i(2,1),Vector2i(3,1),
 	Vector2i(0,2),Vector2i(1,2),Vector2i(2,2),Vector2i(3,2),
 	Vector2i(0,3),Vector2i(1,3),Vector2i(2,3),Vector2i(3,3)
 	]
-var resource_tiles = [Vector2i(4,2),Vector2i(5,2),Vector2i(6,2)]
-var decoration_tiles = [
+var resource_tiles: Array[Vector2i] = [Vector2i(4,2),Vector2i(5,2),Vector2i(6,2)]
+var decoration_tiles: Array[Vector2i] = [
 	Vector2i(4,0),Vector2i(4,1),Vector2i(5,1),
 	Vector2i(6,1),Vector2i(4,3),Vector2i(5,3)
 	]
-var building_tiles = [Vector2i(-1,-1)]
-var selected_tiles = ground_tiles
+var building_tiles: Array[Vector2i] = [Vector2i(-1,-1)]
+var selected_tiles: Array[Vector2i] = ground_tiles
 
 func _on_quit_pressed():
 	get_tree().quit()
 
 func _input(event):
-	if event is InputEventMouseButton:
-		if Input.is_action_just_pressed("place_tile") and not mouse_on_ui:
+	if event is InputEventMouseMotion or event is InputEventMouseButton:
+		if Input.is_action_pressed("place_tile") and not mouse_on_ui:
 			var pos: Vector2i = map.local_to_map(get_global_mouse_position())
 			if pos.x >= 0 and pos.x < GRID_WIDTH and pos.y >= 0 and pos.y < GRID_HEIGHT:
 				var tile: Tile = tiles[pos]
@@ -52,7 +52,18 @@ func _input(event):
 					3:
 						tile.resource_sprite = resource_tiles[current_tile]
 				update_tile(tile)
-			
+		if Input.is_action_pressed("erase_tile") and not mouse_on_ui:
+			var pos: Vector2i = map.local_to_map(get_global_mouse_position())
+			if pos.x >= 0 and pos.x < GRID_WIDTH and pos.y >= 0 and pos.y < GRID_HEIGHT:
+				var tile: Tile = tiles[pos]
+				match current_layer:
+					1:
+						tile.decoration_sprite = Vector2i(-1,-1)
+					2:
+						tile.resource_sprite = Vector2i(-1,-1)
+					3:
+						tile.resource_sprite = Vector2i(-1,-1)
+				update_tile(tile)
 func _process(_delta):
 	preview_tile.position = map.map_to_local(map.local_to_map(get_global_mouse_position())) - Vector2(8,8)
 
@@ -69,8 +80,8 @@ func _ready():
 	preview_tile.texture = atlas
 	for y in range(GRID_WIDTH):
 		for x in range(GRID_HEIGHT):
-			var pos = Vector2i(x,y)
-			var tile = Tile.new(pos, Vector2i(rng.randi_range(0,3),0))
+			var pos: Vector2i = Vector2i(x,y)
+			var tile: Tile = Tile.new(pos, Vector2i(rng.randi_range(0,3),0))
 			tiles[pos] = tile
 			map.set_cell(current_layer, tile.grid_position, 0, tile.ground_sprite)
 
