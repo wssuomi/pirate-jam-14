@@ -140,7 +140,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab"]
+[node name="Picture" type="TextureRect" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab"]
 texture_filter = 1
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
@@ -148,29 +148,17 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_mpe62")
 
-[node name="SlabBuildButton" type="Button" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab"]
+[node name="Button" type="Button" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab"]
 custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
+mouse_filter = 1
 text = "Build
 Slab"
 
-[node name="SlabPlaceButton" type="Button" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab"]
-visible = false
-custom_minimum_size = Vector2(110, 0)
-layout_mode = 2
-text = "Place
-Slab"
-
-[node name="SlabCancelPlaceButton" type="Button" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab"]
-visible = false
-custom_minimum_size = Vector2(110, 0)
-layout_mode = 2
-text = "Cancel"
-
-[node name="SlabBuildTimer" type="Timer" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab"]
+[node name="Timer" type="Timer" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab"]
 one_shot = true
 
-[node name="SlabBuildingLabel" type="Label" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab"]
+[node name="Label" type="Label" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
@@ -382,8 +370,13 @@ offset_right = 17.0
 offset_bottom = 17.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_jpkq7")
 
-[connection signal="pressed" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/SlabBuildButton" to="." method="_on_slab_build_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/SlabPlaceButton" to="." method="_on_slab_place_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/SlabCancelPlaceButton" to="." method="_on_slab_cancel_place_button_pressed"]
-[connection signal="timeout" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/SlabBuildTimer" to="." method="_on_slab_build_timer_timeout"]
+[connection signal="mouse_entered" from="CanvasLayer/PauseMenu" to="." method="_on_mouse_entered_ui"]
+[connection signal="mouse_entered" from="CanvasLayer/SideBarBuild" to="." method="_on_mouse_entered_ui"]
+[connection signal="mouse_exited" from="CanvasLayer/SideBarBuild" to="." method="_on_mouse_exited_ui"]
+[connection signal="pressed" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/Button" to="." method="_on_slab_button_pressed"]
+[connection signal="timeout" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/Timer" to="." method="_on_slab_timer_timeout"]
+[connection signal="mouse_entered" from="CanvasLayer/SideBarAction" to="." method="_on_mouse_entered_ui"]
+[connection signal="mouse_exited" from="CanvasLayer/SideBarAction" to="." method="_on_mouse_exited_ui"]
+[connection signal="mouse_entered" from="CanvasLayer/TopBar" to="." method="_on_mouse_entered_ui"]
+[connection signal="mouse_exited" from="CanvasLayer/TopBar" to="." method="_on_mouse_exited_ui"]
 [connection signal="pressed" from="CanvasLayer/TopBar/Menu" to="." method="_on_menu_pressed"]

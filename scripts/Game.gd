@@ -7,16 +7,16 @@ extends Node2D
 @onready var iron_label: Label = $CanvasLayer/TopBar/Iron/MarginContainer/HBoxContainer/IronLabel
 @onready var coal_label: Label = $CanvasLayer/TopBar/Coal/MarginContainer/HBoxContainer/CoalLabel
 @onready var preview_tile = $PreviewTile
-@onready var slab_build_timer = $CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/SlabBuildTimer
-@onready var slab_building_label = $CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/SlabBuildingLabel
-@onready var slab_build_button = $CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/SlabBuildButton
-@onready var slab_place_button = $CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/SlabPlaceButton
-@onready var slab_cancel_place_button = $CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/SlabCancelPlaceButton
 @onready var stone_label = $CanvasLayer/TopBar/Stone/MarginContainer/HBoxContainer/StoneLabel
+@onready var slab = $CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab
 
 const GRID_WIDTH = 128
 const GRID_HEIGHT = 128
 const Tile = preload("res://scripts/Tile.gd").Tile
+
+enum Modes {Normal, Place}
+enum Buildings {None, Slab}
+enum BuildingStates {None, Building, Waiting, Placing}
 
 var paused = false
 var tiles = {}
@@ -24,7 +24,7 @@ var rng = RandomNumberGenerator.new()
 var ground_layer: int = 0
 var decoration_layer: int = 1
 var resource_layer: int = 2
-var buillding_layer: int = 3
+var building_layer: int = 3
 var copper = 4
 var coal = 0
 var stone = 10
@@ -33,11 +33,10 @@ var mode = 0
 var building = Buildings.None
 var building_tiles: Dictionary = {"slab":Vector2i(0,4)}
 var slab_cost: Array[int] = [0,1,10]
+var slab_state: BuildingStates = BuildingStates.None
+var mouse_on_ui: bool = false
 
-enum Modes {Normal, Place}
-enum Buildings {None, Slab}
-
-signal slab_placed
+signal building_placed
 
 func toggle_pause():
 	if paused:
@@ -84,7 +83,7 @@ func load_map():
 	return loaded_tiles
 
 func _ready():
-	connect("slab_placed",_on_slab_placed)
+	connect("building_placed",_on_building_placed)
 	tiles = load_map()
 	draw_map_tiles()
 	update_labels()
@@ -97,7 +96,7 @@ func update_tile(tile: Tile) -> void:
 	map.set_cell(ground_layer, tile.grid_position, 0, tile.ground_sprite)
 	map.set_cell(decoration_layer, tile.grid_position, 0, tile.decoration_sprite)
 	map.set_cell(resource_layer, tile.grid_position, 0, tile.resource_sprite)
-	map.set_cell(buillding_layer, tile.grid_position, 0, tile.building_sprite)
+	map.set_cell(building_layer, tile.grid_position, 0, tile.building_sprite)
 
 func update_labels():
 	copper_label.text = str(copper)
@@ -113,14 +112,14 @@ func _input(event):
 		if Input.is_action_just_pressed("pause"):
 			toggle_pause()
 	if event is InputEventMouseMotion or event is InputEventMouseButton:
-		if Input.is_action_pressed("place_tile"):
+		if Input.is_action_pressed("place_tile") and not mouse_on_ui:
 			var pos: Vector2i = map.local_to_map(get_global_mouse_position())
 			if pos.x >= 0 and pos.x < GRID_WIDTH and pos.y >= 0 and pos.y < GRID_HEIGHT:
 				var tile: Tile = tiles[pos]
 				match building:
 					Buildings.Slab:
 						tile.ground_sprite = building_tiles["slab"]
-						emit_signal("slab_placed")
+						emit_signal("building_placed")
 					Buildings.None:
 						pass
 				update_tile(tile)
@@ -143,41 +142,83 @@ func _process(_delta):
 func _on_cancel_pressed():
 	exit_place_mode()
 
-func _on_slab_build_button_pressed():
-	if check_resources(slab_cost):
-		slab_build_timer.start()
-		slab_build_button.hide()
-		slab_building_label.show()
-		copper -= slab_cost[0]
-		iron -= slab_cost[1]
-		stone -= slab_cost[2]
-		update_labels()
-	else:
-		print("not enough resources")
-	
-func _on_slab_place_button_pressed():
-	enter_place_mode()
-	slab_place_button.hide()
-	slab_cancel_place_button.show()
-	building = Buildings.Slab
-
-func _on_slab_build_timer_timeout():
-	slab_place_button.show()
-	slab_building_label.hide()
-
-func _on_slab_cancel_place_button_pressed():
-	exit_place_mode()
-	slab_place_button.show()
-	slab_cancel_place_button.hide()
-	building = Buildings.None
-
-func _on_slab_placed():
-	exit_place_mode()
-	slab_cancel_place_button.hide()
-	slab_build_button.show()
-	building = Buildings.None
-
 func check_resources(cost: Array[int]):
 	if copper >= cost[0] and iron >= cost[1] and stone >= cost[2]:
 		return true
 	return false
+
+func _on_slab_button_pressed():
+	match slab_state:
+		BuildingStates.None:
+			if check_resources(slab_cost):
+				slab_state = change_state_to(BuildingStates.Building, slab)
+				copper -= slab_cost[0]
+				iron -= slab_cost[1]
+				stone -= slab_cost[2]
+				update_labels()
+			else:
+				print("not enough resources")
+		BuildingStates.Waiting:
+			slab_state = change_state_to(BuildingStates.Placing, slab)
+			building = Buildings.Slab
+		BuildingStates.Placing:
+			slab_state =  change_state_to(BuildingStates.Waiting, slab)
+			change_mode_to(Modes.Normal)
+			building = Buildings.None
+
+func change_state_to(state: BuildingStates, target: HBoxContainer) -> BuildingStates:
+	var button = target.get_child(1)
+	var timer = target.get_child(2)
+	var label = target.get_child(3)
+	match state:
+		BuildingStates.None:
+			button.text = "Build"
+			button.show()
+			label.hide()
+			return BuildingStates.None
+		BuildingStates.Building:
+			button.hide()
+			label.text = "Building..."
+			label.show()
+			timer.start()
+			return BuildingStates.Building
+		BuildingStates.Waiting:
+			print("Changing state to waiting")
+			button.text = "Place"
+			button.show()
+			label.hide()
+			return BuildingStates.Waiting
+		BuildingStates.Placing:
+			button.text = "Cancel"
+			button.show()
+			label.hide()
+			change_mode_to(Modes.Place)
+			return BuildingStates.Placing
+		_:
+			return BuildingStates.None
+
+func _on_slab_timer_timeout():
+	slab_state = change_state_to(BuildingStates.Waiting, slab)
+
+func change_mode_to(next_mode: Modes):
+	match next_mode:
+		Modes.Normal:
+			mode = Modes.Normal
+			preview_tile.hide()
+			building = Buildings.None
+		Modes.Place:
+			mode = Modes.Place
+			preview_tile.show()
+
+func _on_building_placed():
+	match building:
+		Buildings.Slab:
+			change_mode_to(Modes.Normal)
+			slab_state = change_state_to(BuildingStates.None, slab)
+	building = Buildings.None
+
+func _on_mouse_entered_ui():
+	mouse_on_ui = true
+
+func _on_mouse_exited_ui():
+	mouse_on_ui = false
