@@ -30,7 +30,7 @@ var decoration_tiles: Array[Vector2i] = [
 	Vector2i(4,0),Vector2i(4,1),Vector2i(5,1),
 	Vector2i(6,1),Vector2i(4,3),Vector2i(5,3)
 	]
-var building_tiles: Array[Vector2i] = [Vector2i(-1,-1)]
+var building_tiles: Array[Vector2i] = [Vector2i(0,4)]
 var selected_tiles: Array[Vector2i] = ground_tiles
 
 func _on_quit_pressed():
@@ -50,7 +50,7 @@ func _input(event):
 					2:
 						tile.resource_sprite = resource_tiles[current_tile]
 					3:
-						tile.resource_sprite = resource_tiles[current_tile]
+						tile.building_sprite = building_tiles[current_tile]
 				update_tile(tile)
 		if Input.is_action_pressed("erase_tile") and not mouse_on_ui:
 			var pos: Vector2i = map.local_to_map(get_global_mouse_position())
@@ -62,7 +62,7 @@ func _input(event):
 					2:
 						tile.resource_sprite = Vector2i(-1,-1)
 					3:
-						tile.resource_sprite = Vector2i(-1,-1)
+						tile.building_sprite = Vector2i(-1,-1)
 				update_tile(tile)
 func _process(_delta):
 	preview_tile.position = map.map_to_local(map.local_to_map(get_global_mouse_position())) - Vector2(8,8)
