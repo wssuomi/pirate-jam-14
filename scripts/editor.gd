@@ -1,7 +1,6 @@
 extends Node2D
 
-@onready var map = $Map
-#@onready var selected_tile_tex: TextureRect = $CanvasLayer/Control/MarginContainer/VBoxContainer/SelectedTile
+@onready var map: TileMap = $Map
 @onready var preview_tile: TextureRect = $PreviewTile
 @onready var selected_tile_tex = $CanvasLayer/Control/SelectedTile
 
@@ -57,7 +56,7 @@ func _input(event):
 func _process(_delta):
 	preview_tile.position = map.map_to_local(map.local_to_map(get_global_mouse_position())) - Vector2(8,8)
 
-func update_tile(tile: Tile):
+func update_tile(tile: Tile) -> void:
 	map.set_cell(ground_layer, tile.grid_position, 0, tile.ground_sprite)
 	map.set_cell(decoration_layer, tile.grid_position, 0, tile.decoration_sprite)
 	map.set_cell(resource_layer, tile.grid_position, 0, tile.resource_sprite)
@@ -75,7 +74,7 @@ func _ready():
 			tiles[pos] = tile
 			map.set_cell(current_layer, tile.grid_position, 0, tile.ground_sprite)
 
-func update_shown_tile():
+func update_shown_tile() -> void:
 	atlas.region = Rect2(
 		selected_tiles[current_tile].x * 16,
 		selected_tiles[current_tile].y * 16,
@@ -124,3 +123,64 @@ func _on_previous_pressed():
 	else:
 		current_tile -= 1
 	update_shown_tile()
+
+
+func _on_save_pressed():
+	var ground_line: Array[String] = []
+	var decoration_line: Array[String]  = []
+	var resource_line: Array[String]  = []
+	var building_line: Array[String] = []
+	var save_map = FileAccess.open("res://levels/map.csv", FileAccess.WRITE)
+	for tile: Tile in tiles.values():
+		if tile.ground_sprite != Vector2i(-1,-1):
+			ground_line.append("{0},{1},{2},{3}".format([tile.grid_position.x,tile.grid_position.y,tile.ground_sprite.x,tile.ground_sprite.y]))
+		if tile.decoration_sprite != Vector2i(-1,-1):
+			decoration_line.append("{0},{1},{2},{3}".format([tile.grid_position.x,tile.grid_position.y,tile.decoration_sprite.x,tile.decoration_sprite.y]))
+		if tile.resource_sprite != Vector2i(-1,-1):
+			resource_line.append("{0},{1},{2},{3}".format([tile.grid_position.x,tile.grid_position.y,tile.resource_sprite.x,tile.resource_sprite.y]))
+		if tile.building_sprite != Vector2i(-1,-1):
+			building_line.append("{0},{1},{2},{3}".format([tile.grid_position.x,tile.grid_position.y,tile.building_sprite.x,tile.building_sprite.y]))
+	save_map.store_line(";".join(ground_line))
+	save_map.store_line(";".join(decoration_line))
+	save_map.store_line(";".join(resource_line))
+	save_map.store_line(";".join(building_line))
+	
+func _on_load_pressed():
+	var saved_map = FileAccess.open("res://levels/map.csv", FileAccess.READ)
+	var ground_line: PackedStringArray = saved_map.get_line().split(";")
+	var decoration_line: PackedStringArray  = saved_map.get_line().split(";")
+	var resource_line: PackedStringArray  = saved_map.get_line().split(";")
+	var building_line: PackedStringArray = saved_map.get_line().split(";")
+	var loaded_tiles: Dictionary = {}
+	for tile_string: String in ground_line:
+		var tile_values: PackedStringArray = tile_string.split(",")
+		var pos: Vector2i = Vector2i(int(tile_values[0]),int(tile_values[1]))
+		var sprite: Vector2i = Vector2i(int(tile_values[2]),int(tile_values[3]))
+		loaded_tiles[pos] = Tile.new(pos,sprite)
+	for tile_string: String in decoration_line:
+		if tile_string == "":
+			continue
+		var tile_values: PackedStringArray = tile_string.split(",")
+		var pos: Vector2i = Vector2i(int(tile_values[0]),int(tile_values[1]))
+		var sprite: Vector2i = Vector2i(int(tile_values[2]),int(tile_values[3]))
+		loaded_tiles[pos].decoration_sprite = sprite
+	for tile_string: String in resource_line:
+		if tile_string == "":
+			continue
+		var tile_values: PackedStringArray = tile_string.split(",")
+		var pos: Vector2i = Vector2i(int(tile_values[0]),int(tile_values[1]))
+		var sprite: Vector2i = Vector2i(int(tile_values[2]),int(tile_values[3]))
+		loaded_tiles[pos].resource_sprite = sprite
+	for tile_string: String in building_line:
+		if tile_string == "":
+			continue
+		var tile_values: PackedStringArray = tile_string.split(",")
+		var pos: Vector2i = Vector2i(int(tile_values[0]),int(tile_values[1]))
+		var sprite: Vector2i = Vector2i(int(tile_values[2]),int(tile_values[3]))
+		loaded_tiles[pos].building_sprite = sprite
+	tiles = loaded_tiles
+	draw_map_tiles()
+		
+func draw_map_tiles() -> void:
+	for tile in tiles.values():
+		update_tile(tile)
