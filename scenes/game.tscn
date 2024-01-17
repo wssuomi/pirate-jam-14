@@ -1,12 +1,269 @@
-[gd_scene load_steps=3 format=3 uid="uid://6uwpprnvngbp"]
+[gd_scene load_steps=10 format=3 uid="uid://6uwpprnvngbp"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_astxb"]
+[ext_resource type="Script" path="res://scripts/Camera.gd" id="2_d63gu"]
 [ext_resource type="PackedScene" uid="uid://c0un25vuo1nmm" path="res://scenes/pause_menu.tscn" id="2_nbn5r"]
+[ext_resource type="Texture2D" uid="uid://jm1bhhp8ffsb" path="res://assets/map_tiles.png" id="3_ee80l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_exh5k"]
+atlas = ExtResource("3_ee80l")
+region = Rect2(80, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbi5a"]
+atlas = ExtResource("3_ee80l")
+region = Rect2(64, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k6xtk"]
+atlas = ExtResource("3_ee80l")
+region = Rect2(96, 32, 16, 16)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vnpe4"]
+texture = ExtResource("3_ee80l")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+0:4/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_aha5v"]
+sources/0 = SubResource("TileSetAtlasSource_vnpe4")
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_astxb")
 
 [node name="Camera" type="Camera2D" parent="."]
+position = Vector2(576, 324)
+script = ExtResource("2_d63gu")
 
-[node name="PauseMenu" parent="Camera" instance=ExtResource("2_nbn5r")]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("2_nbn5r")]
 visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="SideBarBuild" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 962.0
+offset_top = 40.0
+offset_right = 1152.0
+offset_bottom = 645.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/SideBarBuild"]
+layout_mode = 0
+offset_right = 190.0
+offset_bottom = 605.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SideBarBuild"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 187.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/SideBarBuild/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/SideBarBuild/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Build"
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/SideBarBuild"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 43.0
+offset_right = 187.0
+offset_bottom = 602.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/SideBarBuild/MarginContainer2"]
+layout_mode = 2
+
+[node name="SideBarAction" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 962.0
+offset_top = 40.0
+offset_right = 1152.0
+offset_bottom = 645.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/SideBarAction"]
+layout_mode = 0
+offset_right = 190.0
+offset_bottom = 605.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SideBarAction"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 187.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/SideBarAction/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/SideBarAction/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Action"
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/SideBarAction"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 43.0
+offset_right = 187.0
+offset_bottom = 602.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/SideBarAction/MarginContainer2"]
+layout_mode = 2
+
+[node name="TopBar" type="Control" parent="CanvasLayer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 37.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/TopBar"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 37.0
+
+[node name="Copper" type="Control" parent="CanvasLayer/TopBar"]
+layout_mode = 2
+anchors_preset = 0
+offset_left = 869.0
+offset_top = 7.0
+offset_right = 959.0
+offset_bottom = 30.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/TopBar/Copper"]
+layout_mode = 0
+offset_right = 90.0
+offset_bottom = 23.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/TopBar/Copper/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/TopBar/Copper/MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/TopBar/Copper/MarginContainer/HBoxContainer"]
+texture_filter = 3
+layout_mode = 2
+texture = SubResource("AtlasTexture_exh5k")
+expand_mode = 2
+
+[node name="CopperLabel" type="Label" parent="CanvasLayer/TopBar/Copper/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="Iron" type="Control" parent="CanvasLayer/TopBar"]
+layout_mode = 2
+anchors_preset = 0
+offset_left = 962.0
+offset_top = 7.0
+offset_right = 1052.0
+offset_bottom = 30.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/TopBar/Iron"]
+layout_mode = 0
+offset_right = 90.0
+offset_bottom = 23.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/TopBar/Iron/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/TopBar/Iron/MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/TopBar/Iron/MarginContainer/HBoxContainer"]
+texture_filter = 3
+layout_mode = 2
+texture = SubResource("AtlasTexture_gbi5a")
+expand_mode = 2
+
+[node name="IronLabel" type="Label" parent="CanvasLayer/TopBar/Iron/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="Coal" type="Control" parent="CanvasLayer/TopBar"]
+layout_mode = 2
+anchors_preset = 0
+offset_left = 1055.0
+offset_top = 7.0
+offset_right = 1145.0
+offset_bottom = 30.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/TopBar/Coal"]
+layout_mode = 0
+offset_right = 90.0
+offset_bottom = 23.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/TopBar/Coal/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/TopBar/Coal/MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/TopBar/Coal/MarginContainer/HBoxContainer"]
+texture_filter = 3
+layout_mode = 2
+texture = SubResource("AtlasTexture_k6xtk")
+expand_mode = 2
+
+[node name="CoalLabel" type="Label" parent="CanvasLayer/TopBar/Coal/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="Menu" type="Button" parent="CanvasLayer/TopBar"]
+layout_mode = 2
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 58.0
+offset_bottom = 34.0
+text = "Menu"
+
+[node name="Map" type="TileMap" parent="."]
+texture_filter = 1
+tile_set = SubResource("TileSet_aha5v")
+format = 2
+layer_0/name = "ground"
+layer_1/name = "decoration"
+layer_1/tile_data = PackedInt32Array()
+layer_2/name = "resource"
+layer_2/tile_data = PackedInt32Array()
+layer_3/name = "building"
+layer_3/tile_data = PackedInt32Array()
+
+[connection signal="pressed" from="CanvasLayer/TopBar/Menu" to="." method="_on_menu_pressed"]

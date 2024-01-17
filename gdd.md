@@ -127,6 +127,15 @@ indicate them finishing.
 
 # Development Timeline
 
+- [x]: **14.1.2024** Design document
+- [x]: **15.1.2024** Empty Godot project
+- [x]: **15.1.2024** Temporary assets
+- [x]: **16.1.2024** Basic project setup
+- [x]: **16.1.2024** Simple menus
+- [x]: **17.1.2024** Level editor
+- [ ]: **17.1.2024** Game menus
+- [ ]: **17.1.2024** Game scene
+
 ## Minimum Viable Product
 
 ## Extra
