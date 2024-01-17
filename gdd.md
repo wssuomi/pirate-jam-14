@@ -139,6 +139,8 @@ indicate them finishing.
 - [ ] **18.1.2024** Unit Pathfinding
 - [ ] **18.1.2024** Unit Action menu
 - [ ] **19.1.2024** Placing bigger buildings
+- [ ] **20.1.2024** Building Interaction
+
 
 ## Minimum Viable Product
 
