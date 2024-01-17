@@ -1,8 +1,9 @@
 extends Node2D
 
 @onready var map = $Map
-@onready var selected_tile_tex: TextureRect = $CanvasLayer/Control/MarginContainer/VBoxContainer/SelectedTile
+#@onready var selected_tile_tex: TextureRect = $CanvasLayer/Control/MarginContainer/VBoxContainer/SelectedTile
 @onready var preview_tile: TextureRect = $PreviewTile
+@onready var selected_tile_tex = $CanvasLayer/Control/SelectedTile
 
 const Tile = preload("res://scripts/Tile.gd").Tile
 const GRID_WIDTH = 128
