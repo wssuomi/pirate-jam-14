@@ -6,6 +6,13 @@ extends Node2D
 @onready var copper_label: Label = $CanvasLayer/TopBar/Copper/MarginContainer/HBoxContainer/CopperLabel
 @onready var iron_label: Label = $CanvasLayer/TopBar/Iron/MarginContainer/HBoxContainer/IronLabel
 @onready var coal_label: Label = $CanvasLayer/TopBar/Coal/MarginContainer/HBoxContainer/CoalLabel
+@onready var preview_tile = $PreviewTile
+@onready var slab_build_timer = $CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/SlabBuildTimer
+@onready var slab_building_label = $CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/SlabBuildingLabel
+@onready var slab_build_button = $CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/SlabBuildButton
+@onready var slab_place_button = $CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/SlabPlaceButton
+@onready var slab_cancel_place_button = $CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/SlabCancelPlaceButton
+@onready var stone_label = $CanvasLayer/TopBar/Stone/MarginContainer/HBoxContainer/StoneLabel
 
 const GRID_WIDTH = 128
 const GRID_HEIGHT = 128
@@ -20,7 +27,17 @@ var resource_layer: int = 2
 var buillding_layer: int = 3
 var copper = 4
 var coal = 0
+var stone = 10
 var iron = 2
+var mode = 0
+var building = Buildings.None
+var building_tiles: Dictionary = {"slab":Vector2i(0,4)}
+var slab_cost: Array[int] = [0,1,10]
+
+enum Modes {Normal, Place}
+enum Buildings {None, Slab}
+
+signal slab_placed
 
 func toggle_pause():
 	if paused:
@@ -67,6 +84,7 @@ func load_map():
 	return loaded_tiles
 
 func _ready():
+	connect("slab_placed",_on_slab_placed)
 	tiles = load_map()
 	draw_map_tiles()
 	update_labels()
@@ -85,8 +103,8 @@ func update_labels():
 	copper_label.text = str(copper)
 	coal_label.text = str(coal)
 	iron_label.text = str(iron)
+	stone_label.text = str(stone)
 	
-
 func _on_menu_pressed():
 	toggle_pause()
 	
@@ -94,3 +112,72 @@ func _input(event):
 	if event is InputEventKey:
 		if Input.is_action_just_pressed("pause"):
 			toggle_pause()
+	if event is InputEventMouseMotion or event is InputEventMouseButton:
+		if Input.is_action_pressed("place_tile"):
+			var pos: Vector2i = map.local_to_map(get_global_mouse_position())
+			if pos.x >= 0 and pos.x < GRID_WIDTH and pos.y >= 0 and pos.y < GRID_HEIGHT:
+				var tile: Tile = tiles[pos]
+				match building:
+					Buildings.Slab:
+						tile.ground_sprite = building_tiles["slab"]
+						emit_signal("slab_placed")
+					Buildings.None:
+						pass
+				update_tile(tile)
+
+func enter_place_mode():
+	mode = Modes.Place
+	preview_tile.show()
+	
+func exit_place_mode():
+	mode = Modes.Normal
+	preview_tile.hide()
+
+func _process(_delta):
+	match mode:
+		Modes.Normal:
+			pass
+		Modes.Place:
+			preview_tile.position = map.map_to_local(map.local_to_map(get_global_mouse_position())) - Vector2(8,8)
+
+func _on_cancel_pressed():
+	exit_place_mode()
+
+func _on_slab_build_button_pressed():
+	if check_resources(slab_cost):
+		slab_build_timer.start()
+		slab_build_button.hide()
+		slab_building_label.show()
+		copper -= slab_cost[0]
+		iron -= slab_cost[1]
+		stone -= slab_cost[2]
+		update_labels()
+	else:
+		print("not enough resources")
+	
+func _on_slab_place_button_pressed():
+	enter_place_mode()
+	slab_place_button.hide()
+	slab_cancel_place_button.show()
+	building = Buildings.Slab
+
+func _on_slab_build_timer_timeout():
+	slab_place_button.show()
+	slab_building_label.hide()
+
+func _on_slab_cancel_place_button_pressed():
+	exit_place_mode()
+	slab_place_button.show()
+	slab_cancel_place_button.hide()
+	building = Buildings.None
+
+func _on_slab_placed():
+	exit_place_mode()
+	slab_cancel_place_button.hide()
+	slab_build_button.show()
+	building = Buildings.None
+
+func check_resources(cost: Array[int]):
+	if copper >= cost[0] and iron >= cost[1] and stone >= cost[2]:
+		return true
+	return false
