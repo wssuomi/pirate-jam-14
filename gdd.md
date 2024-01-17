@@ -133,8 +133,12 @@ indicate them finishing.
 - [x] **16.1.2024** Basic project setup
 - [x] **16.1.2024** Simple menus
 - [x] **17.1.2024** Level editor
-- [ ] **17.1.2024** Game menus
-- [ ] **17.1.2024** Game scene
+- [x] **17.1.2024** Game menus
+- [x] **17.1.2024** Game scene
+- [ ] **18.1.2024** Units
+- [ ] **18.1.2024** Unit Pathfinding
+- [ ] **18.1.2024** Unit Action menu
+- [ ] **19.1.2024** Placing bigger buildings
 
 ## Minimum Viable Product
 

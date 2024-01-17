@@ -25,10 +25,10 @@ var ground_layer: int = 0
 var decoration_layer: int = 1
 var resource_layer: int = 2
 var building_layer: int = 3
-var copper = 4
-var coal = 0
-var stone = 10
-var iron = 2
+var copper = 99
+var coal = 99
+var stone = 99
+var iron = 99
 var mode = 0
 var building = Buildings.None
 var building_tiles: Dictionary = {"slab":Vector2i(0,4)}
@@ -183,7 +183,6 @@ func change_state_to(state: BuildingStates, target: HBoxContainer) -> BuildingSt
 			timer.start()
 			return BuildingStates.Building
 		BuildingStates.Waiting:
-			print("Changing state to waiting")
 			button.text = "Place"
 			button.show()
 			label.hide()
