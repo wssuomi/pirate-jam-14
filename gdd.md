@@ -147,9 +147,9 @@ Esc
 - [x] **17.1.2024** Level editor
 - [x] **17.1.2024** Game menus
 - [x] **17.1.2024** Game scene
-- [ ] **18.1.2024** Units
-- [ ] **18.1.2024** Unit Action menu
-- [ ] **19.1.2024** Placing bigger buildings
+- [x] **18.1.2024** Units
+- [x] **18.1.2024** Unit Action menu
+- [x] **19.1.2024** Placing bigger buildings
 - [ ] **20.1.2024** Building Interaction
 - [ ] **21.1.2024** Unit Pathfinding
 - [ ] **22.1.2024** Pollution
