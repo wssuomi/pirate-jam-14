@@ -12,17 +12,20 @@ extends Node2D
 @onready var move = $CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/Move
 @onready var side_bar_build = $CanvasLayer/SideBarBuild
 @onready var side_bar_unit_action = $CanvasLayer/SideBarUnitAction
+@onready var large_slab = $CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/LargeSlab
 
 const GRID_WIDTH = 128
 const GRID_HEIGHT = 128
 const Tile = preload("res://scripts/Tile.gd").Tile
 const INFANTRY = preload("res://scenes/infantry.tscn")
 
+
 enum Modes {Normal, Place, MoveUnit, UnitSelected}
-enum Buildings {None, Slab}
+enum Buildings {None, Slab, LargeSlab}
 enum BuildingStates {None, Building, Waiting, Placing}
 enum Units {Infantry}
 
+var tiles_texture = preload("res://assets/map_tiles.png")
 var paused = false
 var tiles = {}
 var units = {}
@@ -37,11 +40,14 @@ var stone = 99
 var iron = 99
 var mode = 0
 var building = Buildings.None
-var building_tiles: Dictionary = {"slab":Vector2i(0,4)}
+var building_tiles: Dictionary = {"slab":Vector2i(0,4),"large_slab":[Vector2i(0,5),Vector2i(1,5),Vector2i(0,6),Vector2i(1,6)]}
 var slab_cost: Array[int] = [0,1,10]
 var slab_state: BuildingStates = BuildingStates.None
+var large_slab_state: BuildingStates = BuildingStates.None
+var large_slab_cost: Array[int] = [0,4,40]
 var mouse_on_ui: bool = false
 var selected_unit = null
+var preview_atlas: AtlasTexture = AtlasTexture.new()
 
 signal building_placed
 
@@ -90,13 +96,14 @@ func load_map():
 	return loaded_tiles
 
 func _ready():
+	preview_atlas.atlas = tiles_texture
+	preview_tile.texture = preview_atlas
 	connect("building_placed",_on_building_placed)
 	tiles = load_map()
 	draw_map_tiles()
 	update_labels()
 	spawn_unit(Units.Infantry, Vector2i(32,15))
 	spawn_unit(Units.Infantry, Vector2i(32,25))
-	
 	
 func draw_map_tiles() -> void:
 	for tile in tiles.values():
@@ -134,14 +141,26 @@ func _input(event):
 				if Input.is_action_pressed("place_tile") and not mouse_on_ui:
 					var pos: Vector2i = map.local_to_map(get_global_mouse_position())
 					if pos.x >= 0 and pos.x < GRID_WIDTH and pos.y >= 0 and pos.y < GRID_HEIGHT:
-						var tile: Tile = tiles[pos]
 						match building:
 							Buildings.Slab:
-								tile.ground_sprite = building_tiles["slab"]
+								var tile: Tile = tiles[pos]
+								if check_tile_able_to_build_slab(tiles[pos]):
+									tile.building_sprite = building_tiles["slab"]
+									emit_signal("building_placed")
+									update_tile(tile)
+							Buildings.LargeSlab:
+								var required_tiles_positions: Array[Vector2i] = [pos, pos + Vector2i(0,1),pos + Vector2i(1,0),pos + Vector2i(1,1)]
+								for p in required_tiles_positions:
+									if not (p.x >= 0 and p.x < GRID_WIDTH and p.y >= 0 and p.y < GRID_HEIGHT):
+										return
+									if not check_tile_able_to_build_slab(tiles[p]):
+										return
+								for n in range(len(required_tiles_positions)):
+									tiles[required_tiles_positions[n]].building_sprite = building_tiles["large_slab"][n]
+									update_tile(tiles[required_tiles_positions[n]])
 								emit_signal("building_placed")
 							Buildings.None:
 								pass
-						update_tile(tile)
 		Modes.MoveUnit:
 			if event is InputEventMouseButton:
 				if Input.is_action_just_pressed("select_unit_location") and not mouse_on_ui:
@@ -183,9 +202,14 @@ func _on_slab_button_pressed():
 			else:
 				print("not enough resources")
 		BuildingStates.Waiting:
+			if building != Buildings.None:
+				return
 			slab_state = change_state_to(BuildingStates.Placing, slab)
 			building = Buildings.Slab
+			update_preview_tile()
 		BuildingStates.Placing:
+			if building != Buildings.Slab:
+				return
 			slab_state =  change_state_to(BuildingStates.Waiting, slab)
 			change_mode_to(Modes.Normal)
 			building = Buildings.None
@@ -227,23 +251,26 @@ func change_mode_to(next_mode: Modes):
 	match next_mode:
 		Modes.Normal:
 			mode = Modes.Normal
-			preview_tile.hide()
+			hide_building_preview()
 			building = Buildings.None
 		Modes.Place:
 			mode = Modes.Place
-			preview_tile.show()
+			show_building_preview()
 		Modes.MoveUnit:
 			mode = Modes.MoveUnit
-			preview_tile.hide()
+			hide_building_preview()
 		Modes.UnitSelected:
 			mode = Modes.UnitSelected
-			preview_tile.hide()
+			hide_building_preview()
 
 func _on_building_placed():
 	match building:
 		Buildings.Slab:
 			change_mode_to(Modes.Normal)
 			slab_state = change_state_to(BuildingStates.None, slab)
+		Buildings.LargeSlab:
+			change_mode_to(Modes.Normal)
+			large_slab_state = change_state_to(BuildingStates.None, large_slab)
 	building = Buildings.None
 
 func _on_mouse_entered_ui():
@@ -279,3 +306,56 @@ func _on_move_pressed():
 		Modes.MoveUnit:
 			change_mode_to(Modes.UnitSelected)
 			move.text = "Move"
+
+func check_tile_able_to_build_slab(tile: Tile):
+	if tile.building_sprite == Vector2i(-1,-1):
+		return true
+	return false
+
+func _on_large_slab_button_pressed():
+	match large_slab_state:
+		BuildingStates.None:
+			if check_resources(slab_cost):
+				large_slab_state = change_state_to(BuildingStates.Building, large_slab)
+				copper -= large_slab_cost[0]
+				iron -= large_slab_cost[1]
+				stone -= large_slab_cost[2]
+				update_labels()
+			else:
+				print("not enough resources")
+		BuildingStates.Waiting:
+			if building != Buildings.None:
+				return
+			large_slab_state = change_state_to(BuildingStates.Placing, large_slab)
+			building = Buildings.LargeSlab
+			update_preview_tile()
+		BuildingStates.Placing:
+			if building != Buildings.LargeSlab:
+				return
+			large_slab_state =  change_state_to(BuildingStates.Waiting, large_slab)
+			change_mode_to(Modes.Normal)
+			building = Buildings.None
+
+func _on_large_slab_timer_timeout():
+	large_slab_state = change_state_to(BuildingStates.Waiting, large_slab)
+
+func show_building_preview():
+	preview_tile.show()
+
+func hide_building_preview():
+	preview_tile.hide()
+
+func update_preview_tile():
+	match building:
+		Buildings.Slab:
+			#preview_atlas.region = Rect2(
+				#building_tiles["slab"].x * 16,
+				#building_tiles["slab"].y * 16,
+				#16,16)
+			preview_tile.get_child(0).custom_minimum_size = Vector2i(0,0)
+		Buildings.LargeSlab:
+			#preview_atlas.region = Rect2(
+				#building_tiles["large_slab"][0].x * 16,
+				#building_tiles["large_slab"][0].y * 16,
+				#32,32)
+			preview_tile.get_child(0).custom_minimum_size = Vector2i(34,34)

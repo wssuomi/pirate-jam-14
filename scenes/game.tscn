@@ -9,6 +9,10 @@
 atlas = ExtResource("3_ee80l")
 region = Rect2(0, 64, 16, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_1to33"]
+atlas = ExtResource("3_ee80l")
+region = Rect2(0, 80, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_trr3j"]
 atlas = ExtResource("3_ee80l")
 region = Rect2(64, 32, 16, 16)
@@ -53,13 +57,13 @@ texture = ExtResource("3_ee80l")
 4:3/0 = 0
 5:3/0 = 0
 0:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+1:6/0 = 0
+0:6/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_aha5v"]
 sources/0 = SubResource("TileSetAtlasSource_vnpe4")
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gjrv5"]
-atlas = ExtResource("3_ee80l")
-region = Rect2(0, 64, 16, 16)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jpkq7"]
 bg_color = Color(0, 0, 0, 0)
@@ -91,7 +95,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="SideBarBuild" type="Control" parent="CanvasLayer"]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 962.0
@@ -163,6 +166,36 @@ Slab"
 one_shot = true
 
 [node name="Label" type="Label" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 1
+text = "Building..."
+
+[node name="LargeSlab" type="HBoxContainer" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Picture" type="TextureRect" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/LargeSlab"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_1to33")
+
+[node name="Button" type="Button" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/LargeSlab"]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+mouse_filter = 1
+text = "Build
+Large Slab"
+
+[node name="Timer" type="Timer" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/LargeSlab"]
+one_shot = true
+
+[node name="Label" type="Label" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/LargeSlab"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
@@ -385,17 +418,16 @@ layer_3/name = "building"
 layer_3/tile_data = PackedInt32Array()
 
 [node name="PreviewTile" type="TextureRect" parent="."]
-visible = false
 texture_filter = 1
 offset_left = -39.0
 offset_top = 6.0
 offset_right = -23.0
 offset_bottom = 22.0
-texture = SubResource("AtlasTexture_gjrv5")
 stretch_mode = 3
 
 [node name="Border" type="Panel" parent="PreviewTile"]
 show_behind_parent = true
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 0
 offset_left = -1.0
 offset_top = -1.0
@@ -408,6 +440,8 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_jpkq7")
 [connection signal="mouse_exited" from="CanvasLayer/SideBarBuild" to="." method="_on_mouse_exited_ui"]
 [connection signal="pressed" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/Button" to="." method="_on_slab_button_pressed"]
 [connection signal="timeout" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/Timer" to="." method="_on_slab_timer_timeout"]
+[connection signal="pressed" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/LargeSlab/Button" to="." method="_on_large_slab_button_pressed"]
+[connection signal="timeout" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/LargeSlab/Timer" to="." method="_on_large_slab_timer_timeout"]
 [connection signal="mouse_entered" from="CanvasLayer/SideBarUnitAction" to="." method="_on_mouse_entered_ui"]
 [connection signal="mouse_exited" from="CanvasLayer/SideBarUnitAction" to="." method="_on_mouse_exited_ui"]
 [connection signal="pressed" from="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/Move" to="." method="_on_move_pressed"]
