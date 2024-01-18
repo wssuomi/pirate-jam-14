@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://6uwpprnvngbp"]
+[gd_scene load_steps=15 format=3 uid="uid://6uwpprnvngbp"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_astxb"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="2_d63gu"]
@@ -12,6 +12,10 @@ region = Rect2(0, 64, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_1to33"]
 atlas = ExtResource("3_ee80l")
 region = Rect2(0, 80, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ksces"]
+atlas = ExtResource("3_ee80l")
+region = Rect2(0, 112, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_trr3j"]
 atlas = ExtResource("3_ee80l")
@@ -61,6 +65,10 @@ texture = ExtResource("3_ee80l")
 1:5/0 = 0
 1:6/0 = 0
 0:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+1:8/0 = 0
+0:8/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_aha5v"]
 sources/0 = SubResource("TileSetAtlasSource_vnpe4")
@@ -196,6 +204,36 @@ Large Slab"
 one_shot = true
 
 [node name="Label" type="Label" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/LargeSlab"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 1
+text = "Building..."
+
+[node name="Factory" type="HBoxContainer" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Picture" type="TextureRect" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Factory"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_ksces")
+
+[node name="Button" type="Button" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Factory"]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+mouse_filter = 1
+text = "Build
+Factory"
+
+[node name="Timer" type="Timer" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Factory"]
+one_shot = true
+
+[node name="Label" type="Label" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Factory"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
@@ -418,6 +456,7 @@ layer_3/name = "building"
 layer_3/tile_data = PackedInt32Array()
 
 [node name="PreviewTile" type="TextureRect" parent="."]
+visible = false
 texture_filter = 1
 offset_left = -39.0
 offset_top = 6.0
@@ -442,6 +481,8 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_jpkq7")
 [connection signal="timeout" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/Timer" to="." method="_on_slab_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/LargeSlab/Button" to="." method="_on_large_slab_button_pressed"]
 [connection signal="timeout" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/LargeSlab/Timer" to="." method="_on_large_slab_timer_timeout"]
+[connection signal="pressed" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Factory/Button" to="." method="_on_factory_button_pressed"]
+[connection signal="timeout" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Factory/Timer" to="." method="_on_factory_timer_timeout"]
 [connection signal="mouse_entered" from="CanvasLayer/SideBarUnitAction" to="." method="_on_mouse_entered_ui"]
 [connection signal="mouse_exited" from="CanvasLayer/SideBarUnitAction" to="." method="_on_mouse_exited_ui"]
 [connection signal="pressed" from="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/Move" to="." method="_on_move_pressed"]

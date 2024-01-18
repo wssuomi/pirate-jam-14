@@ -13,15 +13,15 @@ extends Node2D
 @onready var side_bar_build = $CanvasLayer/SideBarBuild
 @onready var side_bar_unit_action = $CanvasLayer/SideBarUnitAction
 @onready var large_slab = $CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/LargeSlab
+@onready var factory = $CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Factory
 
 const GRID_WIDTH = 128
 const GRID_HEIGHT = 128
 const Tile = preload("res://scripts/Tile.gd").Tile
 const INFANTRY = preload("res://scenes/infantry.tscn")
 
-
 enum Modes {Normal, Place, MoveUnit, UnitSelected}
-enum Buildings {None, Slab, LargeSlab}
+enum Buildings {None, Slab, LargeSlab, Factory}
 enum BuildingStates {None, Building, Waiting, Placing}
 enum Units {Infantry}
 
@@ -40,14 +40,17 @@ var stone = 99
 var iron = 99
 var mode = 0
 var building = Buildings.None
-var building_tiles: Dictionary = {"slab":Vector2i(0,4),"large_slab":[Vector2i(0,5),Vector2i(1,5),Vector2i(0,6),Vector2i(1,6)]}
+var building_tiles: Dictionary = {"slab":Vector2i(0,4),"large_slab":[Vector2i(0,5),Vector2i(0,6),Vector2i(1,5),Vector2i(1,6)],"factory":[Vector2i(0,7),Vector2i(0,8),Vector2i(1,7),Vector2i(1,8)]}
 var slab_cost: Array[int] = [0,1,10]
 var slab_state: BuildingStates = BuildingStates.None
 var large_slab_state: BuildingStates = BuildingStates.None
+var factory_state: BuildingStates = BuildingStates.None
 var large_slab_cost: Array[int] = [0,4,40]
+var factory_cost: Array[int] = [0,20,10]
 var mouse_on_ui: bool = false
 var selected_unit = null
 var preview_atlas: AtlasTexture = AtlasTexture.new()
+var slab_sprites = [Vector2i(0,4),Vector2i(0,5),Vector2i(0,6),Vector2i(1,5),Vector2i(1,6)]
 
 signal building_placed
 
@@ -157,6 +160,17 @@ func _input(event):
 										return
 								for n in range(len(required_tiles_positions)):
 									tiles[required_tiles_positions[n]].building_sprite = building_tiles["large_slab"][n]
+									update_tile(tiles[required_tiles_positions[n]])
+								emit_signal("building_placed")
+							Buildings.Factory:
+								var required_tiles_positions: Array[Vector2i] = [pos, pos + Vector2i(0,1),pos + Vector2i(1,0),pos + Vector2i(1,1)]
+								for p in required_tiles_positions:
+									if not (p.x >= 0 and p.x < GRID_WIDTH and p.y >= 0 and p.y < GRID_HEIGHT):
+										return
+									if not check_tile_able_to_build(tiles[p]):
+										return
+								for n in range(len(required_tiles_positions)):
+									tiles[required_tiles_positions[n]].building_sprite = building_tiles["factory"][n]
 									update_tile(tiles[required_tiles_positions[n]])
 								emit_signal("building_placed")
 							Buildings.None:
@@ -271,6 +285,9 @@ func _on_building_placed():
 		Buildings.LargeSlab:
 			change_mode_to(Modes.Normal)
 			large_slab_state = change_state_to(BuildingStates.None, large_slab)
+		Buildings.Factory:
+			change_mode_to(Modes.Normal)
+			factory_state = change_state_to(BuildingStates.None, factory)
 	building = Buildings.None
 
 func _on_mouse_entered_ui():
@@ -309,6 +326,11 @@ func _on_move_pressed():
 
 func check_tile_able_to_build_slab(tile: Tile):
 	if tile.building_sprite == Vector2i(-1,-1):
+		return true
+	return false
+	
+func check_tile_able_to_build(tile: Tile):
+	if tile.building_sprite in slab_sprites:
 		return true
 	return false
 
@@ -359,3 +381,32 @@ func update_preview_tile():
 				#building_tiles["large_slab"][0].y * 16,
 				#32,32)
 			preview_tile.get_child(0).custom_minimum_size = Vector2i(34,34)
+		Buildings.Factory:
+			preview_tile.get_child(0).custom_minimum_size = Vector2i(34,34)
+
+func _on_factory_button_pressed():
+	match factory_state:
+		BuildingStates.None:
+			if check_resources(factory_cost):
+				factory_state = change_state_to(BuildingStates.Building, factory)
+				copper -= factory_cost[0]
+				iron -= factory_cost[1]
+				stone -= factory_cost[2]
+				update_labels()
+			else:
+				print("not enough resources")
+		BuildingStates.Waiting:
+			if building != Buildings.None:
+				return
+			factory_state = change_state_to(BuildingStates.Placing, factory)
+			building = Buildings.Factory
+			update_preview_tile()
+		BuildingStates.Placing:
+			if building != Buildings.Factory:
+				return
+			factory_state =  change_state_to(BuildingStates.Waiting, factory)
+			change_mode_to(Modes.Normal)
+			building = Buildings.None
+
+func _on_factory_timer_timeout():
+	factory_state = change_state_to(BuildingStates.Waiting, factory)
