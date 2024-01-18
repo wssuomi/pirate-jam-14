@@ -136,12 +136,21 @@ indicate them finishing.
 - [x] **17.1.2024** Game menus
 - [x] **17.1.2024** Game scene
 - [ ] **18.1.2024** Units
-- [ ] **18.1.2024** Unit Pathfinding
 - [ ] **18.1.2024** Unit Action menu
 - [ ] **19.1.2024** Placing bigger buildings
 - [ ] **20.1.2024** Building Interaction
+- [ ] **21.1.2024** Unit Pathfinding
+- [ ] **22.1.2024** Pollution
+- [ ] **24.1.2024** Enemies
+- [ ] **25.1.2024** Sound effects
+- [ ] **27.1.2024** Polish things
+- [ ] **27.1.2024** Submit
 
 
 ## Minimum Viable Product
 
 ## Extra
+
+- [ ] **27.1.2024** Settings menu
+- [ ] **27.1.2024** Extra levels/missions
+- [ ] **27.1.2024** Custom mission
