@@ -337,7 +337,7 @@ func check_tile_able_to_build(tile: Tile):
 func _on_large_slab_button_pressed():
 	match large_slab_state:
 		BuildingStates.None:
-			if check_resources(slab_cost):
+			if check_resources(large_slab_cost):
 				large_slab_state = change_state_to(BuildingStates.Building, large_slab)
 				copper -= large_slab_cost[0]
 				iron -= large_slab_cost[1]
@@ -370,19 +370,23 @@ func hide_building_preview():
 func update_preview_tile():
 	match building:
 		Buildings.Slab:
-			#preview_atlas.region = Rect2(
-				#building_tiles["slab"].x * 16,
-				#building_tiles["slab"].y * 16,
-				#16,16)
-			preview_tile.get_child(0).custom_minimum_size = Vector2i(0,0)
+			preview_atlas.region = Rect2(
+				building_tiles["slab"].x * 16,
+				building_tiles["slab"].y * 16,
+				16,16)
+			preview_tile.get_child(0).size = Vector2i(18,18)
 		Buildings.LargeSlab:
-			#preview_atlas.region = Rect2(
-				#building_tiles["large_slab"][0].x * 16,
-				#building_tiles["large_slab"][0].y * 16,
-				#32,32)
-			preview_tile.get_child(0).custom_minimum_size = Vector2i(34,34)
+			preview_atlas.region = Rect2(
+				building_tiles["large_slab"][0].x * 16,
+				building_tiles["large_slab"][0].y * 16,
+				32,32)
+			preview_tile.get_child(0).size = Vector2i(34,34)
 		Buildings.Factory:
-			preview_tile.get_child(0).custom_minimum_size = Vector2i(34,34)
+			preview_atlas.region = Rect2(
+				building_tiles["factory"][0].x * 16,
+				building_tiles["factory"][0].y * 16,
+				32,32)
+			preview_tile.get_child(0).size = Vector2i(34,34)
 
 func _on_factory_button_pressed():
 	match factory_state:
