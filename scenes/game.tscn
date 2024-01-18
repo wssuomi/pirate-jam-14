@@ -103,6 +103,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="SideBarBuild" type="Control" parent="CanvasLayer"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 962.0
@@ -456,6 +457,7 @@ layer_3/name = "building"
 layer_3/tile_data = PackedInt32Array()
 
 [node name="PreviewTile" type="TextureRect" parent="."]
+visible = false
 texture_filter = 1
 offset_right = 16.0
 offset_bottom = 16.0

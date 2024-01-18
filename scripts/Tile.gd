@@ -6,11 +6,17 @@ class Tile:
 	var decoration_sprite: Vector2i
 	var resource_sprite: Vector2i
 	var building_sprite: Vector2i
+	var walkable = true
+	var g_cost: int
+	var h_cost: int
+	var f_cost: int
+	var parent: Tile
 	func _init(_grid_position: Vector2i, 
 			_ground_sprite: Vector2i,
 			_resource_sprite: Vector2i = Vector2i(-1,-1),
 			_decoration_sprite: Vector2i = Vector2i(-1,-1),
 			_building_sprite: Vector2i = Vector2i(-1,-1)):
+		self.f_cost = g_cost + h_cost 
 		ground_sprite = _ground_sprite
 		resource_sprite = _resource_sprite
 		decoration_sprite = _decoration_sprite

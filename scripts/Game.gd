@@ -179,7 +179,12 @@ func _input(event):
 			if event is InputEventMouseButton:
 				if Input.is_action_just_pressed("select_unit_location") and not mouse_on_ui:
 					var pos: Vector2i = map.local_to_map(get_global_mouse_position())
-					print(pos)
+					if selected_unit.move_queue != []:
+						selected_unit.move_queue.append_array(find_path(selected_unit.move_queue[-1],pos))
+					else:
+						selected_unit.move_queue.append_array(find_path(map.local_to_map(selected_unit.global_position),pos))
+					change_mode_to(Modes.UnitSelected)
+					move.text = "Move"
 		Modes.UnitSelected:
 			if event is InputEventMouseButton and not mouse_on_ui:
 				if Input.is_action_just_pressed("select_unit"):
@@ -414,3 +419,60 @@ func _on_factory_button_pressed():
 
 func _on_factory_timer_timeout():
 	factory_state = change_state_to(BuildingStates.Waiting, factory)
+
+func find_path(start: Vector2i, end: Vector2i):
+	var start_tile = tiles[start]
+	var end_tile = tiles[end]
+	if not end_tile.walkable:
+		return []
+	var open_set: Array[Tile] = []
+	var closed_set: Array[Tile] = []
+	open_set.append(start_tile)
+	while len(open_set) > 0:
+		var current_tile = open_set[0]
+		for i in range(1,len(open_set)):
+			if open_set[i].f_cost < current_tile.f_cost or open_set[i].f_cost == current_tile.f_cost and open_set[i].h_cost < current_tile.h_cost:
+				current_tile = open_set[i]
+		var index = open_set.find(current_tile)
+		open_set.remove_at(index)
+		closed_set.append(current_tile)
+		if current_tile == end_tile:
+			return retrace_path(start_tile, end_tile)
+		for n: Tile in get_neighbors(current_tile):
+			if not n.walkable or n in closed_set:
+				continue
+			var new_movement_cost_to_neighbor = current_tile.g_cost + get_distance(current_tile, n)
+			if new_movement_cost_to_neighbor < n.g_cost or not n in open_set:
+				n.g_cost = new_movement_cost_to_neighbor
+				n.h_cost = get_distance(n, end_tile)
+				n.parent = current_tile
+				if not n in open_set:
+					open_set.append(n)
+
+func get_distance(tile_a: Tile, tile_b: Tile):
+	var dst_x = abs(tile_a.grid_position.x - tile_b.grid_position.x)
+	var dst_y = abs(tile_a.grid_position.y - tile_b.grid_position.y)
+	if dst_x > dst_y:
+		return 14*dst_y + 10 * (dst_x-dst_y)
+	return 14*dst_x + 10 * (dst_y-dst_x)
+	
+func retrace_path(start: Tile, end: Tile) -> Array[Vector2i]:
+	var path: Array[Vector2i] = []
+	var current_tile = end
+	while current_tile !=  start:
+		path.append(current_tile.grid_position)
+		current_tile = current_tile.parent
+	path.reverse()
+	return path
+	
+func get_neighbors(tile: Tile):
+	var neighbors = []
+	for y in range(-1,2):
+		for x in range(-1,2):
+			if x == 0 and y == 0:
+				continue
+			var check_x = tile.grid_position.x + x
+			var check_y = tile.grid_position.y + y
+			if check_x >= 0 and check_x < GRID_WIDTH and check_y >= 0 and check_y < GRID_HEIGHT:
+				neighbors.append(tiles[Vector2i(check_x,check_y)])
+	return neighbors
