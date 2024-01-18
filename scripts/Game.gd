@@ -95,6 +95,7 @@ func _ready():
 	draw_map_tiles()
 	update_labels()
 	spawn_unit(Units.Infantry, Vector2i(32,15))
+	spawn_unit(Units.Infantry, Vector2i(32,25))
 	
 	
 func draw_map_tiles() -> void:
@@ -143,13 +144,20 @@ func _input(event):
 						update_tile(tile)
 		Modes.MoveUnit:
 			if event is InputEventMouseButton:
-				if Input.is_action_just_pressed("select_unit_location"):
+				if Input.is_action_just_pressed("select_unit_location") and not mouse_on_ui:
 					var pos: Vector2i = map.local_to_map(get_global_mouse_position())
 					print(pos)
 		Modes.UnitSelected:
 			if event is InputEventMouseButton and not mouse_on_ui:
 				if Input.is_action_just_pressed("select_unit"):
-					pass
+					var pos: Vector2i = map.local_to_map(get_global_mouse_position())
+					if pos in units.keys():
+						deselect_unit()
+						select_unit(pos)
+						change_mode_to(Modes.UnitSelected)
+					else:
+						deselect_unit()
+						change_mode_to(Modes.Normal)
 
 func _process(_delta):
 	match mode:
@@ -227,6 +235,9 @@ func change_mode_to(next_mode: Modes):
 		Modes.MoveUnit:
 			mode = Modes.MoveUnit
 			preview_tile.hide()
+		Modes.UnitSelected:
+			mode = Modes.UnitSelected
+			preview_tile.hide()
 
 func _on_building_placed():
 	match building:
@@ -252,17 +263,19 @@ func spawn_unit(unit: Units, pos: Vector2i):
 func select_unit(pos: Vector2i):
 	selected_unit = units[pos]
 	selected_unit.select()
+	side_bar_unit_action.show()
 
 func deselect_unit():
 	if selected_unit != null:
 		selected_unit.deselect()
 		selected_unit = null
+		side_bar_unit_action.hide()
 
 func _on_move_pressed():
 	match mode:
-		Modes.UnitSelected:	
+		Modes.UnitSelected:
 			change_mode_to(Modes.MoveUnit)
 			move.text = "Cancel"
 		Modes.MoveUnit:
-			change_mode_to(Modes.Normal)
+			change_mode_to(Modes.UnitSelected)
 			move.text = "Move"

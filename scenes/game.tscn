@@ -98,11 +98,13 @@ offset_left = 962.0
 offset_top = 40.0
 offset_right = 1152.0
 offset_bottom = 645.0
+mouse_filter = 1
 
 [node name="Panel" type="Panel" parent="CanvasLayer/SideBarBuild"]
 layout_mode = 0
 offset_right = 190.0
 offset_bottom = 605.0
+mouse_filter = 1
 
 [node name="Title" type="MarginContainer" parent="CanvasLayer/SideBarBuild"]
 layout_mode = 0
@@ -125,6 +127,7 @@ offset_left = 3.0
 offset_top = 43.0
 offset_right = 187.0
 offset_bottom = 602.0
+mouse_filter = 1
 
 [node name="BuildOptions" type="MarginContainer" parent="CanvasLayer/SideBarBuild"]
 layout_mode = 0
@@ -163,20 +166,24 @@ one_shot = true
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
+mouse_filter = 1
 text = "Building..."
 
 [node name="SideBarUnitAction" type="Control" parent="CanvasLayer"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 962.0
 offset_top = 40.0
 offset_right = 1152.0
 offset_bottom = 645.0
+mouse_filter = 1
 
 [node name="Panel" type="Panel" parent="CanvasLayer/SideBarUnitAction"]
 layout_mode = 0
 offset_right = 190.0
 offset_bottom = 605.0
+mouse_filter = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SideBarUnitAction"]
 layout_mode = 0
@@ -187,10 +194,12 @@ offset_bottom = 40.0
 
 [node name="Panel" type="Panel" parent="CanvasLayer/SideBarUnitAction/MarginContainer"]
 layout_mode = 2
+mouse_filter = 1
 
 [node name="Label" type="Label" parent="CanvasLayer/SideBarUnitAction/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+mouse_filter = 1
 text = "Action"
 
 [node name="Actions" type="MarginContainer" parent="CanvasLayer/SideBarUnitAction"]
@@ -202,17 +211,15 @@ offset_bottom = 602.0
 
 [node name="Panel" type="Panel" parent="CanvasLayer/SideBarUnitAction/Actions"]
 layout_mode = 2
+mouse_filter = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SideBarUnitAction/Actions"]
 layout_mode = 2
 
 [node name="Move" type="Button" parent="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 text = "Move"
-
-[node name="Button2" type="Button" parent="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer"]
-visible = false
-layout_mode = 2
 
 [node name="TopBar" type="Control" parent="CanvasLayer"]
 custom_minimum_size = Vector2(10, 0)
@@ -220,11 +227,13 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 37.0
+mouse_filter = 1
 
 [node name="Panel" type="Panel" parent="CanvasLayer/TopBar"]
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 37.0
+mouse_filter = 1
 
 [node name="Stone" type="Control" parent="CanvasLayer/TopBar"]
 layout_mode = 2
@@ -233,6 +242,7 @@ offset_left = 776.0
 offset_top = 7.0
 offset_right = 866.0
 offset_bottom = 30.0
+mouse_filter = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/TopBar/Stone"]
 layout_mode = 0
@@ -241,6 +251,7 @@ offset_bottom = 23.0
 
 [node name="Panel" type="Panel" parent="CanvasLayer/TopBar/Stone/MarginContainer"]
 layout_mode = 2
+mouse_filter = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/TopBar/Stone/MarginContainer"]
 layout_mode = 2
@@ -253,6 +264,7 @@ expand_mode = 2
 
 [node name="StoneLabel" type="Label" parent="CanvasLayer/TopBar/Stone/MarginContainer/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 text = "0"
 
 [node name="Copper" type="Control" parent="CanvasLayer/TopBar"]
@@ -262,6 +274,7 @@ offset_left = 869.0
 offset_top = 7.0
 offset_right = 959.0
 offset_bottom = 30.0
+mouse_filter = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/TopBar/Copper"]
 layout_mode = 0
@@ -270,6 +283,7 @@ offset_bottom = 23.0
 
 [node name="Panel" type="Panel" parent="CanvasLayer/TopBar/Copper/MarginContainer"]
 layout_mode = 2
+mouse_filter = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/TopBar/Copper/MarginContainer"]
 layout_mode = 2
@@ -282,6 +296,7 @@ expand_mode = 2
 
 [node name="CopperLabel" type="Label" parent="CanvasLayer/TopBar/Copper/MarginContainer/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 text = "0"
 
 [node name="Iron" type="Control" parent="CanvasLayer/TopBar"]
@@ -291,6 +306,7 @@ offset_left = 962.0
 offset_top = 7.0
 offset_right = 1052.0
 offset_bottom = 30.0
+mouse_filter = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/TopBar/Iron"]
 layout_mode = 0
@@ -299,6 +315,7 @@ offset_bottom = 23.0
 
 [node name="Panel" type="Panel" parent="CanvasLayer/TopBar/Iron/MarginContainer"]
 layout_mode = 2
+mouse_filter = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/TopBar/Iron/MarginContainer"]
 layout_mode = 2
@@ -311,6 +328,7 @@ expand_mode = 2
 
 [node name="IronLabel" type="Label" parent="CanvasLayer/TopBar/Iron/MarginContainer/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 text = "0"
 
 [node name="Coal" type="Control" parent="CanvasLayer/TopBar"]
@@ -320,6 +338,7 @@ offset_left = 1055.0
 offset_top = 7.0
 offset_right = 1145.0
 offset_bottom = 30.0
+mouse_filter = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/TopBar/Coal"]
 layout_mode = 0
@@ -328,6 +347,7 @@ offset_bottom = 23.0
 
 [node name="Panel" type="Panel" parent="CanvasLayer/TopBar/Coal/MarginContainer"]
 layout_mode = 2
+mouse_filter = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/TopBar/Coal/MarginContainer"]
 layout_mode = 2
@@ -340,6 +360,7 @@ expand_mode = 2
 
 [node name="CoalLabel" type="Label" parent="CanvasLayer/TopBar/Coal/MarginContainer/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 text = "0"
 
 [node name="Menu" type="Button" parent="CanvasLayer/TopBar"]
@@ -348,6 +369,7 @@ offset_left = 3.0
 offset_top = 3.0
 offset_right = 58.0
 offset_bottom = 34.0
+mouse_filter = 1
 text = "Menu"
 
 [node name="Map" type="TileMap" parent="."]
