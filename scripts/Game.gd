@@ -9,17 +9,23 @@ extends Node2D
 @onready var preview_tile = $PreviewTile
 @onready var stone_label = $CanvasLayer/TopBar/Stone/MarginContainer/HBoxContainer/StoneLabel
 @onready var slab = $CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab
+@onready var move = $CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/Move
+@onready var side_bar_build = $CanvasLayer/SideBarBuild
+@onready var side_bar_unit_action = $CanvasLayer/SideBarUnitAction
 
 const GRID_WIDTH = 128
 const GRID_HEIGHT = 128
 const Tile = preload("res://scripts/Tile.gd").Tile
+const INFANTRY = preload("res://scenes/infantry.tscn")
 
-enum Modes {Normal, Place}
+enum Modes {Normal, Place, MoveUnit, UnitSelected}
 enum Buildings {None, Slab}
 enum BuildingStates {None, Building, Waiting, Placing}
+enum Units {Infantry}
 
 var paused = false
 var tiles = {}
+var units = {}
 var rng = RandomNumberGenerator.new()
 var ground_layer: int = 0
 var decoration_layer: int = 1
@@ -35,6 +41,7 @@ var building_tiles: Dictionary = {"slab":Vector2i(0,4)}
 var slab_cost: Array[int] = [0,1,10]
 var slab_state: BuildingStates = BuildingStates.None
 var mouse_on_ui: bool = false
+var selected_unit = null
 
 signal building_placed
 
@@ -87,6 +94,8 @@ func _ready():
 	tiles = load_map()
 	draw_map_tiles()
 	update_labels()
+	spawn_unit(Units.Infantry, Vector2i(32,15))
+	
 	
 func draw_map_tiles() -> void:
 	for tile in tiles.values():
@@ -111,26 +120,36 @@ func _input(event):
 	if event is InputEventKey:
 		if Input.is_action_just_pressed("pause"):
 			toggle_pause()
-	if event is InputEventMouseMotion or event is InputEventMouseButton:
-		if Input.is_action_pressed("place_tile") and not mouse_on_ui:
-			var pos: Vector2i = map.local_to_map(get_global_mouse_position())
-			if pos.x >= 0 and pos.x < GRID_WIDTH and pos.y >= 0 and pos.y < GRID_HEIGHT:
-				var tile: Tile = tiles[pos]
-				match building:
-					Buildings.Slab:
-						tile.ground_sprite = building_tiles["slab"]
-						emit_signal("building_placed")
-					Buildings.None:
-						pass
-				update_tile(tile)
-
-func enter_place_mode():
-	mode = Modes.Place
-	preview_tile.show()
-	
-func exit_place_mode():
-	mode = Modes.Normal
-	preview_tile.hide()
+	match mode:
+		Modes.Normal:
+			if event is InputEventMouseButton and not mouse_on_ui:
+				if Input.is_action_just_pressed("select_unit"):
+					var pos: Vector2i = map.local_to_map(get_global_mouse_position())
+					if pos in units.keys():
+						select_unit(pos)
+						change_mode_to(Modes.UnitSelected)
+		Modes.Place:
+			if event is InputEventMouseButton:
+				if Input.is_action_pressed("place_tile") and not mouse_on_ui:
+					var pos: Vector2i = map.local_to_map(get_global_mouse_position())
+					if pos.x >= 0 and pos.x < GRID_WIDTH and pos.y >= 0 and pos.y < GRID_HEIGHT:
+						var tile: Tile = tiles[pos]
+						match building:
+							Buildings.Slab:
+								tile.ground_sprite = building_tiles["slab"]
+								emit_signal("building_placed")
+							Buildings.None:
+								pass
+						update_tile(tile)
+		Modes.MoveUnit:
+			if event is InputEventMouseButton:
+				if Input.is_action_just_pressed("select_unit_location"):
+					var pos: Vector2i = map.local_to_map(get_global_mouse_position())
+					print(pos)
+		Modes.UnitSelected:
+			if event is InputEventMouseButton and not mouse_on_ui:
+				if Input.is_action_just_pressed("select_unit"):
+					pass
 
 func _process(_delta):
 	match mode:
@@ -138,9 +157,6 @@ func _process(_delta):
 			pass
 		Modes.Place:
 			preview_tile.position = map.map_to_local(map.local_to_map(get_global_mouse_position())) - Vector2(8,8)
-
-func _on_cancel_pressed():
-	exit_place_mode()
 
 func check_resources(cost: Array[int]):
 	if copper >= cost[0] and iron >= cost[1] and stone >= cost[2]:
@@ -208,6 +224,9 @@ func change_mode_to(next_mode: Modes):
 		Modes.Place:
 			mode = Modes.Place
 			preview_tile.show()
+		Modes.MoveUnit:
+			mode = Modes.MoveUnit
+			preview_tile.hide()
 
 func _on_building_placed():
 	match building:
@@ -221,3 +240,29 @@ func _on_mouse_entered_ui():
 
 func _on_mouse_exited_ui():
 	mouse_on_ui = false
+
+func spawn_unit(unit: Units, pos: Vector2i):
+	match unit:
+		Units.Infantry:
+			var instance = INFANTRY.instantiate()
+			instance.position = map.map_to_local(pos)
+			add_child(instance)
+			units[pos] = instance
+
+func select_unit(pos: Vector2i):
+	selected_unit = units[pos]
+	selected_unit.select()
+
+func deselect_unit():
+	if selected_unit != null:
+		selected_unit.deselect()
+		selected_unit = null
+
+func _on_move_pressed():
+	match mode:
+		Modes.UnitSelected:	
+			change_mode_to(Modes.MoveUnit)
+			move.text = "Cancel"
+		Modes.MoveUnit:
+			change_mode_to(Modes.Normal)
+			move.text = "Move"

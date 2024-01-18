@@ -91,6 +91,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="SideBarBuild" type="Control" parent="CanvasLayer"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 962.0
@@ -164,8 +165,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Building..."
 
-[node name="SideBarAction" type="Control" parent="CanvasLayer"]
-visible = false
+[node name="SideBarUnitAction" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 962.0
@@ -173,34 +173,45 @@ offset_top = 40.0
 offset_right = 1152.0
 offset_bottom = 645.0
 
-[node name="Panel" type="Panel" parent="CanvasLayer/SideBarAction"]
+[node name="Panel" type="Panel" parent="CanvasLayer/SideBarUnitAction"]
 layout_mode = 0
 offset_right = 190.0
 offset_bottom = 605.0
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SideBarAction"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SideBarUnitAction"]
 layout_mode = 0
 offset_left = 3.0
 offset_top = 3.0
 offset_right = 187.0
 offset_bottom = 40.0
 
-[node name="Panel" type="Panel" parent="CanvasLayer/SideBarAction/MarginContainer"]
+[node name="Panel" type="Panel" parent="CanvasLayer/SideBarUnitAction/MarginContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/SideBarAction/MarginContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/SideBarUnitAction/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Action"
 
-[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/SideBarAction"]
+[node name="Actions" type="MarginContainer" parent="CanvasLayer/SideBarUnitAction"]
 layout_mode = 0
 offset_left = 3.0
 offset_top = 43.0
 offset_right = 187.0
 offset_bottom = 602.0
 
-[node name="Panel" type="Panel" parent="CanvasLayer/SideBarAction/MarginContainer2"]
+[node name="Panel" type="Panel" parent="CanvasLayer/SideBarUnitAction/Actions"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SideBarUnitAction/Actions"]
+layout_mode = 2
+
+[node name="Move" type="Button" parent="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer"]
+layout_mode = 2
+text = "Move"
+
+[node name="Button2" type="Button" parent="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="TopBar" type="Control" parent="CanvasLayer"]
@@ -375,8 +386,9 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_jpkq7")
 [connection signal="mouse_exited" from="CanvasLayer/SideBarBuild" to="." method="_on_mouse_exited_ui"]
 [connection signal="pressed" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/Button" to="." method="_on_slab_button_pressed"]
 [connection signal="timeout" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Slab/Timer" to="." method="_on_slab_timer_timeout"]
-[connection signal="mouse_entered" from="CanvasLayer/SideBarAction" to="." method="_on_mouse_entered_ui"]
-[connection signal="mouse_exited" from="CanvasLayer/SideBarAction" to="." method="_on_mouse_exited_ui"]
+[connection signal="mouse_entered" from="CanvasLayer/SideBarUnitAction" to="." method="_on_mouse_entered_ui"]
+[connection signal="mouse_exited" from="CanvasLayer/SideBarUnitAction" to="." method="_on_mouse_exited_ui"]
+[connection signal="pressed" from="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/Move" to="." method="_on_move_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/TopBar" to="." method="_on_mouse_entered_ui"]
 [connection signal="mouse_exited" from="CanvasLayer/TopBar" to="." method="_on_mouse_exited_ui"]
 [connection signal="pressed" from="CanvasLayer/TopBar/Menu" to="." method="_on_menu_pressed"]
