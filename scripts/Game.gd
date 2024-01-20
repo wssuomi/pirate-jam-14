@@ -420,7 +420,7 @@ func _on_factory_button_pressed():
 func _on_factory_timer_timeout():
 	factory_state = change_state_to(BuildingStates.Waiting, factory)
 
-func find_path(start: Vector2i, end: Vector2i):
+func find_path(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
 	var start_tile: Tile = tiles[start]
 	var end_tile: Tile = tiles[end]
 	if not is_walkable(end_tile):
@@ -448,6 +448,7 @@ func find_path(start: Vector2i, end: Vector2i):
 				n.parent = current_tile
 				if not n in open_set:
 					open_set.append(n)
+	return []
 
 func get_distance(tile_a: Tile, tile_b: Tile):
 	var dst_x = abs(tile_a.grid_position.x - tile_b.grid_position.x)
@@ -481,10 +482,8 @@ func is_walkable(tile: Tile):
 	if tile.building_sprite != Vector2i(-1,-1):
 		if not tile.building_sprite in slab_sprites:
 			return false
-	for u in units.values():
-		if u.state == u.States.Walk:
-			continue
-		if map.local_to_map(u.global_position) == tile.grid_position:
+	for k in units.keys():
+		if k == tile.grid_position:
 			return false
 	return true
-		
+
