@@ -30,7 +30,7 @@ var decoration_tiles: Array[Vector2i] = [
 	Vector2i(4,0),Vector2i(4,1),Vector2i(5,1),
 	Vector2i(6,1),Vector2i(4,3),Vector2i(5,3)
 	]
-var building_tiles: Array[Vector2i] = [Vector2i(0,4)]
+var building_tiles: Array[Vector2i] = [Vector2i(0,4),Vector2i(0,7),Vector2i(1,7),Vector2i(0,8),Vector2i(1,8)]
 var selected_tiles: Array[Vector2i] = ground_tiles
 
 func _on_quit_pressed():
