@@ -19,8 +19,9 @@ const GRID_WIDTH = 128
 const GRID_HEIGHT = 128
 const Tile = preload("res://scripts/Tile.gd").Tile
 const INFANTRY = preload("res://scenes/infantry.tscn")
+const FACTORY = preload("res://scenes/factory.tscn")
 
-enum Modes {Normal, Place, MoveUnit, UnitSelected}
+enum Modes {Normal, Place, MoveUnit, UnitSelected, BuildingSelected}
 enum Buildings {None, Slab, LargeSlab, Factory}
 enum BuildingStates {None, Building, Waiting, Placing}
 enum Units {Infantry}
@@ -49,8 +50,10 @@ var large_slab_cost: Array[int] = [0,4,40]
 var factory_cost: Array[int] = [0,20,10]
 var mouse_on_ui: bool = false
 var selected_unit = null
+var selected_building = null
 var preview_atlas: AtlasTexture = AtlasTexture.new()
 var slab_sprites = [Vector2i(0,4),Vector2i(0,5),Vector2i(0,6),Vector2i(1,5),Vector2i(1,6)]
+var buildings: Dictionary = {}
 
 signal building_placed
 
@@ -108,6 +111,7 @@ func _ready():
 	for n in range(len(start_factory_pos)):
 		tiles[start_factory_pos[n]].building_sprite = building_tiles["factory"][n]
 		tiles[start_factory_pos[n]].building = Buildings.Factory
+	create_building(Buildings.Factory, start_factory_pos)
 	draw_map_tiles()
 	update_labels()
 	spawn_unit(Units.Infantry, Vector2i(32,15))
@@ -145,6 +149,12 @@ func _input(event):
 					if pos in units.keys():
 						select_unit(pos)
 						change_mode_to(Modes.UnitSelected)
+				if Input.is_action_just_pressed("interact_with_building") and not mouse_on_ui:
+					var pos: Vector2i = map.local_to_map(get_global_mouse_position())
+					for k in buildings.keys():
+						if pos in k:
+							selected_building = buildings[k]
+							change_mode_to(Modes.BuildingSelected)
 		Modes.Place:
 			if event is InputEventMouseButton:
 				if Input.is_action_pressed("place_tile") and not mouse_on_ui:
@@ -205,6 +215,11 @@ func _input(event):
 					else:
 						deselect_unit()
 						change_mode_to(Modes.Normal)
+		Modes.BuildingSelected:
+			if event is InputEventMouseButton and not mouse_on_ui:
+				if Input.is_action_just_pressed("select_unit"):
+					change_mode_to(Modes.Normal)
+					selected_building = null
 
 func _process(_delta):
 	match mode:
@@ -281,6 +296,8 @@ func change_mode_to(next_mode: Modes):
 			mode = Modes.Normal
 			hide_building_preview()
 			building = Buildings.None
+			if selected_building != null:
+				selected_building.hide_menu()
 		Modes.Place:
 			mode = Modes.Place
 			show_building_preview()
@@ -290,6 +307,9 @@ func change_mode_to(next_mode: Modes):
 		Modes.UnitSelected:
 			mode = Modes.UnitSelected
 			hide_building_preview()
+		Modes.BuildingSelected:
+			mode = Modes.BuildingSelected
+			selected_building.show_menu()
 
 func _on_building_placed():
 	match building:
@@ -317,6 +337,13 @@ func spawn_unit(unit: Units, pos: Vector2i):
 			instance.position = map.map_to_local(pos)
 			add_child(instance)
 			units[pos] = instance
+			
+func create_building(new_building: Buildings, pos: Array[Vector2i]):
+	match new_building:
+		Buildings.Factory:
+			var instance = FACTORY.instantiate()
+			add_child(instance)
+			buildings[pos] = instance
 
 func select_unit(pos: Vector2i):
 	selected_unit = units[pos]
@@ -494,4 +521,3 @@ func is_walkable(tile: Tile):
 		if k == tile.grid_position:
 			return false
 	return true
-

@@ -1,4 +1,4 @@
-# [Redacted]
+# Spread of the smog
 
 ### Walsu, R4smR, TosRen
 
@@ -6,7 +6,7 @@
 
 ## Game Summary Pitch
 
-[Redacted] is a rts game you build a base manage pollution on a new planet
+Spread of the smog is a rts game you build a base manage pollution on a new planet
 
 ## Inpiration
 
@@ -96,7 +96,7 @@ die near the base.
 ## Theme Interpretation
 
 The planet will have nice green grass and big forests. This will start
-changing over time when the player spreads the pollution and build their base.
+changing over time when the player spreads the pollution and builds their base.
 Plants will start looking dead, trees will drop leaves and the grass will turn
 brown.
 
@@ -116,16 +116,15 @@ TBD
 ## Sound Effects
 
 Actions like selecting units or interacting with a building will have
-a unique sound that plays when done. Timers have small bells to indicate 
+a unique sound that plays when done. Timers have small bells to indicate
 them finishing.
 
 # Game Experience
 
 ## UI
 
-Design of the UI follows similar rules as the machines and 
-other player built things. 
-
+Design of the UI follows similar rules as the machines and
+other player built things.
 
 ## Controls
 
@@ -150,14 +149,14 @@ Esc
 - [x] **18.1.2024** Units
 - [x] **18.1.2024** Unit Action menu
 - [x] **19.1.2024** Placing bigger buildings
-- [ ] **20.1.2024** Building Interaction
-- [ ] **21.1.2024** Unit Pathfinding
+- [x] **20.1.2024** Building Interaction
+- [x] **21.1.2024** Unit Pathfinding
 - [ ] **22.1.2024** Pollution
-- [ ] **24.1.2024** Enemies
+- [ ] **23.1.2024** Enemies
+- [ ] **24.1.2024** Fog of war
 - [ ] **25.1.2024** Sound effects
 - [ ] **27.1.2024** Polish things
 - [ ] **27.1.2024** Submit
-
 
 ## Minimum Viable Product
 

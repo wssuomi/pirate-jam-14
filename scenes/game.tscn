@@ -100,6 +100,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="SideBarBuild" type="Control" parent="CanvasLayer"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 962.0

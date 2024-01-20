@@ -1,0 +1,166 @@
+[gd_scene load_steps=6 format=3 uid="uid://dj2xxodlriqlb"]
+
+[ext_resource type="Script" path="res://scripts/factory.gd" id="1_hivjp"]
+[ext_resource type="Texture2D" uid="uid://jm1bhhp8ffsb" path="res://assets/map_tiles.png" id="2_01lje"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8p0xr"]
+atlas = ExtResource("2_01lje")
+region = Rect2(0, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhvgx"]
+atlas = ExtResource("2_01lje")
+region = Rect2(0, 80, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4y08"]
+atlas = ExtResource("2_01lje")
+region = Rect2(0, 112, 32, 32)
+
+[node name="factory" type="CanvasLayer"]
+script = ExtResource("1_hivjp")
+
+[node name="SideBarBuild" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 962.0
+offset_top = 40.0
+offset_right = 1152.0
+offset_bottom = 645.0
+mouse_filter = 1
+
+[node name="Panel" type="Panel" parent="SideBarBuild"]
+layout_mode = 0
+offset_right = 190.0
+offset_bottom = 605.0
+mouse_filter = 1
+
+[node name="Title" type="MarginContainer" parent="SideBarBuild"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 187.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="SideBarBuild/Title"]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="Label" type="Label" parent="SideBarBuild/Title"]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 1
+text = "Build"
+
+[node name="Panel2" type="Panel" parent="SideBarBuild"]
+layout_mode = 2
+offset_left = 3.0
+offset_top = 43.0
+offset_right = 187.0
+offset_bottom = 602.0
+mouse_filter = 1
+
+[node name="BuildOptions" type="MarginContainer" parent="SideBarBuild"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 46.0
+offset_right = 184.0
+offset_bottom = 599.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SideBarBuild/BuildOptions"]
+layout_mode = 2
+
+[node name="Unit" type="HBoxContainer" parent="SideBarBuild/BuildOptions/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Picture" type="TextureRect" parent="SideBarBuild/BuildOptions/VBoxContainer/Unit"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_8p0xr")
+
+[node name="Button" type="Button" parent="SideBarBuild/BuildOptions/VBoxContainer/Unit"]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+mouse_filter = 1
+text = "Build
+Infantry"
+
+[node name="Timer" type="Timer" parent="SideBarBuild/BuildOptions/VBoxContainer/Unit"]
+one_shot = true
+
+[node name="Label" type="Label" parent="SideBarBuild/BuildOptions/VBoxContainer/Unit"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 1
+text = "Building..."
+
+[node name="LargeSlab" type="HBoxContainer" parent="SideBarBuild/BuildOptions/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Picture" type="TextureRect" parent="SideBarBuild/BuildOptions/VBoxContainer/LargeSlab"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_jhvgx")
+
+[node name="Button" type="Button" parent="SideBarBuild/BuildOptions/VBoxContainer/LargeSlab"]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+mouse_filter = 1
+text = "Build
+Large Slab"
+
+[node name="Timer" type="Timer" parent="SideBarBuild/BuildOptions/VBoxContainer/LargeSlab"]
+one_shot = true
+
+[node name="Label" type="Label" parent="SideBarBuild/BuildOptions/VBoxContainer/LargeSlab"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 1
+text = "Building..."
+
+[node name="Factory" type="HBoxContainer" parent="SideBarBuild/BuildOptions/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Picture" type="TextureRect" parent="SideBarBuild/BuildOptions/VBoxContainer/Factory"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_c4y08")
+
+[node name="Button" type="Button" parent="SideBarBuild/BuildOptions/VBoxContainer/Factory"]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+mouse_filter = 1
+text = "Build
+Factory"
+
+[node name="Timer" type="Timer" parent="SideBarBuild/BuildOptions/VBoxContainer/Factory"]
+one_shot = true
+
+[node name="Label" type="Label" parent="SideBarBuild/BuildOptions/VBoxContainer/Factory"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 1
+text = "Building..."
+
+[connection signal="mouse_entered" from="SideBarBuild" to="." method="_on_side_bar_build_mouse_entered"]
+[connection signal="mouse_exited" from="SideBarBuild" to="." method="_on_side_bar_build_mouse_exited"]
+[connection signal="pressed" from="SideBarBuild/BuildOptions/VBoxContainer/Unit/Button" to="." method="_on_button_pressed"]
