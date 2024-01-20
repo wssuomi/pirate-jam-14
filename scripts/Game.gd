@@ -99,14 +99,20 @@ func load_map():
 	return loaded_tiles
 
 func _ready():
+	var pos = Vector2i(int(GRID_WIDTH / 2.),int(GRID_HEIGHT / 2.))
+	var start_factory_pos: Array[Vector2i] = [pos, pos + Vector2i(0,1),pos + Vector2i(1,0),pos + Vector2i(1,1)]
 	preview_atlas.atlas = tiles_texture
 	preview_tile.texture = preview_atlas
 	connect("building_placed",_on_building_placed)
 	tiles = load_map()
+	for n in range(len(start_factory_pos)):
+		tiles[start_factory_pos[n]].building_sprite = building_tiles["factory"][n]
+		tiles[start_factory_pos[n]].building = Buildings.Factory
 	draw_map_tiles()
 	update_labels()
 	spawn_unit(Units.Infantry, Vector2i(32,15))
 	spawn_unit(Units.Infantry, Vector2i(32,25))
+	spawn_unit(Units.Infantry, Vector2i(60,60))
 	
 func draw_map_tiles() -> void:
 	for tile in tiles.values():
@@ -149,6 +155,7 @@ func _input(event):
 								var tile: Tile = tiles[pos]
 								if check_tile_able_to_build_slab(tiles[pos]):
 									tile.building_sprite = building_tiles["slab"]
+									tile.building= Buildings.Slab
 									emit_signal("building_placed")
 									update_tile(tile)
 							Buildings.LargeSlab:
@@ -160,6 +167,7 @@ func _input(event):
 										return
 								for n in range(len(required_tiles_positions)):
 									tiles[required_tiles_positions[n]].building_sprite = building_tiles["large_slab"][n]
+									tiles[required_tiles_positions[n]].building = Buildings.LargeSlab
 									update_tile(tiles[required_tiles_positions[n]])
 								emit_signal("building_placed")
 							Buildings.Factory:
@@ -171,6 +179,7 @@ func _input(event):
 										return
 								for n in range(len(required_tiles_positions)):
 									tiles[required_tiles_positions[n]].building_sprite = building_tiles["factory"][n]
+									tiles[required_tiles_positions[n]].building = Buildings.Factory
 									update_tile(tiles[required_tiles_positions[n]])
 								emit_signal("building_placed")
 							Buildings.None:
@@ -479,9 +488,8 @@ func get_neighbors(tile: Tile):
 	return neighbors
 
 func is_walkable(tile: Tile):
-	if tile.building_sprite != Vector2i(-1,-1):
-		if not tile.building_sprite in slab_sprites:
-			return false
+	if tile.building != Buildings.Slab and tile.building != Buildings.None:
+		return false
 	for k in units.keys():
 		if k == tile.grid_position:
 			return false
