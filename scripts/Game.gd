@@ -421,9 +421,9 @@ func _on_factory_timer_timeout():
 	factory_state = change_state_to(BuildingStates.Waiting, factory)
 
 func find_path(start: Vector2i, end: Vector2i):
-	var start_tile = tiles[start]
-	var end_tile = tiles[end]
-	if not end_tile.walkable:
+	var start_tile: Tile = tiles[start]
+	var end_tile: Tile = tiles[end]
+	if not is_walkable(end_tile):
 		return []
 	var open_set: Array[Tile] = []
 	var closed_set: Array[Tile] = []
@@ -439,7 +439,7 @@ func find_path(start: Vector2i, end: Vector2i):
 		if current_tile == end_tile:
 			return retrace_path(start_tile, end_tile)
 		for n: Tile in get_neighbors(current_tile):
-			if not n.walkable or n in closed_set:
+			if not is_walkable(n) or n in closed_set:
 				continue
 			var new_movement_cost_to_neighbor = current_tile.g_cost + get_distance(current_tile, n)
 			if new_movement_cost_to_neighbor < n.g_cost or not n in open_set:
@@ -476,3 +476,15 @@ func get_neighbors(tile: Tile):
 			if check_x >= 0 and check_x < GRID_WIDTH and check_y >= 0 and check_y < GRID_HEIGHT:
 				neighbors.append(tiles[Vector2i(check_x,check_y)])
 	return neighbors
+
+func is_walkable(tile: Tile):
+	if tile.building_sprite != Vector2i(-1,-1):
+		if not tile.building_sprite in slab_sprites:
+			return false
+	for u in units.values():
+		if u.state == u.States.Walk:
+			continue
+		if map.local_to_map(u.global_position) == tile.grid_position:
+			return false
+	return true
+		

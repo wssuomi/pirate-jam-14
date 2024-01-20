@@ -6,7 +6,6 @@ class Tile:
 	var decoration_sprite: Vector2i
 	var resource_sprite: Vector2i
 	var building_sprite: Vector2i
-	var walkable = true
 	var g_cost: int
 	var h_cost: int
 	var f_cost: int
