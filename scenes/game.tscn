@@ -1,9 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://6uwpprnvngbp"]
+[gd_scene load_steps=20 format=3 uid="uid://6uwpprnvngbp"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_astxb"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="2_d63gu"]
 [ext_resource type="PackedScene" uid="uid://c0un25vuo1nmm" path="res://scenes/pause_menu.tscn" id="2_nbn5r"]
 [ext_resource type="Texture2D" uid="uid://jm1bhhp8ffsb" path="res://assets/map_tiles.png" id="3_ee80l"]
+[ext_resource type="Texture2D" uid="uid://b4r4fhn87fmlj" path="res://assets/top_bar.png" id="5_wedu5"]
+[ext_resource type="StyleBox" uid="uid://bytjq71w8uwm1" path="res://assets/resource.tres" id="6_c0pvi"]
+[ext_resource type="Texture2D" uid="uid://k75m7nff1uar" path="res://assets/iron_icon.png" id="7_fomvy"]
+[ext_resource type="Texture2D" uid="uid://dnxkeswg4ckue" path="res://assets/pause_menu_button.png" id="8_etsvh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mpe62"]
 atlas = ExtResource("3_ee80l")
@@ -17,6 +21,9 @@ region = Rect2(0, 80, 32, 32)
 atlas = ExtResource("3_ee80l")
 region = Rect2(0, 112, 32, 32)
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2p2xj"]
+texture = ExtResource("5_wedu5")
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_trr3j"]
 atlas = ExtResource("3_ee80l")
 region = Rect2(64, 32, 16, 16)
@@ -25,13 +32,12 @@ region = Rect2(64, 32, 16, 16)
 atlas = ExtResource("3_ee80l")
 region = Rect2(80, 32, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gbi5a"]
-atlas = ExtResource("3_ee80l")
-region = Rect2(64, 32, 16, 16)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_k6xtk"]
 atlas = ExtResource("3_ee80l")
 region = Rect2(96, 32, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rtws7"]
+texture = ExtResource("8_etsvh")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vnpe4"]
 texture = ExtResource("3_ee80l")
@@ -103,7 +109,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="SideBarBuild" type="Control" parent="CanvasLayer"]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 962.0
@@ -302,18 +307,20 @@ offset_bottom = 37.0
 mouse_filter = 1
 
 [node name="Panel" type="Panel" parent="CanvasLayer/TopBar"]
+texture_filter = 1
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 37.0
 mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxTexture_2p2xj")
 
 [node name="Stone" type="Control" parent="CanvasLayer/TopBar"]
 layout_mode = 2
 anchors_preset = 0
 offset_left = 776.0
 offset_top = 7.0
-offset_right = 866.0
-offset_bottom = 30.0
+offset_right = 864.0
+offset_bottom = 31.0
 mouse_filter = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/TopBar/Stone"]
@@ -322,8 +329,10 @@ offset_right = 90.0
 offset_bottom = 23.0
 
 [node name="Panel" type="Panel" parent="CanvasLayer/TopBar/Stone/MarginContainer"]
+texture_filter = 1
 layout_mode = 2
 mouse_filter = 1
+theme_override_styles/panel = ExtResource("6_c0pvi")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/TopBar/Stone/MarginContainer"]
 layout_mode = 2
@@ -354,8 +363,10 @@ offset_right = 90.0
 offset_bottom = 23.0
 
 [node name="Panel" type="Panel" parent="CanvasLayer/TopBar/Copper/MarginContainer"]
+texture_filter = 1
 layout_mode = 2
 mouse_filter = 1
+theme_override_styles/panel = ExtResource("6_c0pvi")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/TopBar/Copper/MarginContainer"]
 layout_mode = 2
@@ -386,8 +397,10 @@ offset_right = 90.0
 offset_bottom = 23.0
 
 [node name="Panel" type="Panel" parent="CanvasLayer/TopBar/Iron/MarginContainer"]
+texture_filter = 1
 layout_mode = 2
 mouse_filter = 1
+theme_override_styles/panel = ExtResource("6_c0pvi")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/TopBar/Iron/MarginContainer"]
 layout_mode = 2
@@ -395,7 +408,7 @@ layout_mode = 2
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/TopBar/Iron/MarginContainer/HBoxContainer"]
 texture_filter = 3
 layout_mode = 2
-texture = SubResource("AtlasTexture_gbi5a")
+texture = ExtResource("7_fomvy")
 expand_mode = 2
 
 [node name="IronLabel" type="Label" parent="CanvasLayer/TopBar/Iron/MarginContainer/HBoxContainer"]
@@ -418,8 +431,10 @@ offset_right = 90.0
 offset_bottom = 23.0
 
 [node name="Panel" type="Panel" parent="CanvasLayer/TopBar/Coal/MarginContainer"]
+texture_filter = 1
 layout_mode = 2
 mouse_filter = 1
+theme_override_styles/panel = ExtResource("6_c0pvi")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/TopBar/Coal/MarginContainer"]
 layout_mode = 2
@@ -436,13 +451,14 @@ mouse_filter = 1
 text = "0"
 
 [node name="Menu" type="Button" parent="CanvasLayer/TopBar"]
+texture_filter = 1
 layout_mode = 2
-offset_left = 3.0
-offset_top = 3.0
-offset_right = 58.0
-offset_bottom = 34.0
+offset_left = 8.0
+offset_top = 7.0
+offset_right = 32.0
+offset_bottom = 31.0
 mouse_filter = 1
-text = "Menu"
+theme_override_styles/normal = SubResource("StyleBoxTexture_rtws7")
 
 [node name="Map" type="TileMap" parent="."]
 texture_filter = 1
