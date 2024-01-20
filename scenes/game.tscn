@@ -7,7 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://b4r4fhn87fmlj" path="res://assets/top_bar.png" id="5_wedu5"]
 [ext_resource type="StyleBox" uid="uid://bytjq71w8uwm1" path="res://assets/resource.tres" id="6_c0pvi"]
 [ext_resource type="Texture2D" uid="uid://k75m7nff1uar" path="res://assets/iron_icon.png" id="7_fomvy"]
+[ext_resource type="Texture2D" uid="uid://bb4qt77gf68jt" path="res://assets/bush_icon_0.png" id="7_lvbrs"]
+[ext_resource type="Texture2D" uid="uid://drcew5y3os6os" path="res://assets/copper_icon_1.png" id="8_e2mof"]
 [ext_resource type="Texture2D" uid="uid://dnxkeswg4ckue" path="res://assets/pause_menu_button.png" id="8_etsvh"]
+[ext_resource type="Texture2D" uid="uid://bw6yl05yv6j1w" path="res://assets/copper_icon_0.png" id="10_58yyy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mpe62"]
 atlas = ExtResource("3_ee80l")
@@ -23,18 +26,6 @@ region = Rect2(0, 112, 32, 32)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2p2xj"]
 texture = ExtResource("5_wedu5")
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_trr3j"]
-atlas = ExtResource("3_ee80l")
-region = Rect2(64, 32, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_exh5k"]
-atlas = ExtResource("3_ee80l")
-region = Rect2(80, 32, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_k6xtk"]
-atlas = ExtResource("3_ee80l")
-region = Rect2(96, 32, 16, 16)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rtws7"]
 texture = ExtResource("8_etsvh")
@@ -340,7 +331,7 @@ layout_mode = 2
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/TopBar/Stone/MarginContainer/HBoxContainer"]
 texture_filter = 3
 layout_mode = 2
-texture = SubResource("AtlasTexture_trr3j")
+texture = ExtResource("7_lvbrs")
 expand_mode = 2
 
 [node name="StoneLabel" type="Label" parent="CanvasLayer/TopBar/Stone/MarginContainer/HBoxContainer"]
@@ -374,7 +365,7 @@ layout_mode = 2
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/TopBar/Copper/MarginContainer/HBoxContainer"]
 texture_filter = 3
 layout_mode = 2
-texture = SubResource("AtlasTexture_exh5k")
+texture = ExtResource("8_e2mof")
 expand_mode = 2
 
 [node name="CopperLabel" type="Label" parent="CanvasLayer/TopBar/Copper/MarginContainer/HBoxContainer"]
@@ -442,7 +433,7 @@ layout_mode = 2
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/TopBar/Coal/MarginContainer/HBoxContainer"]
 texture_filter = 3
 layout_mode = 2
-texture = SubResource("AtlasTexture_k6xtk")
+texture = ExtResource("10_58yyy")
 expand_mode = 2
 
 [node name="CoalLabel" type="Label" parent="CanvasLayer/TopBar/Coal/MarginContainer/HBoxContainer"]
