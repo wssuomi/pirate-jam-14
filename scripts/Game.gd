@@ -106,6 +106,7 @@ func load_map():
 	return loaded_tiles
 
 func _ready():
+	fill_fog()
 	var pos = Vector2i(int(GRID_WIDTH / 2.),int(GRID_HEIGHT / 2.))
 	var start_factory_pos: Array[Vector2i] = [pos, pos + Vector2i(0,1),pos + Vector2i(1,0),pos + Vector2i(1,1)]
 	preview_atlas.atlas = tiles_texture
@@ -115,6 +116,8 @@ func _ready():
 	for n in range(len(start_factory_pos)):
 		tiles[start_factory_pos[n]].building_sprite = building_tiles["factory"][n]
 		tiles[start_factory_pos[n]].building = Buildings.Factory
+		print(start_factory_pos[n])
+		clear_fog_around_pos(start_factory_pos[n])
 	create_building(Buildings.Factory, start_factory_pos)
 	draw_map_tiles()
 	update_labels()
@@ -194,6 +197,7 @@ func _input(event):
 								for n in range(len(required_tiles_positions)):
 									tiles[required_tiles_positions[n]].building_sprite = building_tiles["factory"][n]
 									tiles[required_tiles_positions[n]].building = Buildings.Factory
+									clear_fog_around_pos(required_tiles_positions[n])
 									update_tile(tiles[required_tiles_positions[n]])
 								create_building(Buildings.Factory, required_tiles_positions)
 								emit_signal("building_placed")
@@ -343,6 +347,7 @@ func spawn_unit(unit: Units, pos: Vector2i):
 			instance.position = map.map_to_local(pos)
 			add_child(instance)
 			units[pos] = instance
+	clear_fog_around_pos(pos)
 			
 func create_building(new_building: Buildings, pos: Array[Vector2i]):
 	match new_building:
@@ -508,8 +513,8 @@ func retrace_path(start: Tile, end: Tile) -> Array[Vector2i]:
 	path.reverse()
 	return path
 	
-func get_neighbors(tile: Tile):
-	var neighbors = []
+func get_neighbors(tile: Tile) -> Array[Tile]:
+	var neighbors: Array[Tile] = []
 	for y in range(-1,2):
 		for x in range(-1,2):
 			if x == 0 and y == 0:
@@ -582,3 +587,15 @@ func _on_pollution_update_timer_timeout():
 	for t in tiles_need_update:
 		update_tile(t)
 	tiles_need_update = []
+
+func fill_fog():
+	for y in range(GRID_HEIGHT):
+		for x in range(GRID_WIDTH):
+			map.set_cell(4, Vector2i(x,y),0,Vector2i(0,4))
+
+func clear_fog_around_pos(pos: Vector2i):
+	var neighbors: Array[Tile] = get_neighbors(tiles[pos])
+	for n in neighbors:
+		map.erase_cell(4,n.grid_position)
+	map.erase_cell(4,pos)
+		

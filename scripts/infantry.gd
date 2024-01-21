@@ -27,6 +27,7 @@ func _process(delta):
 					var angle = Vector2(map.local_to_map(global_position)).angle_to_point(move_queue[0])
 					angle = int(angle * 180 / PI) + 135
 					angle = int((((angle - 0) * (8 - 0)) / (360. - 0)) + 0)
+					main.clear_fog_around_pos(move_queue[0])
 					match angle:
 						1:
 							unit_sprite.play("walk_up")
