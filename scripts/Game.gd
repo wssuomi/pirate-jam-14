@@ -598,4 +598,3 @@ func clear_fog_around_pos(pos: Vector2i):
 	for n in neighbors:
 		map.erase_cell(4,n.grid_position)
 	map.erase_cell(4,pos)
-		
