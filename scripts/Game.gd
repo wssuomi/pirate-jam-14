@@ -116,7 +116,7 @@ func _ready():
 	for n in range(len(start_factory_pos)):
 		tiles[start_factory_pos[n]].building_sprite = building_tiles["factory"][n]
 		tiles[start_factory_pos[n]].building = Buildings.Factory
-		print(start_factory_pos[n])
+		#print(start_factory_pos[n])
 		clear_fog_around_pos(start_factory_pos[n])
 	create_building(Buildings.Factory, start_factory_pos)
 	draw_map_tiles()
@@ -591,10 +591,12 @@ func _on_pollution_update_timer_timeout():
 func fill_fog():
 	for y in range(GRID_HEIGHT):
 		for x in range(GRID_WIDTH):
-			map.set_cell(4, Vector2i(x,y),0,Vector2i(0,4))
+			map.set_cell(4, Vector2i(x,y),0,Vector2i(1,10))
 
 func clear_fog_around_pos(pos: Vector2i):
+	map.erase_cell(4,pos)
 	var neighbors: Array[Tile] = get_neighbors(tiles[pos])
 	for n in neighbors:
+		#print(map.get_cell_atlas_coords(4,n.grid_position))
 		map.erase_cell(4,n.grid_position)
-	map.erase_cell(4,pos)
+	
