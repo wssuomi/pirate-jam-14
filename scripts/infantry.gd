@@ -26,18 +26,18 @@ func _process(delta):
 					units[move_queue[0]] = self
 					var angle = Vector2(map.local_to_map(global_position)).angle_to_point(move_queue[0])
 					angle = int(angle * 180 / PI) + 135
-					angle = int((((angle - 0) * (8 - 0)) / (360. - 0)) + 0) - 1
+					angle = int((((angle - 0) * (8 - 0)) / (360. - 0)) + 0)
 					match angle:
-						0:
+						1:
 							unit_sprite.play("walk_up")
 							look_dir = Directions.Up
-						4:
+						5:
 							unit_sprite.play("walk_down")
 							look_dir = Directions.Down
-						1,2,3:
+						2,3,4:
 							unit_sprite.play("walk_right")
 							look_dir = Directions.Right
-						5,6,7:
+						6,7,0:
 							unit_sprite.play("walk_left")
 							look_dir = Directions.Left
 				else:

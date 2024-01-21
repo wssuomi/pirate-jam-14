@@ -561,7 +561,7 @@ func spread_single_tile_pollution(delta):
 				tile.pollution -= spread_amount
 				if spread_to_tile not in tiles_with_pollution:
 					tiles_with_pollution[spread_to_pos] = spread_to_tile
-				print("spreading ", spread_amount, " from ", tile.grid_position, " to ", spread_to_tile.grid_position)	
+				#print("spreading ", spread_amount, " from ", tile.grid_position, " to ", spread_to_tile.grid_position)	
 		if tile.pollution >= 5 and tile.pollution < 20 and tile.ground_sprite.y != 1:
 			tile.ground_sprite.y = 1
 			if tile not in tiles_need_update:
