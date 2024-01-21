@@ -1,9 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://6uwpprnvngbp"]
+[gd_scene load_steps=28 format=3 uid="uid://6uwpprnvngbp"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_astxb"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="2_d63gu"]
 [ext_resource type="PackedScene" uid="uid://c0un25vuo1nmm" path="res://scenes/pause_menu.tscn" id="2_nbn5r"]
 [ext_resource type="Texture2D" uid="uid://jm1bhhp8ffsb" path="res://assets/map_tiles.png" id="3_ee80l"]
+[ext_resource type="Texture2D" uid="uid://dr6yxo7p8kuw" path="res://assets/side_menu_background.png" id="4_2yxa8"]
+[ext_resource type="Texture2D" uid="uid://bu4mn6i8vavn" path="res://assets/menu_title_background.png" id="5_vidrx"]
 [ext_resource type="Texture2D" uid="uid://b4r4fhn87fmlj" path="res://assets/top_bar.png" id="5_wedu5"]
 [ext_resource type="StyleBox" uid="uid://bytjq71w8uwm1" path="res://assets/resource.tres" id="6_c0pvi"]
 [ext_resource type="Texture2D" uid="uid://k75m7nff1uar" path="res://assets/iron_icon.png" id="7_fomvy"]
@@ -11,6 +13,13 @@
 [ext_resource type="Texture2D" uid="uid://drcew5y3os6os" path="res://assets/copper_icon_1.png" id="8_e2mof"]
 [ext_resource type="Texture2D" uid="uid://dnxkeswg4ckue" path="res://assets/pause_menu_button.png" id="8_etsvh"]
 [ext_resource type="Texture2D" uid="uid://bw6yl05yv6j1w" path="res://assets/copper_icon_0.png" id="10_58yyy"]
+[ext_resource type="Texture2D" uid="uid://bdo11j8h0vwei" path="res://assets/pause_menu_button_pushed.png" id="12_n2fay"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yobv3"]
+texture = ExtResource("4_2yxa8")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_islr6"]
+texture = ExtResource("5_vidrx")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mpe62"]
 atlas = ExtResource("3_ee80l")
@@ -29,6 +38,15 @@ texture = ExtResource("5_wedu5")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rtws7"]
 texture = ExtResource("8_etsvh")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_veudi"]
+texture = ExtResource("8_etsvh")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mlyhk"]
+texture = ExtResource("12_n2fay")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h6m8d"]
+texture = ExtResource("12_n2fay")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vnpe4"]
 texture = ExtResource("3_ee80l")
@@ -102,27 +120,31 @@ size_flags_vertical = 4
 [node name="SideBarBuild" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 962.0
+offset_left = 959.0
 offset_top = 40.0
-offset_right = 1152.0
+offset_right = 1149.0
 offset_bottom = 645.0
 mouse_filter = 1
 
 [node name="Panel" type="Panel" parent="CanvasLayer/SideBarBuild"]
+texture_filter = 1
 layout_mode = 0
 offset_right = 190.0
 offset_bottom = 605.0
 mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxTexture_yobv3")
 
 [node name="Title" type="MarginContainer" parent="CanvasLayer/SideBarBuild"]
 layout_mode = 0
-offset_left = 3.0
-offset_top = 3.0
-offset_right = 187.0
-offset_bottom = 40.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 184.0
+offset_bottom = 38.0
 
 [node name="Panel" type="Panel" parent="CanvasLayer/SideBarBuild/Title"]
+texture_filter = 1
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_islr6")
 
 [node name="Label" type="Label" parent="CanvasLayer/SideBarBuild/Title"]
 layout_mode = 2
@@ -130,6 +152,7 @@ size_flags_horizontal = 4
 text = "Build"
 
 [node name="Panel2" type="Panel" parent="CanvasLayer/SideBarBuild"]
+visible = false
 layout_mode = 2
 offset_left = 3.0
 offset_top = 43.0
@@ -450,6 +473,9 @@ offset_right = 32.0
 offset_bottom = 31.0
 mouse_filter = 1
 theme_override_styles/normal = SubResource("StyleBoxTexture_rtws7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_veudi")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_mlyhk")
+theme_override_styles/focus = SubResource("StyleBoxTexture_h6m8d")
 
 [node name="Map" type="TileMap" parent="."]
 texture_filter = 1
