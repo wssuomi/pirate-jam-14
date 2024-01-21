@@ -4,7 +4,7 @@ extends CanvasLayer
 @onready var side_bar_build = $SideBarBuild
 
 # per tile
-const POLLUTION_GENERATION: int = 3
+const POLLUTION_GENERATION: int = 1
 
 func _on_button_pressed():
 	main.spawn_unit(main.Units.Infantry,Vector2i(32,32))

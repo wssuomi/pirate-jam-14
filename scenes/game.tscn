@@ -487,6 +487,7 @@ wait_time = 0.05
 autostart = true
 
 [node name="PollutionUpdateTimer" type="Timer" parent="."]
+wait_time = 3.0
 autostart = true
 
 [connection signal="mouse_entered" from="CanvasLayer/PauseMenu" to="." method="_on_mouse_entered_ui"]

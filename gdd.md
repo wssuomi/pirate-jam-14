@@ -151,7 +151,7 @@ Esc
 - [x] **19.1.2024** Placing bigger buildings
 - [x] **20.1.2024** Building Interaction
 - [x] **21.1.2024** Unit Pathfinding
-- [ ] **22.1.2024** Pollution
+- [x] **22.1.2024** Pollution
 - [ ] **23.1.2024** Enemies
 - [ ] **24.1.2024** Fog of war
 - [ ] **25.1.2024** Sound effects
