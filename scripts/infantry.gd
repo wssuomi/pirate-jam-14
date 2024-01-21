@@ -24,14 +24,9 @@ func _process(delta):
 					state = States.Walk
 					units.erase(map.local_to_map(global_position))
 					units[move_queue[0]] = self
-					#NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin
-					#int((x - 0.0) / (128.0 - 0.0) * (4.0 - 0.0) + 0.0)
-					#print("pos: ", map.local_to_map(global_position))
-					#print("queue: ", move_queue[0])
 					var angle = Vector2(map.local_to_map(global_position)).angle_to_point(move_queue[0])
 					angle = int(angle * 180 / PI) + 135
 					angle = int((((angle - 0) * (8 - 0)) / (360. - 0)) + 0) - 1
-					#print(angle)
 					match angle:
 						0:
 							unit_sprite.play("walk_up")

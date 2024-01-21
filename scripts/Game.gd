@@ -530,55 +530,13 @@ func is_walkable(tile: Tile):
 
 func add_pollution():
 	for k in buildings:
-		#print(typeof(buildings[k]))
 		match typeof(buildings[k]):
 			24:
 				for p in k:
-					#print("pollution added: ", p)
 					var tile: Tile = tiles[p]
 					tile.pollution += buildings[k].POLLUTION_GENERATION
 					if tile not in tiles_with_pollution:
 						tiles_with_pollution[p] = tile
-					#print("tile: ", tiles[p].grid_position)
-					#print(tiles[p].pollution)
-
-func spread_pollution():
-	for t: Tile in tiles_with_pollution.values():
-		if t.pollution < 150:
-			continue
-		var possible_neighbors = [
-			t.grid_position + Vector2i(-1,0),
-			t.grid_position + Vector2i(1,0),
-			t.grid_position + Vector2i(0,1),
-			t.grid_position + Vector2i(0,-1)
-			]
-		var spread_to_pos = possible_neighbors[rng.randi_range(0,3)]
-		if spread_to_pos.x >= 0 and spread_to_pos.x < GRID_WIDTH and spread_to_pos.y >= 0 and spread_to_pos.y < GRID_HEIGHT:
-			var spread_to_tile: Tile = tiles[spread_to_pos]
-			#print(spread_to_tile.pollution)
-			if spread_to_tile.pollution < t.pollution:
-				var spread_amount = int(t.pollution / POLLUTION_SPREAD_RATE)
-				spread_to_tile.pollution += spread_amount
-				t.pollution -= spread_amount
-				if spread_to_tile not in tiles_with_pollution:
-						tiles_with_pollution[spread_to_pos] = spread_to_tile
-				#print("spreading ", spread_amount, " from ", t.grid_position, " to ", spread_to_tile.grid_position)
-		if t.pollution >= 140:
-			t.ground_sprite.y = 1
-			if t not in tiles_need_update:
-				tiles_need_update.append(t)
-		if t.pollution >= 300:
-			t.ground_sprite.y = 2
-			if t not in tiles_need_update:
-				tiles_need_update.append(t)
-		if t.pollution >= 600:
-			t.ground_sprite.y = 3
-			if t not in tiles_need_update:
-				tiles_need_update.append(t)
-		#if t.pollution != 0:
-			#print("tile: ", t.grid_position)
-			#print(t.ground_sprite)
-			#print(t.pollution)
 
 func spread_single_tile_pollution(delta):
 	if tiles_with_pollution.size() != 0:
@@ -619,12 +577,8 @@ func spread_single_tile_pollution(delta):
 
 func _on_pollution_timer_timeout():
 	add_pollution()
-	#print("pollution added")
-	#spread_pollution()
-	#print("pollution spread")
 
 func _on_pollution_update_timer_timeout():
-	#print("updating")
 	for t in tiles_need_update:
 		update_tile(t)
 	tiles_need_update = []
