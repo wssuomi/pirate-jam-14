@@ -13,6 +13,7 @@ class Tile:
 	var f_cost: int
 	var parent: Tile
 	var building: Buildings
+	var pollution: float
 	func _init(_grid_position: Vector2i, 
 			_ground_sprite: Vector2i,
 			_building: Buildings = Buildings.None,

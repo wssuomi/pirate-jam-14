@@ -20,6 +20,7 @@ const GRID_HEIGHT = 128
 const Tile = preload("res://scripts/Tile.gd").Tile
 const INFANTRY = preload("res://scenes/infantry.tscn")
 const FACTORY = preload("res://scenes/factory.tscn")
+const POLLUTION_SPREAD_RATE: float = 2.
 
 enum Modes {Normal, Place, MoveUnit, UnitSelected, BuildingSelected}
 enum Buildings {None, Slab, LargeSlab, Factory}
@@ -54,6 +55,9 @@ var selected_building = null
 var preview_atlas: AtlasTexture = AtlasTexture.new()
 var slab_sprites = [Vector2i(0,4),Vector2i(0,5),Vector2i(0,6),Vector2i(1,5),Vector2i(1,6)]
 var buildings: Dictionary = {}
+var tiles_need_update: Array[Tile] = []
+var tiles_with_pollution: Dictionary = {}
+var pollution_tile_counter: int = 0
 
 signal building_placed
 
@@ -191,6 +195,7 @@ func _input(event):
 									tiles[required_tiles_positions[n]].building_sprite = building_tiles["factory"][n]
 									tiles[required_tiles_positions[n]].building = Buildings.Factory
 									update_tile(tiles[required_tiles_positions[n]])
+								create_building(Buildings.Factory, required_tiles_positions)
 								emit_signal("building_placed")
 							Buildings.None:
 								pass
@@ -221,7 +226,8 @@ func _input(event):
 					change_mode_to(Modes.Normal)
 					selected_building = null
 
-func _process(_delta):
+func _process(delta):
+	spread_single_tile_pollution(delta)
 	match mode:
 		Modes.Normal:
 			pass
@@ -521,3 +527,104 @@ func is_walkable(tile: Tile):
 		if k == tile.grid_position:
 			return false
 	return true
+
+func add_pollution():
+	for k in buildings:
+		#print(typeof(buildings[k]))
+		match typeof(buildings[k]):
+			24:
+				for p in k:
+					#print("pollution added: ", p)
+					var tile: Tile = tiles[p]
+					tile.pollution += buildings[k].POLLUTION_GENERATION
+					if tile not in tiles_with_pollution:
+						tiles_with_pollution[p] = tile
+					#print("tile: ", tiles[p].grid_position)
+					#print(tiles[p].pollution)
+
+func spread_pollution():
+	for t: Tile in tiles_with_pollution.values():
+		if t.pollution < 150:
+			continue
+		var possible_neighbors = [
+			t.grid_position + Vector2i(-1,0),
+			t.grid_position + Vector2i(1,0),
+			t.grid_position + Vector2i(0,1),
+			t.grid_position + Vector2i(0,-1)
+			]
+		var spread_to_pos = possible_neighbors[rng.randi_range(0,3)]
+		if spread_to_pos.x >= 0 and spread_to_pos.x < GRID_WIDTH and spread_to_pos.y >= 0 and spread_to_pos.y < GRID_HEIGHT:
+			var spread_to_tile: Tile = tiles[spread_to_pos]
+			#print(spread_to_tile.pollution)
+			if spread_to_tile.pollution < t.pollution:
+				var spread_amount = int(t.pollution / POLLUTION_SPREAD_RATE)
+				spread_to_tile.pollution += spread_amount
+				t.pollution -= spread_amount
+				if spread_to_tile not in tiles_with_pollution:
+						tiles_with_pollution[spread_to_pos] = spread_to_tile
+				#print("spreading ", spread_amount, " from ", t.grid_position, " to ", spread_to_tile.grid_position)
+		if t.pollution >= 140:
+			t.ground_sprite.y = 1
+			if t not in tiles_need_update:
+				tiles_need_update.append(t)
+		if t.pollution >= 300:
+			t.ground_sprite.y = 2
+			if t not in tiles_need_update:
+				tiles_need_update.append(t)
+		if t.pollution >= 600:
+			t.ground_sprite.y = 3
+			if t not in tiles_need_update:
+				tiles_need_update.append(t)
+		#if t.pollution != 0:
+			#print("tile: ", t.grid_position)
+			#print(t.ground_sprite)
+			#print(t.pollution)
+
+func spread_single_tile_pollution(delta):
+	if tiles_with_pollution.size() != 0:
+		if pollution_tile_counter >= tiles_with_pollution.size():
+			pollution_tile_counter = 0
+		var tile: Tile = tiles_with_pollution.values()[pollution_tile_counter]
+		pollution_tile_counter += 1
+		if tile.pollution < 4:
+			return
+		var possible_neighbors = [
+			tile.grid_position + Vector2i(-1,0),
+			tile.grid_position + Vector2i(1,0),
+			tile.grid_position + Vector2i(0,1),
+			tile.grid_position + Vector2i(0,-1)
+			]
+		var spread_to_pos = possible_neighbors[rng.randi_range(0,3)]
+		if spread_to_pos.x >= 0 and spread_to_pos.x < GRID_WIDTH and spread_to_pos.y >= 0 and spread_to_pos.y < GRID_HEIGHT:
+			var spread_to_tile: Tile = tiles[spread_to_pos]
+			if spread_to_tile.pollution < tile.pollution:
+				var spread_amount = int(tile.pollution / POLLUTION_SPREAD_RATE) * delta
+				spread_to_tile.pollution += spread_amount
+				tile.pollution -= spread_amount
+				if spread_to_tile not in tiles_with_pollution:
+					tiles_with_pollution[spread_to_pos] = spread_to_tile
+				print("spreading ", spread_amount, " from ", tile.grid_position, " to ", spread_to_tile.grid_position)	
+		if tile.pollution >= 5 and tile.pollution < 20 and tile.ground_sprite.y != 1:
+			tile.ground_sprite.y = 1
+			if tile not in tiles_need_update:
+				tiles_need_update.append(tile)
+		elif tile.pollution >= 20 and tile.pollution > 200 and tile.ground_sprite.y != 2:
+			tile.ground_sprite.y = 2
+			if tile not in tiles_need_update:
+				tiles_need_update.append(tile)
+		elif tile.pollution >= 200 and tile.pollution > 600 and tile.ground_sprite.y != 3:
+			tile.ground_sprite.y = 3
+			if tile not in tiles_need_update:
+				tiles_need_update.append(tile)
+
+func _on_pollution_timer_timeout():
+	add_pollution()
+	#print("pollution added")
+	#spread_pollution()
+	#print("pollution spread")
+
+func _on_pollution_update_timer_timeout():
+	#print("updating")
+	for t in tiles_need_update:
+		update_tile(t)
+	tiles_need_update = []

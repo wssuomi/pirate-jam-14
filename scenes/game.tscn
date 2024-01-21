@@ -100,7 +100,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="SideBarBuild" type="Control" parent="CanvasLayer"]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 962.0
@@ -483,6 +482,13 @@ offset_right = 17.0
 offset_bottom = 17.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_jpkq7")
 
+[node name="PollutionTimer" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true
+
+[node name="PollutionUpdateTimer" type="Timer" parent="."]
+autostart = true
+
 [connection signal="mouse_entered" from="CanvasLayer/PauseMenu" to="." method="_on_mouse_entered_ui"]
 [connection signal="mouse_entered" from="CanvasLayer/SideBarBuild" to="." method="_on_mouse_entered_ui"]
 [connection signal="mouse_exited" from="CanvasLayer/SideBarBuild" to="." method="_on_mouse_exited_ui"]
@@ -498,3 +504,5 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_jpkq7")
 [connection signal="mouse_entered" from="CanvasLayer/TopBar" to="." method="_on_mouse_entered_ui"]
 [connection signal="mouse_exited" from="CanvasLayer/TopBar" to="." method="_on_mouse_exited_ui"]
 [connection signal="pressed" from="CanvasLayer/TopBar/Menu" to="." method="_on_menu_pressed"]
+[connection signal="timeout" from="PollutionTimer" to="." method="_on_pollution_timer_timeout"]
+[connection signal="timeout" from="PollutionUpdateTimer" to="." method="_on_pollution_update_timer_timeout"]
