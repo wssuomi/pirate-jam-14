@@ -12,10 +12,8 @@ func show_menu():
 func hide_menu():
 	side_bar_build.hide()
 
-
 func _on_side_bar_build_mouse_entered():
 	main.mouse_on_ui = true
-
 
 func _on_side_bar_build_mouse_exited():
 	main.mouse_on_ui = false

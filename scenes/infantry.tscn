@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://crg3fixuwquxk"]
+[gd_scene load_steps=39 format=3 uid="uid://crg3fixuwquxk"]
 
 [ext_resource type="Texture2D" uid="uid://blbghw1potmm" path="res://assets/unit_spritesheet.png" id="1_0nlkj"]
 [ext_resource type="Script" path="res://scripts/infantry.gd" id="1_5qvgc"]
@@ -19,6 +19,22 @@ region = Rect2(16, 0, 8, 8)
 [sub_resource type="AtlasTexture" id="AtlasTexture_6450o"]
 atlas = ExtResource("1_0nlkj")
 region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wwgr2"]
+atlas = ExtResource("1_0nlkj")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_crd2s"]
+atlas = ExtResource("1_0nlkj")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h4gby"]
+atlas = ExtResource("1_0nlkj")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xrv0b"]
+atlas = ExtResource("1_0nlkj")
+region = Rect2(16, 0, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tkpjc"]
 atlas = ExtResource("1_0nlkj")
@@ -102,6 +118,38 @@ animations = [{
 "loop": true,
 "name": &"Spin",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wwgr2")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_crd2s")
+}],
+"loop": true,
+"name": &"idle_left",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h4gby")
+}],
+"loop": true,
+"name": &"idle_right",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xrv0b")
+}],
+"loop": true,
+"name": &"idle_up",
+"speed": 0.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -244,11 +292,10 @@ collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_5qvgc")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="UnitSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_xjdlf")
-animation = &"walk_left"
-autoplay = "walk_left"
+animation = &"idle_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
