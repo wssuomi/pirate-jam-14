@@ -43,13 +43,196 @@ const fog_dict = {
 [Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1)]:Vector2i(1,14),
 
 [Vector2i(0, 1), Vector2i(1, 0)]:Vector2i(2,11),
-[Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 0)]:Vector2i(2,11),
 [Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(2,11),
-[Vector2i(0, 1), Vector2i(1, 1), Vector2i(1, 0)]:Vector2i(2,11),
-[Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1), Vector2i(1, 0)]:Vector2i(2,11),
+[Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 0)]:Vector2i(2,11),
+[Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(2,11),
 [Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(2,11),
-[Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 1), Vector2i(1, 0)]:Vector2i(2,11),
-[Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 1), Vector2i(1, 0)]:Vector2i(2,11),
+[Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(2,11),
+[Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(2,11),
+[Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(2,11),
+
+[Vector2i(-1, 0), Vector2i(0, 1)]:Vector2i(0,11),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, 1)]:Vector2i(0,11),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)]:Vector2i(0,11),
+[Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, 1)]:Vector2i(0,11),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)]:Vector2i(0,11),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, 1)]:Vector2i(0,11),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]:Vector2i(0,11),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]:Vector2i(0,11),
+
+[Vector2i(-1, 0), Vector2i(0, -1)]:Vector2i(0,9),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, -1)]:Vector2i(0,9),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1)]:Vector2i(0,9),
+[Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, -1)]:Vector2i(0,9),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1)]:Vector2i(0,9),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, -1)]:Vector2i(0,9),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, -1)]:Vector2i(0,9),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, -1)]:Vector2i(0,9),
+
+[Vector2i(0, -1), Vector2i(1, 0)]:Vector2i(2,9),
+[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, 0)]:Vector2i(2,9),
+[Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(2,9),
+[Vector2i(0, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(2,9),
+[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(2,9),
+[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(2,9),
+[Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(2,9),
+[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(2,9),
+
+[Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, 0)]:Vector2i(3,9),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, 0)]:Vector2i(3,9),
+[Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(3,9),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, 0)]:Vector2i(3,9),
+[Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,9),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(3,9),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, 0)]:Vector2i(3,9),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,9),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(3,9),
+[Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,9),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,9),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(3,9),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,9),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,9),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,9),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,9),
+
+[Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, 0)]:Vector2i(3,11),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, 0)]:Vector2i(3,11),
+[Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(3,11),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 0)]:Vector2i(3,11),
+[Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,11),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(3,11),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 0)]:Vector2i(3,11),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,11),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(3,11),
+[Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,11),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,11),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(3,11),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,11),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,11),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,11),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,11),
+
+[Vector2i(-1, 0), Vector2i(1, 0)]:Vector2i(3,10),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(1, 0)]:Vector2i(3,10),
+[Vector2i(-1, 0), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(3,10),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, 0)]:Vector2i(3,10),
+[Vector2i(-1, 0), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,10),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(3,10),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, 0)]:Vector2i(3,10),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,10),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(3,10),
+[Vector2i(-1, 0), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,10),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,10),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(3,10),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,10),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,10),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,10),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,10),
+
+[Vector2i(1, 1)]:Vector2i(0,12),
+
+[Vector2i(-1, 1)]:Vector2i(2,12),
+
+[Vector2i(1, -1)]:Vector2i(0,14),
+
+[Vector2i(-1, -1)]:Vector2i(2,14),
+
+[Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 1)]:Vector2i(0,15),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 1)]:Vector2i(0,15),
+[Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1)]:Vector2i(0,15),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1)]:Vector2i(0,15),
+[Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 1)]:Vector2i(0,15),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1)]:Vector2i(0,15),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1)]:Vector2i(0,15),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 1)]:Vector2i(0,15),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1)]:Vector2i(0,15),
+[Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(0,15),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 1)]:Vector2i(0,15),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1)]:Vector2i(0,15),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(0,15),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 1)]:Vector2i(0,15),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(0,15),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(0,15),
+
+[Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0)]:Vector2i(2,15),
+[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0)]:Vector2i(2,15),
+[Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(2,15),
+[Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0)]:Vector2i(2,15),
+[Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(2,15),
+[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(2,15),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0)]:Vector2i(2,15),
+[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(2,15),
+[Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(2,15),
+[Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(2,15),
+[Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(2,15),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(2,15),
+[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(2,15),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(2,15),
+[Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(2,15),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(2,15),
+
+[Vector2i(0, -1), Vector2i(0, 1)]:Vector2i(1,15),
+[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(0, 1)]:Vector2i(1,15),
+[Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1)]:Vector2i(1,15),
+[Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1)]:Vector2i(1,15),
+[Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 1)]:Vector2i(1,15),
+[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1)]:Vector2i(1,15),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1)]:Vector2i(1,15),
+[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 1)]:Vector2i(1,15),
+[Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1)]:Vector2i(1,15),
+[Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(1,15),
+[Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 1)]:Vector2i(1,15),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1)]:Vector2i(1,15),
+[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(1,15),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 1)]:Vector2i(1,15),
+[Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(1,15),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(1,15),
+
+[Vector2i(-1, -1), Vector2i(-1, 1)]:Vector2i(0,16),
+
+[Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(1,16),
+
+[Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0)]:Vector2i(3,12),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0)]:Vector2i(3,12),
+[Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(3,12),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0)]:Vector2i(3,12),
+[Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,12),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(3,12),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0)]:Vector2i(3,12),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,12),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(3,12),
+[Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,12),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,12),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(3,12),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,12),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,12),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,12),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(3,12),
+
+[Vector2i(-1, -1), Vector2i(1, -1)]:Vector2i(2,16),
+
+[Vector2i(-1, 1), Vector2i(1, 1)]:Vector2i(2,17),
+
+[Vector2i(-1, -1), Vector2i(0, 1), Vector2i(1, -1)]:Vector2i(3,16),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, -1)]:Vector2i(3,16),
+[Vector2i(-1, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(3,16),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(3,16),
+
+[Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, 1)]:Vector2i(3,17),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, 1)]:Vector2i(3,17),
+[Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(3,17),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(3,17),
+
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(1, 0)]:Vector2i(0,17),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(0,17),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(0,17),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(0,17),
+
+[Vector2i(-1, 0), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(1,17),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(1,17),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(1,17),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(1,17),
+
 
 
 }
@@ -140,10 +323,16 @@ func load_map():
 
 func _ready():
 	
-	var test_list = [Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)]
+	var test_list = [Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]
+	print("start ",test_list)
+	test_list.sort()
+	print("test 1 ",test_list)
+	test_list = [Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]
 	test_list.sort_custom(fog_sort_1)
+	print("test 2 ",test_list)
+	test_list = [Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]
 	test_list.sort_custom(fog_sort_2)
-	print("test ",test_list)
+	print("test 3 ",test_list)
 	
 	fill_fog()
 	var pos = Vector2i(int(GRID_WIDTH / 2.),int(GRID_HEIGHT / 2.))
@@ -189,7 +378,7 @@ func _input(event):
 		#print(pos)
 		
 		var fog_neighbors = get_fog_neighbors(pos)
-		print(get_not_fog_neighbors(pos))
+		var tmp = get_not_fog_neighbors(pos)
 		for fn in fog_neighbors:
 			#print(pos +fn)
 			var not_fog = get_not_fog_neighbors(pos + fn)
@@ -271,6 +460,8 @@ func _input(event):
 					pass
 				_:
 					print("missing: ", not_fog)
+			tmp.sort()
+			print(tmp)
 	if event is InputEventKey:
 		if Input.is_action_just_pressed("pause"):
 			toggle_pause()
@@ -735,10 +926,7 @@ func clear_fog_around_pos(pos_2: Vector2i):
 			#print(". ",pos +fn)
 			
 			var not_fog = get_not_fog_neighbors(pos + fn)
-			#map.set_cell(4,pos+fn  ,0,Vector2i(3,12))
-			#print(not_fog)
-			not_fog.sort_custom(fog_sort_1)
-			not_fog.sort_custom(fog_sort_2)
+			not_fog.sort()
 			#print(not_fog)
 			if not_fog in fog_dict.keys():
 				map.set_cell(4,pos+fn ,0,fog_dict[not_fog])
