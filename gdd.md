@@ -153,7 +153,7 @@ Esc
 - [x] **21.1.2024** Unit Pathfinding
 - [x] **22.1.2024** Pollution
 - [ ] **23.1.2024** Enemies
-- [#] **24.1.2024** Fog of war
+- [x] **24.1.2024** Fog of war
 - [ ] **25.1.2024** Sound effects
 - [ ] **27.1.2024** Polish things
 - [ ] **27.1.2024** Submit
