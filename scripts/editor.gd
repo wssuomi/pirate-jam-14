@@ -5,8 +5,8 @@ extends Node2D
 @onready var selected_tile_tex: TextureRect = $CanvasLayer/Control/SelectedTile
 
 const Tile = preload("res://scripts/Tile.gd").Tile
-const GRID_WIDTH: int = 128
-const GRID_HEIGHT: int = 128
+const GRID_WIDTH: int = 64
+const GRID_HEIGHT: int = 64
 
 var rng = RandomNumberGenerator.new()
 var tiles: Dictionary = {}
@@ -134,7 +134,6 @@ func _on_previous_pressed():
 	else:
 		current_tile -= 1
 	update_shown_tile()
-
 
 func _on_save_pressed():
 	var ground_line: Array[String] = []

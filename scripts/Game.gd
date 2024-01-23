@@ -14,20 +14,23 @@ extends Node2D
 @onready var side_bar_unit_action = $CanvasLayer/SideBarUnitAction
 @onready var large_slab = $CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/LargeSlab
 @onready var factory = $CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Factory
+@onready var drill = $CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Drill
 
-const GRID_WIDTH = 128
-const GRID_HEIGHT = 128
+const GRID_WIDTH = 64
+const GRID_HEIGHT = 64
 const Tile = preload("res://scripts/Tile.gd").Tile
 const INFANTRY = preload("res://scenes/infantry.tscn")
 const FACTORY = preload("res://scenes/factory.tscn")
 const POLLUTION_SPREAD_RATE: float = 2.
 const fog_dict = preload("res://scripts/fog.gd").fog_dict
+const DRILL = preload("res://scenes/drill.tscn")
 
 enum Modes {Normal, Place, MoveUnit, UnitSelected, BuildingSelected}
-enum Buildings {None, Slab, LargeSlab, Factory}
+enum Buildings {None, Slab, LargeSlab, Factory, Drill}
 enum BuildingStates {None, Building, Waiting, Placing}
 enum Units {Infantry}
 enum Neighbors {T,TR,R,BR,B,BL,L,TL}
+enum Resources {Copper, Stone, Iron, Coal}
 
 var tiles_texture = preload("res://assets/map_tiles.png")
 var paused = false
@@ -44,13 +47,15 @@ var stone = 99
 var iron = 99
 var mode = 0
 var building = Buildings.None
-var building_tiles: Dictionary = {"slab":Vector2i(0,4),"large_slab":[Vector2i(0,5),Vector2i(0,6),Vector2i(1,5),Vector2i(1,6)],"factory":[Vector2i(0,7),Vector2i(0,8),Vector2i(1,7),Vector2i(1,8)]}
+var building_tiles: Dictionary = {"slab":Vector2i(0,4),"large_slab":[Vector2i(0,5),Vector2i(0,6),Vector2i(1,5),Vector2i(1,6)],"factory":[Vector2i(0,7),Vector2i(0,8),Vector2i(1,7),Vector2i(1,8)],"drill":[Vector2i(2,8)]}
 var slab_cost: Array[int] = [0,1,10]
 var slab_state: BuildingStates = BuildingStates.None
 var large_slab_state: BuildingStates = BuildingStates.None
 var factory_state: BuildingStates = BuildingStates.None
+var drill_state: BuildingStates = BuildingStates.None
 var large_slab_cost: Array[int] = [0,4,40]
 var factory_cost: Array[int] = [0,20,10]
+var drill_cost: Array[int] = [5,10,0]
 var mouse_on_ui: bool = false
 var selected_unit = null
 var selected_building = null
@@ -60,6 +65,7 @@ var buildings: Dictionary = {}
 var tiles_need_update: Array[Tile] = []
 var tiles_with_pollution: Dictionary = {}
 var pollution_tile_counter: int = 0
+var resource_sprites: Array[Vector2i] = [Vector2i(4,2),Vector2i(5,2),Vector2i(6,2)]
 
 signal building_placed
 
@@ -137,15 +143,19 @@ func update_tile(tile: Tile) -> void:
 	map.set_cell(building_layer, tile.grid_position, 0, tile.building_sprite)
 
 func update_labels():
-	copper_label.text = str(copper)
-	coal_label.text = str(coal)
-	iron_label.text = str(iron)
-	stone_label.text = str(stone)
+	copper_label.text = str(floor(copper))
+	coal_label.text = str(floor(coal))
+	iron_label.text = str(floor(iron))
+	stone_label.text = str(floor(stone))
 	
 func _on_menu_pressed():
 	toggle_pause()
 	
 func _input(event):
+	
+	if Input.is_action_just_pressed("select_unit"):
+		var pos: Vector2i = map.local_to_map(get_global_mouse_position())
+		print(check_tile_able_to_build_drill(tiles[pos]))
 	if event is InputEventKey:
 		if Input.is_action_just_pressed("pause"):
 			toggle_pause()
@@ -201,6 +211,18 @@ func _input(event):
 									clear_fog_around_pos(required_tiles_positions[n])
 									update_tile(tiles[required_tiles_positions[n]])
 								create_building(Buildings.Factory, required_tiles_positions)
+								emit_signal("building_placed")
+							Buildings.Drill:
+								var required_tiles_positions: Array[Vector2i] = [pos]
+								if not (pos.x >= 0 and pos.x < GRID_WIDTH and pos.y >= 0 and pos.y < GRID_HEIGHT):
+									return
+								if not check_tile_able_to_build_drill(tiles[pos]):
+									return
+								tiles[required_tiles_positions[0]].building_sprite = building_tiles["drill"][0]
+								tiles[required_tiles_positions[0]].building = Buildings.Drill
+								clear_fog_around_pos(required_tiles_positions[0])
+								update_tile(tiles[required_tiles_positions[0]])
+								create_building(Buildings.Drill, required_tiles_positions)
 								emit_signal("building_placed")
 							Buildings.None:
 								pass
@@ -334,6 +356,9 @@ func _on_building_placed():
 		Buildings.Factory:
 			change_mode_to(Modes.Normal)
 			factory_state = change_state_to(BuildingStates.None, factory)
+		Buildings.Drill:
+			change_mode_to(Modes.Normal)
+			drill_state = change_state_to(BuildingStates.None, drill)
 	building = Buildings.None
 
 func _on_mouse_entered_ui():
@@ -355,6 +380,19 @@ func create_building(new_building: Buildings, pos: Array[Vector2i]):
 	match new_building:
 		Buildings.Factory:
 			var instance = FACTORY.instantiate()
+			add_child(instance)
+			buildings[pos] = instance
+		Buildings.Drill:
+			var instance = DRILL.instantiate()
+			match tiles[pos[0]].resource_sprite:
+				Vector2i(4,2):
+					instance.resource_type = Resources.Stone
+				Vector2i(5,2):
+					instance.resource_type = Resources.Copper
+				Vector2i(6,2):
+					instance.resource_type = Resources.Coal
+				Vector2i(7,2):
+					instance.resource_type = Resources.Iron
 			add_child(instance)
 			buildings[pos] = instance
 
@@ -387,6 +425,13 @@ func check_tile_able_to_build(tile: Tile):
 	if tile.building_sprite in slab_sprites:
 		return true
 	return false
+
+func check_tile_able_to_build_drill(tile: Tile):
+	if tile.building_sprite != Vector2i(-1,-1):
+		return false
+	if not tile.resource_sprite in resource_sprites:
+		return false
+	return true
 
 func _on_large_slab_button_pressed():
 	match large_slab_state:
@@ -650,3 +695,30 @@ func get_fog_neighbors(pos: Vector2i) -> Array:
 				continue
 			neighbors.append(pn)
 	return neighbors
+
+func _on_drill_button_pressed():
+	match drill_state:
+		BuildingStates.None:
+			if check_resources(drill_cost):
+				drill_state = change_state_to(BuildingStates.Building, drill)
+				copper -= drill_cost[0]
+				iron -= drill_cost[1]
+				stone -= drill_cost[2]
+				update_labels()
+			else:
+				print("not enough resources")
+		BuildingStates.Waiting:
+			if building != Buildings.None:
+				return
+			drill_state = change_state_to(BuildingStates.Placing, drill)
+			building = Buildings.Drill
+			update_preview_tile()
+		BuildingStates.Placing:
+			if building != Buildings.Drill:
+				return
+			drill_state =  change_state_to(BuildingStates.Waiting, drill)
+			change_mode_to(Modes.Normal)
+			building = Buildings.None
+
+func _on_drill_timer_timeout():
+	drill_state = change_state_to(BuildingStates.Waiting, drill)

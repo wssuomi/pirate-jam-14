@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://6uwpprnvngbp"]
+[gd_scene load_steps=29 format=3 uid="uid://6uwpprnvngbp"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_astxb"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="2_d63gu"]
@@ -32,6 +32,10 @@ region = Rect2(0, 80, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ksces"]
 atlas = ExtResource("3_ee80l")
 region = Rect2(0, 112, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kyk8h"]
+atlas = ExtResource("3_ee80l")
+region = Rect2(32, 128, 16, 16)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2p2xj"]
 texture = ExtResource("5_wedu5")
@@ -136,6 +140,7 @@ texture = ExtResource("3_ee80l")
 4:20/0 = 0
 4:19/0 = 0
 4:21/0 = 0
+2:8/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_aha5v"]
 sources/0 = SubResource("TileSetAtlasSource_vnpe4")
@@ -306,6 +311,36 @@ Factory"
 one_shot = true
 
 [node name="Label" type="Label" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Factory"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 1
+text = "Building..."
+
+[node name="Drill" type="HBoxContainer" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Picture" type="TextureRect" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Drill"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_kyk8h")
+
+[node name="Button" type="Button" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Drill"]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+mouse_filter = 1
+text = "Build
+Factory"
+
+[node name="Timer" type="Timer" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Drill"]
+one_shot = true
+
+[node name="Label" type="Label" parent="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Drill"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
@@ -579,6 +614,8 @@ autostart = true
 [connection signal="timeout" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/LargeSlab/Timer" to="." method="_on_large_slab_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Factory/Button" to="." method="_on_factory_button_pressed"]
 [connection signal="timeout" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Factory/Timer" to="." method="_on_factory_timer_timeout"]
+[connection signal="pressed" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Drill/Button" to="." method="_on_drill_button_pressed"]
+[connection signal="timeout" from="CanvasLayer/SideBarBuild/BuildOptions/VBoxContainer/Drill/Timer" to="." method="_on_drill_timer_timeout"]
 [connection signal="mouse_entered" from="CanvasLayer/SideBarUnitAction" to="." method="_on_mouse_entered_ui"]
 [connection signal="mouse_exited" from="CanvasLayer/SideBarUnitAction" to="." method="_on_mouse_exited_ui"]
 [connection signal="pressed" from="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/Move" to="." method="_on_move_pressed"]

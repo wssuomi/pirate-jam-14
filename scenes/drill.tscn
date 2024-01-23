@@ -1,0 +1,94 @@
+[gd_scene load_steps=8 format=3 uid="uid://6xrnjxoba5hd"]
+
+[ext_resource type="Texture2D" uid="uid://jm1bhhp8ffsb" path="res://assets/map_tiles.png" id="1_7uhb3"]
+[ext_resource type="Texture2D" uid="uid://dr6yxo7p8kuw" path="res://assets/side_menu_background.png" id="1_g8yed"]
+[ext_resource type="Script" path="res://scripts/drill.gd" id="1_ln8l5"]
+[ext_resource type="Texture2D" uid="uid://bu4mn6i8vavn" path="res://assets/menu_title_background.png" id="2_k8o4l"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2nc5i"]
+texture = ExtResource("1_g8yed")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uygdr"]
+texture = ExtResource("2_k8o4l")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3c3f"]
+atlas = ExtResource("1_7uhb3")
+region = Rect2(32, 128, 16, 16)
+
+[node name="Drill" type="CanvasLayer"]
+script = ExtResource("1_ln8l5")
+
+[node name="SideBar" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 962.0
+offset_top = 40.0
+offset_right = 1152.0
+offset_bottom = 645.0
+mouse_filter = 1
+
+[node name="Panel" type="Panel" parent="SideBar"]
+layout_mode = 0
+offset_right = 190.0
+offset_bottom = 605.0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxTexture_2nc5i")
+
+[node name="Title" type="MarginContainer" parent="SideBar"]
+layout_mode = 2
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 187.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="SideBar/Title"]
+texture_filter = 1
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_uygdr")
+
+[node name="Label" type="Label" parent="SideBar/Title"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Drill"
+
+[node name="Content" type="MarginContainer" parent="SideBar"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 46.0
+offset_right = 184.0
+offset_bottom = 599.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SideBar/Content"]
+layout_mode = 2
+
+[node name="Description" type="HBoxContainer" parent="SideBar/Content/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Picture" type="TextureRect" parent="SideBar/Content/VBoxContainer/Description"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_q3c3f")
+
+[node name="Timer" type="Timer" parent="SideBar/Content/VBoxContainer/Description"]
+one_shot = true
+
+[node name="Label" type="Label" parent="SideBar/Content/VBoxContainer/Description"]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 1
+text = "energy: -2/m
+ore: +10/m"
+
+[node name="MineTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="mouse_entered" from="SideBar" to="." method="_on_side_bar_mouse_entered"]
+[connection signal="mouse_exited" from="SideBar" to="." method="_on_side_bar_mouse_exited"]
+[connection signal="timeout" from="MineTimer" to="." method="_on_mine_timer_timeout"]
