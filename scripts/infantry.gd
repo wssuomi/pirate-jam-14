@@ -6,7 +6,7 @@ extends Node2D
 @onready var main = $".."
 @onready var unit_sprite = $UnitSprite
 
-const SPEED = 1000
+const SPEED = 10
 
 enum Directions {Up, Down, Left, Right}
 
