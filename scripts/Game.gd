@@ -506,12 +506,13 @@ func _input(event):
 			if event is InputEventMouseButton:
 				if Input.is_action_just_pressed("select_unit_location") and not mouse_on_ui:
 					var pos: Vector2i = map.local_to_map(get_global_mouse_position())
-					if selected_unit.move_queue != []:
-						selected_unit.move_queue.append_array(find_path(selected_unit.move_queue[-1],pos))
-					else:
-						selected_unit.move_queue.append_array(find_path(map.local_to_map(selected_unit.global_position),pos))
-					change_mode_to(Modes.UnitSelected)
-					move.text = "Move"
+					if pos.x >= 0 and pos.x < GRID_WIDTH and pos.y >= 0 and pos.y < GRID_HEIGHT:
+						if selected_unit.move_queue != []:
+							selected_unit.move_queue.append_array(find_path(selected_unit.move_queue[-1],pos))
+						else:
+							selected_unit.move_queue.append_array(find_path(map.local_to_map(selected_unit.global_position),pos))
+						change_mode_to(Modes.UnitSelected)
+						move.text = "Move"
 		Modes.UnitSelected:
 			if event is InputEventMouseButton and not mouse_on_ui:
 				if Input.is_action_just_pressed("select_unit"):
@@ -908,17 +909,17 @@ func clear_fog_around_pos(pos_2: Vector2i):
 
 func get_not_fog_neighbors(pos: Vector2i) -> Array:
 	var neighbors: Array = []
-	var possible_neighbors: Dictionary = {
-		Vector2i(-1,-1):Neighbors.TL,
-		Vector2i(0,-1):Neighbors.T,
-		Vector2i(1,-1):Neighbors.TR,
-		Vector2i(-1,0):Neighbors.L,
-		Vector2i(1,0):Neighbors.R,
-		Vector2i(-1,1):Neighbors.BL,
-		Vector2i(0,1):Neighbors.B,
-		Vector2i(1,1):Neighbors.BR
-	}
-	for pn in possible_neighbors.keys():
+	var possible_neighbors: Array = [
+		Vector2i(-1,-1),
+		Vector2i(0,-1),
+		Vector2i(1,-1),
+		Vector2i(-1,0),
+		Vector2i(1,0),
+		Vector2i(-1,1),
+		Vector2i(0,1),
+		Vector2i(1,1)
+	]
+	for pn in possible_neighbors:
 		var check_x = pos.x + pn.x
 		var check_y = pos.y + pn.y
 		if check_x >= 0 and check_x < GRID_WIDTH and check_y >= 0 and check_y < GRID_HEIGHT:
@@ -929,17 +930,17 @@ func get_not_fog_neighbors(pos: Vector2i) -> Array:
 
 func get_fog_neighbors(pos: Vector2i) -> Array:
 	var neighbors: Array = []
-	var possible_neighbors: Dictionary = {
-		Vector2i(-1,-1):Neighbors.TL,
-		Vector2i(0,-1):Neighbors.T,
-		Vector2i(1,-1):Neighbors.TR,
-		Vector2i(-1,0):Neighbors.L,
-		Vector2i(1,0):Neighbors.R,
-		Vector2i(-1,1):Neighbors.BL,
-		Vector2i(0,1):Neighbors.B,
-		Vector2i(1,1):Neighbors.BR
-	}
-	for pn in possible_neighbors.keys():
+	var possible_neighbors: Array = [
+		Vector2i(-1,-1),
+		Vector2i(0,-1),
+		Vector2i(1,-1),
+		Vector2i(-1,0),
+		Vector2i(1,0),
+		Vector2i(-1,1),
+		Vector2i(0,1),
+		Vector2i(1,1)
+	]
+	for pn in possible_neighbors:
 		var check_x = pos.x + pn.x
 		var check_y = pos.y + pn.y
 		if check_x >= 0 and check_x < GRID_WIDTH and check_y >= 0 and check_y < GRID_HEIGHT:
