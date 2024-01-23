@@ -233,7 +233,91 @@ const fog_dict = {
 [Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(1,17),
 [Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(1,17),
 
+[Vector2i(-1, 1), Vector2i(1, 0)]:Vector2i(0,18),
+[Vector2i(-1, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(0,18),
+[Vector2i(-1, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(0,18),
+[Vector2i(-1, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(0,18),
 
+[Vector2i(-1, -1), Vector2i(1, 0)]:Vector2i(0,19),
+[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(0,19),
+[Vector2i(-1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(0,19),
+[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(0,19),
+
+[Vector2i(-1, 0), Vector2i(1, 1)]:Vector2i(1,18),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(1, 1)]:Vector2i(1,18),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, 1)]:Vector2i(1,18),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, 1)]:Vector2i(1,18),
+
+[Vector2i(-1, 0), Vector2i(1, -1)]:Vector2i(1,19),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(1, -1)]:Vector2i(1,19),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, -1)]:Vector2i(1,19),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, -1)]:Vector2i(1,19),
+
+[Vector2i(0, 1), Vector2i(1, -1)]:Vector2i(2,18),
+[Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, -1)]:Vector2i(2,18),
+[Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(2,18),
+[Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(2,18),
+
+[Vector2i(-1, -1), Vector2i(0, 1)]:Vector2i(3,18),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, 1)]:Vector2i(3,18),
+[Vector2i(-1, -1), Vector2i(0, 1), Vector2i(1, 1)]:Vector2i(3,18),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]:Vector2i(3,18),
+
+[Vector2i(0, -1), Vector2i(1, 1)]:Vector2i(2,19),
+[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, 1)]:Vector2i(2,19),
+[Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(2,19),
+[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(2,19),
+
+[Vector2i(-1, 1), Vector2i(0, -1)]:Vector2i(3,19),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, -1)]:Vector2i(3,19),
+[Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, -1)]:Vector2i(3,19),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, -1)]:Vector2i(3,19),
+
+[Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, 1)]:Vector2i(0,20),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, 1)]:Vector2i(0,20),
+[Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(0,20),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, 1)]:Vector2i(0,20),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(0,20),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, 1)]:Vector2i(0,20),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(0,20),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(0,20), 
+
+[Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, 0)]:Vector2i(1,20),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, 0)]:Vector2i(1,20),
+[Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(1,20),
+[Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(1,20),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(1,20),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(1,20),
+[Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(1,20),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(1,20),  
+
+[Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, -1)]:Vector2i(0,21),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, -1)]:Vector2i(0,21),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, -1)]:Vector2i(0,21),
+[Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(0,21),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, -1)]:Vector2i(0,21),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(0,21),
+[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(0,21),
+[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(0,21),  
+
+[Vector2i(-1, -1), Vector2i(0, 1), Vector2i(1, 0)]:Vector2i(1,21),
+[Vector2i(-1, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(1,21),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 0)]:Vector2i(1,21),
+[Vector2i(-1, -1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(1,21),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0)]:Vector2i(1,21),
+[Vector2i(-1, -1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(1,21),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(1,21),
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]:Vector2i(1,21),   
+
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(1, -1)]:Vector2i(2,20),
+
+[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(3,20),
+
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(1, 1)]:Vector2i(2,21),
+
+[Vector2i(-1, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(3,21),
+
+[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(1, 1)]:Vector2i(4,20),
 
 }
 
@@ -322,18 +406,6 @@ func load_map():
 	return loaded_tiles
 
 func _ready():
-	
-	var test_list = [Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]
-	print("start ",test_list)
-	test_list.sort()
-	print("test 1 ",test_list)
-	test_list = [Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]
-	test_list.sort_custom(fog_sort_1)
-	print("test 2 ",test_list)
-	test_list = [Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]
-	test_list.sort_custom(fog_sort_2)
-	print("test 3 ",test_list)
-	
 	fill_fog()
 	var pos = Vector2i(int(GRID_WIDTH / 2.),int(GRID_HEIGHT / 2.))
 	var start_factory_pos: Array[Vector2i] = [pos, pos + Vector2i(0,1),pos + Vector2i(1,0),pos + Vector2i(1,1)]
@@ -344,7 +416,6 @@ func _ready():
 	for n in range(len(start_factory_pos)):
 		tiles[start_factory_pos[n]].building_sprite = building_tiles["factory"][n]
 		tiles[start_factory_pos[n]].building = Buildings.Factory
-		#print(start_factory_pos[n])
 		clear_fog_around_pos(start_factory_pos[n])
 	create_building(Buildings.Factory, start_factory_pos)
 	draw_map_tiles()
@@ -373,95 +444,6 @@ func _on_menu_pressed():
 	toggle_pause()
 	
 func _input(event):
-	if Input.is_action_just_pressed("select_unit"):
-		var pos = map.local_to_map(get_global_mouse_position())
-		#print(pos)
-		
-		var fog_neighbors = get_fog_neighbors(pos)
-		var tmp = get_not_fog_neighbors(pos)
-		for fn in fog_neighbors:
-			#print(pos +fn)
-			var not_fog = get_not_fog_neighbors(pos + fn)
-			#print(not_fog)
-			match not_fog:
-				[Vector2i(-1,-1)]:
-					map.set_cell(4,pos+fn ,0,Vector2i(2,14))
-				[Vector2i(-1,-1), Vector2i(0,-1)],[Vector2i(0,-1), Vector2i(1,-1)],[Vector2i(-1,-1), Vector2i(0,-1), Vector2i(1,-1)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(1,14))
-				[Vector2i(1,-1)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(0,14))
-				[Vector2i(1,-1),Vector2i(1,0)],[Vector2i(1,-1),Vector2i(1,0), Vector2i(1,1)],[Vector2i(1,0),Vector2i(1,1)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(0,13))
-				[Vector2i(1,1)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(0,12))
-				[Vector2i(0,1),Vector2i(1,1)], [Vector2i(-1,1),Vector2i(0,1),Vector2i(1,1)],[Vector2i(-1,1),Vector2i(0,1)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(1,12))
-				[Vector2i(-1,1)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(2,12))
-				[Vector2i(-1,0),Vector2i(-1,1)],[Vector2i(-1,-1),Vector2i(-1,0),Vector2i(-1,1)],[Vector2i(-1,-1),Vector2i(-1,0)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(2,13))
-				[Vector2i(1,-1),Vector2i(1,1)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(1,16))
-				[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(0, -1), Vector2i(1, -1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 1), Vector2i(0, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(0, 1)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(1,15))
-				[Vector2i(-1,-1),Vector2i(-1,1)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(0,16))
-				[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)],[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(0,11))
-				[Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)], [Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(0,15))
-				[Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(2,15))
-				[Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0)],[Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(1, 1)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(2,9))
-				[Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(1, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1)],[Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(2,11))
-				[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(-1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 0)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 0), Vector2i(-1, 1)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(0,9))
-				[Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1)],[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(3,11))
-				[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(1, 1)],[Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(1, 1)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(3,9))
-				[Vector2i(-1, -1), Vector2i(1, -1)]:
-					map.set_cell(4,pos+fn  ,0,Vector2i(2,16))
-				[Vector2i(-1, -1), Vector2i(1, 0), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 0)]:
-					map.set_cell(4,pos+fn ,0,Vector2i(0,19))
-				[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)]:
-					map.set_cell(4,pos+fn ,0,Vector2i(3,12))
-				[Vector2i(-1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(1, 1)]:
-					map.set_cell(4,pos+fn ,0,Vector2i(0,17))
-				[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(1, 1)]:
-					map.set_cell(4,pos+fn ,0,Vector2i(1,18))
-				[Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1)],[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0)],[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1)],[Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(1, 1)],[Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(1, 1)]:
-					map.set_cell(4,pos+fn ,0,Vector2i(3,10))
-				[Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1)],[Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(1, 1)],[Vector2i(1, 0), Vector2i(-1, 1), Vector2i(1, 1)]:
-					map.set_cell(4,pos+fn ,0,Vector2i(0,18))
-				[Vector2i(-1, 1), Vector2i(1, 1)]:
-					map.set_cell(4,pos+fn ,0,Vector2i(2,17))
-				[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 1)],[Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 1)]:
-					map.set_cell(4,pos+fn ,0,Vector2i(2,19))
-				[Vector2i(1, -1), Vector2i(-1, 0), Vector2i(-1, 1)],[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(-1, 1)],[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 0)]:
-					map.set_cell(4,pos+fn ,0,Vector2i(1,19))
-				[Vector2i(1, -1), Vector2i(-1, 1), Vector2i(0, 1)],[Vector2i(1, -1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(1, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]:
-					map.set_cell(4,pos+fn ,0,Vector2i(2,18))
-				[Vector2i(-1, -1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]:
-					map.set_cell(4,pos+fn ,0,Vector2i(3,18))
-				[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]:
-					map.set_cell(4,pos+fn ,0,Vector2i(1,21))
-				[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 0), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, 1)]:
-					map.set_cell(4,pos+fn ,0,Vector2i(0,20))
-				[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 1)]:
-					map.set_cell(4,pos+fn ,0,Vector2i(3,19))
-				[Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1)]:
-					map.set_cell(4,pos+fn ,0,Vector2i(1,20))
-				[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]:
-					map.set_cell(4,pos+fn ,0,Vector2i(3,16))
-				[]:
-					pass
-				_:
-					print("missing: ", not_fog)
-			tmp.sort()
-			print(tmp)
 	if event is InputEventKey:
 		if Input.is_action_just_pressed("pause"):
 			toggle_pause()
@@ -913,103 +895,17 @@ func fill_fog():
 func clear_fog_around_pos(pos_2: Vector2i):
 	map.erase_cell(4,pos_2)
 	var neighbors: Array[Tile] = get_neighbors(tiles[pos_2])
-	#print("===")
-	#print(len(neighbors))
 	for n in neighbors:
 		map.erase_cell(4,n.grid_position)
 	for n in neighbors:
-		#print(n.grid_position)
 		var pos = n.grid_position
 		var fog_neighbors = get_fog_neighbors(pos)
-		#map.set_cell(4,pos  ,0,Vector2i(1,13))
 		for fn in fog_neighbors:
-			#print(". ",pos +fn)
-			
 			var not_fog = get_not_fog_neighbors(pos + fn)
 			not_fog.sort()
-			#print(not_fog)
 			if not_fog in fog_dict.keys():
 				map.set_cell(4,pos+fn ,0,fog_dict[not_fog])
-			
-			#match not_fog:
-				#[Vector2i(-1,-1)]:
-					#map.set_cell(4,pos+fn ,0,Vector2i(2,14))
-				#[Vector2i(-1,-1), Vector2i(0,-1)],[Vector2i(0,-1), Vector2i(1,-1)],[Vector2i(-1,-1), Vector2i(0,-1), Vector2i(1,-1)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(1,14))
-				#[Vector2i(1,-1)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(0,14))
-				#[Vector2i(1,-1),Vector2i(1,0)],[Vector2i(1,-1),Vector2i(1,0), Vector2i(1,1)],[Vector2i(1,0),Vector2i(1,1)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(0,13))
-				#[Vector2i(1,1)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(0,12))
-				#[Vector2i(0,1),Vector2i(1,1)], [Vector2i(-1,1),Vector2i(0,1),Vector2i(1,1)],[Vector2i(-1,1),Vector2i(0,1)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(1,12))
-				#[Vector2i(-1,1)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(2,12))
-				#[Vector2i(-1,0),Vector2i(-1,1)],[Vector2i(-1,-1),Vector2i(-1,0),Vector2i(-1,1)],[Vector2i(-1,-1),Vector2i(-1,0)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(2,13))
-				#[Vector2i(1,-1),Vector2i(1,1)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(1,16))
-				#[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(0, -1), Vector2i(1, -1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 1), Vector2i(0, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(0, 1)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(1,15))
-				#[Vector2i(-1,-1),Vector2i(-1,1)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(0,16))
-				#[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)],[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(0,11))
-				#[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)], [Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(0,15))
-				#[Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(2,15))
-				#[Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0)],[Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(1, 1)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(2,9))
-				#[Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(1, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1)],[Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(2,11))
-				#[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(-1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 0)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 0), Vector2i(-1, 1)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(0,9))
-				#[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(3,11))
-				#[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(1, 1)],[Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(1, 1)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(3,9))
-				#[Vector2i(-1, -1), Vector2i(1, -1)]:
-					#map.set_cell(4,pos+fn  ,0,Vector2i(2,16))
-				#[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 0)]:
-					#map.set_cell(4,pos+fn ,0,Vector2i(0,19))
-				#[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)]:
-					#map.set_cell(4,pos+fn ,0,Vector2i(3,12))
-				#[Vector2i(-1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(1, 1)]:
-					#map.set_cell(4,pos+fn ,0,Vector2i(0,17))
-				#[Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(1, 1)]:
-					#map.set_cell(4,pos+fn ,0,Vector2i(1,18))
-				#[Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1)],[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0)],[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1)],[Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(1, 1)],[Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(1, 1)]:
-					#map.set_cell(4,pos+fn ,0,Vector2i(3,10))
-				#[Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1)],[Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(1, 1)],[Vector2i(1, 0), Vector2i(-1, 1), Vector2i(1, 1)]:
-					#map.set_cell(4,pos+fn ,0,Vector2i(0,18))
-				#[Vector2i(-1, 1), Vector2i(1, 1)]:
-					#map.set_cell(4,pos+fn ,0,Vector2i(2,17))
-				#[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 1)],[Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 1)]:
-					#map.set_cell(4,pos+fn ,0,Vector2i(2,19))
-				#[Vector2i(1, -1), Vector2i(-1, 0), Vector2i(-1, 1)],[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(-1, 1)],[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 0)]:
-					#map.set_cell(4,pos+fn ,0,Vector2i(1,19))
-				#[Vector2i(1, -1), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(1, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]:
-					#map.set_cell(4,pos+fn ,0,Vector2i(2,18))
-				#[Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]:
-					#map.set_cell(4,pos+fn ,0,Vector2i(3,18))
-				#[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)],[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]:
-					#map.set_cell(4,pos+fn ,0,Vector2i(1,21))
-				#[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, 1)]:
-					#map.set_cell(4,pos+fn ,0,Vector2i(0,20))
-				#[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 1)]:
-					#map.set_cell(4,pos+fn ,0,Vector2i(3,19))
-				#[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(-1, 1)]:
-					#map.set_cell(4,pos+fn ,0,Vector2i(1,20))
-				#[Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]:
-					#map.set_cell(4,pos+fn ,0,Vector2i(3,16))
-				#[]:
-					#pass
-				#_:
-					#print("missing: ", not_fog)
-					
-					
+
 func get_not_fog_neighbors(pos: Vector2i) -> Array:
 	var neighbors: Array = []
 	var possible_neighbors: Dictionary = {
@@ -1025,7 +921,6 @@ func get_not_fog_neighbors(pos: Vector2i) -> Array:
 	for pn in possible_neighbors.keys():
 		var check_x = pos.x + pn.x
 		var check_y = pos.y + pn.y
-		#print("checking: ", check_x," ",check_y)
 		if check_x >= 0 and check_x < GRID_WIDTH and check_y >= 0 and check_y < GRID_HEIGHT:
 			if map.get_cell_atlas_coords(4,pos + pn) != Vector2i(-1,-1):
 				continue
@@ -1052,13 +947,3 @@ func get_fog_neighbors(pos: Vector2i) -> Array:
 				continue
 			neighbors.append(pn)
 	return neighbors
-
-func fog_sort_1(a, b):
-	if a.x < b.x:
-		return true
-	return false
-
-func fog_sort_2(a, b):
-	if a.y < b.y:
-		return true
-	return false
