@@ -18,6 +18,7 @@ var rng = RandomNumberGenerator.new()
 var health: int = 2
 var attack_damage: int = 1
 var attack_target: Vector2i = Vector2i(-1,-1)
+var search_range: int = 3
 
 enum States {Idle, Walk, Attack}
 
@@ -98,24 +99,47 @@ func random_walk():
 	return []
 
 func _on_random_walk_timer_timeout():
-	if state == States.Idle:
+	if state == States.Idle and attack_target == Vector2i(-1,-1):
 		move_queue.append_array(random_walk())
 
 func take_damage(damage_amount):
 	health -= damage_amount
 	if health <= 0:
 		enemies.erase(main.map.local_to_map(global_position))
-		queue_free()
+		self.queue_free()
 
 func attack():
+	if state == States.Walk:
+		return
 	if attack_target == Vector2i(-1,-1):
 		return
 	var pos = main.map.local_to_map(self.global_position)
-	if not main.get_distance(main.tiles[pos], main.tiles[attack_target]) <= 28:
+	if main.get_distance(main.tiles[pos], main.tiles[attack_target]) >= 14:
 		return
 	if attack_target in units.keys():
-		print("unit attacked")
-		units[attack_target].take_damage(attack_damage)
+		if is_instance_valid(units[attack_target]):
+			units[attack_target].take_damage(attack_damage)
+		else:
+			attack_target = Vector2i(-1,-1)
+	else:
+		attack_target = Vector2i(-1,-1)
 
 func _on_attack_timer_timeout():
 	attack()
+
+func _on_search_timer_timeout():
+	for y in range(-search_range,search_range):
+		for x in range(-search_range,search_range):
+			var pos = main.map.local_to_map(global_position) + Vector2i(x,y)
+			if pos in units.keys():
+				attack_target = pos
+				if main.get_distance(main.tiles[main.map.local_to_map(global_position)], main.tiles[attack_target]) > 14:
+					if move_queue != []:
+						var path = main.find_attack_path(move_queue[0],attack_target,14)
+						var tmp: Array[Vector2i] = [move_queue[0]]
+						tmp.append_array(path)
+						move_queue = tmp
+					else:
+						var path = main.find_attack_path(main.map.local_to_map(global_position),attack_target,14)
+						move_queue = path
+				return

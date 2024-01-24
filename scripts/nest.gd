@@ -56,4 +56,4 @@ func take_damage(damage_amount):
 	health -= damage_amount
 	if health <= 0:
 		enemies.erase(main.map.local_to_map(self.global_position))
-		queue_free()
+		self.queue_free()

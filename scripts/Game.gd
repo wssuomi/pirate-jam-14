@@ -112,7 +112,7 @@ func _ready():
 	ship.create_ship(pos,Buildings.Ship,ship)
 	draw_map_tiles()
 	update_labels()
-	spawn_unit(Units.Infantry, Vector2i(32,15))
+	spawn_unit(Units.Infantry, Vector2i(10,15))
 	spawn_unit(Units.Infantry, Vector2i(32,25))
 	spawn_unit(Units.Infantry, Vector2i(60,60))
 	spawn_enemy(Enemies.Bug, Vector2i(16,16))
@@ -198,9 +198,9 @@ func _input(event):
 					var pos: Vector2i = map.local_to_map(get_global_mouse_position())
 					if pos.x >= 0 and pos.x < GRID_WIDTH and pos.y >= 0 and pos.y < GRID_HEIGHT:
 						if selected_unit.move_queue != []:
-							selected_unit.move_queue.append_array(find_attack_path(selected_unit.move_queue[-1],pos))
+							selected_unit.move_queue.append_array(find_attack_path(selected_unit.move_queue[-1],pos,28))
 						else:
-							selected_unit.move_queue.append_array(find_attack_path(map.local_to_map(selected_unit.global_position),pos))
+							selected_unit.move_queue.append_array(find_attack_path(map.local_to_map(selected_unit.global_position),pos,28))
 						selected_unit.attack_target = pos
 						change_mode_to(Modes.UnitSelected)
 						attack.text = "Attack"
@@ -331,7 +331,7 @@ func find_path(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
 					open_set.append(n)
 	return []
 
-func find_attack_path(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
+func find_attack_path(start: Vector2i, end: Vector2i, attack_range) -> Array[Vector2i]:
 	var start_tile: Tile = tiles[start]
 	var end_tile: Tile = tiles[end]
 	var open_set: Array[Tile] = []
@@ -345,7 +345,7 @@ func find_attack_path(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
 		var index = open_set.find(current_tile)
 		open_set.remove_at(index)
 		closed_set.append(current_tile)
-		if get_distance(current_tile,end_tile) <= 28:
+		if get_distance(current_tile,end_tile) <= attack_range:
 			end_tile = current_tile
 		if current_tile == end_tile:
 			return retrace_path(start_tile, end_tile)

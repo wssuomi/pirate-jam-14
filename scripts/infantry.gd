@@ -75,14 +75,18 @@ func deselect():
 	select_indicator.hide()
 
 func attack():
+	if state == States.Walk:
+		return
 	if attack_target == Vector2i(-1,-1):
 		return
 	var pos = main.map.local_to_map(self.global_position)
-	if not main.get_distance(main.tiles[pos], main.tiles[attack_target]) <= 28:
+	if main.get_distance(main.tiles[pos], main.tiles[attack_target]) >= 28:
 		return
 	if attack_target in enemies.keys():
-		print("attacked enemy")
-		enemies[attack_target].take_damage(attack_damage)
+		if is_instance_valid(enemies[attack_target]):
+			enemies[attack_target].take_damage(attack_damage)
+		else:
+			attack_target = Vector2i(-1,-1)
 	else:
 		attack_target = Vector2i(-1,-1)
 
@@ -93,7 +97,7 @@ func take_damage(damage_amount):
 			main.deselect_unit()
 			main.change_mode_to(main.Modes.Normal)
 		units.erase(main.map.local_to_map(global_position))
-		queue_free()
+		self.queue_free()
 
 func _on_attack_timer_timeout():
 	attack()
@@ -103,9 +107,9 @@ func search_for_enemies():
 		for x in range(-search_range,search_range):
 			var pos = main.map.local_to_map(global_position) + Vector2i(x,y)
 			if pos in enemies.keys():
-				attack_target = pos
-				print("enemy found")
-				return
+				if is_instance_valid(enemies[pos]):
+					attack_target = pos
+					return
 
 func _on_search_timer_timeout():
 	search_for_enemies()
