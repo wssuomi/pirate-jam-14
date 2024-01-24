@@ -29,4 +29,6 @@ func _on_mine_timer_timeout():
 			main.stone += RESOURCE_GENERATION
 		main.Resources.Coal:
 			main.coal += RESOURCE_GENERATION
+		_:
+			print("Unknown resource")
 	main.update_labels()

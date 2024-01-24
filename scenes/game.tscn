@@ -141,6 +141,11 @@ texture = ExtResource("3_ee80l")
 4:19/0 = 0
 4:21/0 = 0
 2:8/0 = 0
+5:0/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+3:5/0 = 0
+2:5/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_aha5v"]
 sources/0 = SubResource("TileSetAtlasSource_vnpe4")
@@ -175,6 +180,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="SideBarBuild" type="Control" parent="CanvasLayer"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 959.0

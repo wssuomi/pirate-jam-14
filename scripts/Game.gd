@@ -24,9 +24,10 @@ const FACTORY = preload("res://scenes/factory.tscn")
 const POLLUTION_SPREAD_RATE: float = 2.
 const fog_dict = preload("res://scripts/fog.gd").fog_dict
 const DRILL = preload("res://scenes/drill.tscn")
+const SHIP = preload("res://scenes/ship.tscn")
 
 enum Modes {Normal, Place, MoveUnit, UnitSelected, BuildingSelected}
-enum Buildings {None, Slab, LargeSlab, Factory, Drill}
+enum Buildings {None, Slab, LargeSlab, Factory, Drill, Ship}
 enum BuildingStates {None, Building, Waiting, Placing}
 enum Units {Infantry}
 enum Neighbors {T,TR,R,BR,B,BL,L,TL}
@@ -66,6 +67,7 @@ var tiles_need_update: Array[Tile] = []
 var tiles_with_pollution: Dictionary = {}
 var pollution_tile_counter: int = 0
 var resource_sprites: Array[Vector2i] = [Vector2i(4,2),Vector2i(5,2),Vector2i(6,2)]
+var ship
 
 signal building_placed
 
@@ -114,18 +116,22 @@ func load_map():
 	return loaded_tiles
 
 func _ready():
+	
 	fill_fog()
 	var pos = Vector2i(int(GRID_WIDTH / 2.),int(GRID_HEIGHT / 2.))
-	var start_factory_pos: Array[Vector2i] = [pos, pos + Vector2i(0,1),pos + Vector2i(1,0),pos + Vector2i(1,1)]
 	preview_atlas.atlas = tiles_texture
 	preview_tile.texture = preview_atlas
 	connect("building_placed",_on_building_placed)
 	tiles = load_map()
-	for n in range(len(start_factory_pos)):
-		tiles[start_factory_pos[n]].building_sprite = building_tiles["factory"][n]
-		tiles[start_factory_pos[n]].building = Buildings.Factory
-		clear_fog_around_pos(start_factory_pos[n])
-	create_building(Buildings.Factory, start_factory_pos)
+	var test_ship = SHIP.instantiate()
+	add_child(test_ship)
+	ship = $Ship
+	ship.create_ship(pos,Buildings.Ship,ship)
+	#for n in range(len(start_factory_pos)):
+		#tiles[start_factory_pos[n]].building_sprite = building_tiles["factory"][n]
+		#tiles[start_factory_pos[n]].building = Buildings.Factory
+		#clear_fog_around_pos(start_factory_pos[n])
+	#create_building(Buildings.Factory, start_factory_pos)
 	draw_map_tiles()
 	update_labels()
 	spawn_unit(Units.Infantry, Vector2i(32,15))
@@ -152,10 +158,9 @@ func _on_menu_pressed():
 	toggle_pause()
 	
 func _input(event):
-	
-	if Input.is_action_just_pressed("select_unit"):
-		var pos: Vector2i = map.local_to_map(get_global_mouse_position())
-		print(check_tile_able_to_build_drill(tiles[pos]))
+	#if Input.is_action_just_pressed("select_unit"):
+		#var pos: Vector2i = map.local_to_map(get_global_mouse_position())
+		#print(check_tile_able_to_build_drill(tiles[pos]))
 	if event is InputEventKey:
 		if Input.is_action_just_pressed("pause"):
 			toggle_pause()
@@ -173,6 +178,12 @@ func _input(event):
 						if pos in k:
 							selected_building = buildings[k]
 							change_mode_to(Modes.BuildingSelected)
+		Modes.Place:
+			if event is InputEventMouseButton:
+				if Input.is_action_pressed("place_tile") and not mouse_on_ui:
+					var pos: Vector2i = map.local_to_map(get_global_mouse_position())
+					if ship.try_create_building(ship.selected_building,pos):
+						emit_signal("building_placed")
 		Modes.Place:
 			if event is InputEventMouseButton:
 				if Input.is_action_pressed("place_tile") and not mouse_on_ui:
@@ -343,9 +354,11 @@ func change_mode_to(next_mode: Modes):
 			hide_building_preview()
 		Modes.BuildingSelected:
 			mode = Modes.BuildingSelected
+			hide_building_preview()
 			selected_building.show_menu()
 
 func _on_building_placed():
+	ship.change_to_normal()
 	match building:
 		Buildings.Slab:
 			change_mode_to(Modes.Normal)
@@ -573,7 +586,7 @@ func get_neighbors(tile: Tile) -> Array[Tile]:
 	return neighbors
 
 func is_walkable(tile: Tile):
-	if tile.building != Buildings.Slab and tile.building != Buildings.None:
+	if tile.building != Buildings.Slab and tile.building != Buildings.None and tile.building != Buildings.LargeSlab:
 		return false
 	for k in units.keys():
 		if k == tile.grid_position:
