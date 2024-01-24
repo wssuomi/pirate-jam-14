@@ -38,6 +38,7 @@ region = Rect2(32, 128, 16, 16)
 script = ExtResource("1_s7wpo")
 
 [node name="SideBar" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 959.0
