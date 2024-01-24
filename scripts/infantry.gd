@@ -17,6 +17,7 @@ var look_dir: Directions = Directions.Down
 var attack_target: Vector2i = Vector2i(-1,-1)
 var health: int = 10
 var attack_damage = 1
+var search_range = 2
 
 enum States {Guard, Walk, Attack}
 
@@ -82,12 +83,29 @@ func attack():
 	if attack_target in enemies.keys():
 		print("attacked enemy")
 		enemies[attack_target].take_damage(attack_damage)
+	else:
+		attack_target = Vector2i(-1,-1)
 
 func take_damage(damage_amount):
 	health -= damage_amount
 	if health <= 0:
+		if main.selected_unit == self:
+			main.deselect_unit()
+			main.change_mode_to(main.Modes.Normal)
 		units.erase(main.map.local_to_map(global_position))
 		queue_free()
 
 func _on_attack_timer_timeout():
 	attack()
+
+func search_for_enemies():
+	for y in range(-search_range,search_range):
+		for x in range(-search_range,search_range):
+			var pos = main.map.local_to_map(global_position) + Vector2i(x,y)
+			if pos in enemies.keys():
+				attack_target = pos
+				print("enemy found")
+				return
+
+func _on_search_timer_timeout():
+	search_for_enemies()
