@@ -10,6 +10,7 @@ extends Node2D
 @onready var stone_label = $CanvasLayer/TopBar/Stone/MarginContainer/HBoxContainer/StoneLabel
 @onready var move = $CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/Move
 @onready var side_bar_unit_action = $CanvasLayer/SideBarUnitAction
+@onready var attack = $CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/Attack
 
 const GRID_WIDTH = 64
 const GRID_HEIGHT = 64
@@ -21,7 +22,7 @@ const SHIP = preload("res://scenes/ship.tscn")
 const BUG = preload("res://scenes/bug.tscn")
 const NEST = preload("res://scenes/nest.tscn")
 
-enum Modes {Normal, Place, MoveUnit, UnitSelected, BuildingSelected}
+enum Modes {Normal, Place, MoveUnit, UnitSelected, BuildingSelected, AttackWithUnit}
 enum Buildings {None, Slab, LargeSlab, Factory, Drill, Ship}
 enum Units {Infantry}
 enum Enemies {Bug, Nest}
@@ -191,6 +192,18 @@ func _input(event):
 				if Input.is_action_just_pressed("select_unit"):
 					change_mode_to(Modes.Normal)
 					selected_building = null
+		Modes.AttackWithUnit:
+			if event is InputEventMouseButton:
+				if Input.is_action_just_pressed("select_unit_location") and not mouse_on_ui:
+					var pos: Vector2i = map.local_to_map(get_global_mouse_position())
+					if pos.x >= 0 and pos.x < GRID_WIDTH and pos.y >= 0 and pos.y < GRID_HEIGHT:
+						if selected_unit.move_queue != []:
+							selected_unit.move_queue.append_array(find_attack_path(selected_unit.move_queue[-1],pos))
+						else:
+							selected_unit.move_queue.append_array(find_attack_path(map.local_to_map(selected_unit.global_position),pos))
+						selected_unit.attack_target = pos
+						change_mode_to(Modes.UnitSelected)
+						attack.text = "Attack"
 
 func _process(delta):
 	spread_single_tile_pollution(delta)
@@ -225,6 +238,9 @@ func change_mode_to(next_mode: Modes):
 			mode = Modes.BuildingSelected
 			hide_building_preview()
 			selected_building.show_menu()
+		Modes.AttackWithUnit:
+			mode = Modes.AttackWithUnit
+			hide_building_preview()
 
 func _on_building_placed():
 	ship.change_to_normal()
@@ -314,6 +330,45 @@ func find_path(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
 				if not n in open_set:
 					open_set.append(n)
 	return []
+
+func find_attack_path(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
+	var start_tile: Tile = tiles[start]
+	var end_tile: Tile = tiles[end]
+	var open_set: Array[Tile] = []
+	var closed_set: Array[Tile] = []
+	open_set.append(start_tile)
+	while len(open_set) > 0:
+		var current_tile = open_set[0]
+		for i in range(1,len(open_set)):
+			if open_set[i].f_cost < current_tile.f_cost or open_set[i].f_cost == current_tile.f_cost and open_set[i].h_cost < current_tile.h_cost:
+				current_tile = open_set[i]
+		var index = open_set.find(current_tile)
+		open_set.remove_at(index)
+		closed_set.append(current_tile)
+		if get_distance(current_tile,end_tile) <= 28:
+			end_tile = current_tile
+		if current_tile == end_tile:
+			return retrace_path(start_tile, end_tile)
+		for n: Tile in get_neighbors(current_tile):
+			if not is_walkable(n) or n in closed_set:
+				continue
+			var new_movement_cost_to_neighbor = current_tile.g_cost + get_distance(current_tile, n)
+			if new_movement_cost_to_neighbor < n.g_cost or not n in open_set:
+				n.g_cost = new_movement_cost_to_neighbor
+				n.h_cost = get_distance(n, end_tile)
+				n.parent = current_tile
+				if not n in open_set:
+					open_set.append(n)
+	return []
+
+func is_valid_attack_target(tile: Tile):
+	for k in units.keys():
+		if k == tile.grid_position:
+			return false
+	for k in enemies.keys():
+		if k == tile.grid_position:
+			return false
+	return true
 
 func get_distance(tile_a: Tile, tile_b: Tile):
 	var dst_x = abs(tile_a.grid_position.x - tile_b.grid_position.x)
@@ -469,3 +524,12 @@ func get_fog_neighbors(pos: Vector2i) -> Array:
 				continue
 			neighbors.append(pn)
 	return neighbors
+
+func _on_attack_pressed():
+	match mode:
+		Modes.UnitSelected:
+			change_mode_to(Modes.AttackWithUnit)
+			attack.text = "Cancel"
+		Modes.MoveUnit:
+			change_mode_to(Modes.UnitSelected)
+			attack.text = "Attack"

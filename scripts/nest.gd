@@ -8,6 +8,7 @@ extends Node
 var rng = RandomNumberGenerator.new()
 var spawn_range = 2
 var state = States.Normal
+var health: int = 3
 
 enum SpawnCooldowns {Normal, LowPollution, MediumPollution, HighPollution, Alert}
 enum States {Normal, Alert}
@@ -32,14 +33,14 @@ func try_spawn_random():
 			main.spawn_enemy(main.Enemies.Bug,pos + offset)
 
 func change_spawn_cooldown(cooldown):
-	print("Spawn Cooldown: ", spawn_cooldowns[cooldown])
+	#print("Spawn Cooldown: ", spawn_cooldowns[cooldown])
 	spawn_timer.wait_time = spawn_cooldowns[cooldown]
 
 func _on_check_timer_timeout():
 	var tile = main.tiles[main.map.local_to_map(self.global_position)]
 	if state == States.Alert:
 		return
-	print(tile.pollution)
+	#print(tile.pollution)
 	if tile.pollution > 1 and tile.pollution <= 10:
 		change_spawn_cooldown(SpawnCooldowns.LowPollution)
 	if tile.pollution > 10 and tile.pollution <= 20:
@@ -50,3 +51,9 @@ func _on_check_timer_timeout():
 func _ready():
 	change_spawn_cooldown(SpawnCooldowns.Normal)
 	try_spawn_random()
+
+func take_damage(damage_amount):
+	health -= damage_amount
+	if health <= 0:
+		enemies.erase(main.map.local_to_map(self.global_position))
+		queue_free()

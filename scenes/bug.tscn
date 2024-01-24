@@ -337,4 +337,7 @@ shape = SubResource("RectangleShape2D_sy38v")
 wait_time = 9.0
 autostart = true
 
+[node name="AttackTimer" type="Timer" parent="."]
+
 [connection signal="timeout" from="RandomWalkTimer" to="." method="_on_random_walk_timer_timeout"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

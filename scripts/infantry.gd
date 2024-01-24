@@ -14,6 +14,9 @@ enum Directions {Up, Down, Left, Right}
 var move_queue: Array[Vector2i] = []
 var state: States = States.Guard
 var look_dir: Directions = Directions.Down
+var attack_target: Vector2i = Vector2i(-1,-1)
+var health: int = 10
+var attack_damage = 1
 
 enum States {Guard, Walk, Attack}
 
@@ -69,3 +72,22 @@ func select():
 
 func deselect():
 	select_indicator.hide()
+
+func attack():
+	if attack_target == Vector2i(-1,-1):
+		return
+	var pos = main.map.local_to_map(self.global_position)
+	if not main.get_distance(main.tiles[pos], main.tiles[attack_target]) <= 28:
+		return
+	if attack_target in enemies.keys():
+		print("attacked enemy")
+		enemies[attack_target].take_damage(attack_damage)
+
+func take_damage(damage_amount):
+	health -= damage_amount
+	if health <= 0:
+		units.erase(main.map.local_to_map(global_position))
+		queue_free()
+
+func _on_attack_timer_timeout():
+	attack()

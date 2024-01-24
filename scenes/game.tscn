@@ -207,6 +207,11 @@ layout_mode = 2
 mouse_filter = 1
 text = "Move"
 
+[node name="Attack" type="Button" parent="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+text = "Attack"
+
 [node name="TopBar" type="Control" parent="CanvasLayer"]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 3
@@ -417,6 +422,7 @@ autostart = true
 [connection signal="mouse_entered" from="CanvasLayer/SideBarUnitAction" to="." method="_on_mouse_entered_ui"]
 [connection signal="mouse_exited" from="CanvasLayer/SideBarUnitAction" to="." method="_on_mouse_exited_ui"]
 [connection signal="pressed" from="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/Move" to="." method="_on_move_pressed"]
+[connection signal="pressed" from="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/Attack" to="." method="_on_attack_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/TopBar" to="." method="_on_mouse_entered_ui"]
 [connection signal="mouse_exited" from="CanvasLayer/TopBar" to="." method="_on_mouse_exited_ui"]
 [connection signal="pressed" from="CanvasLayer/TopBar/Menu" to="." method="_on_menu_pressed"]

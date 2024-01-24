@@ -15,6 +15,9 @@ var state: States = States.Idle
 var look_dir: Directions = Directions.Down
 var random_walk_range = 1
 var rng = RandomNumberGenerator.new()
+var health: int = 2
+var attack_damage: int = 1
+var attack_target: Vector2i = Vector2i(-1,-1)
 
 enum States {Idle, Walk, Attack}
 
@@ -97,3 +100,22 @@ func random_walk():
 func _on_random_walk_timer_timeout():
 	if state == States.Idle:
 		move_queue.append_array(random_walk())
+
+func take_damage(damage_amount):
+	health -= damage_amount
+	if health <= 0:
+		enemies.erase(main.map.local_to_map(global_position))
+		queue_free()
+
+func attack():
+	if attack_target == Vector2i(-1,-1):
+		return
+	var pos = main.map.local_to_map(self.global_position)
+	if not main.get_distance(main.tiles[pos], main.tiles[attack_target]) <= 28:
+		return
+	if attack_target in units.keys():
+		print("unit attacked")
+		units[attack_target].take_damage(attack_damage)
+
+func _on_attack_timer_timeout():
+	attack()
