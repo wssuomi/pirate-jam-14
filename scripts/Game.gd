@@ -18,16 +18,19 @@ const INFANTRY = preload("res://scenes/infantry.tscn")
 const POLLUTION_SPREAD_RATE: float = 2.
 const fog_dict = preload("res://scripts/fog.gd").fog_dict
 const SHIP = preload("res://scenes/ship.tscn")
+const BUG = preload("res://scenes/bug.tscn")
 
 enum Modes {Normal, Place, MoveUnit, UnitSelected, BuildingSelected}
 enum Buildings {None, Slab, LargeSlab, Factory, Drill, Ship}
 enum Units {Infantry}
+enum Enemies {Bug}
 enum Resources {Copper, Stone, Iron, Coal}
 
 var tiles_texture = preload("res://assets/map_tiles.png")
 var paused = false
 var tiles = {}
 var units = {}
+var enemies = {}
 var rng = RandomNumberGenerator.new()
 var ground_layer: int = 0
 var decoration_layer: int = 1
@@ -110,6 +113,10 @@ func _ready():
 	spawn_unit(Units.Infantry, Vector2i(32,15))
 	spawn_unit(Units.Infantry, Vector2i(32,25))
 	spawn_unit(Units.Infantry, Vector2i(60,60))
+	spawn_enemy(Enemies.Bug, Vector2i(16,16))
+	enemies.values()[0].move_queue.append_array(find_path(Vector2i(16,16),Vector2i(0,0)))
+	enemies.values()[0].move_queue.append_array(find_path(Vector2i(0,0),Vector2i(10,0)))
+	enemies.values()[0].move_queue.append_array(find_path(Vector2i(10,0),Vector2i(16,10)))
 	
 func draw_map_tiles() -> void:
 	for tile in tiles.values():
@@ -233,6 +240,16 @@ func spawn_unit(unit: Units, pos: Vector2i):
 			instance.position = map.map_to_local(pos)
 			add_child(instance)
 			units[pos] = instance
+	clear_fog_around_pos(pos)
+	
+func spawn_enemy(enemy_type: Enemies, pos: Vector2i):
+	match enemy_type:
+		Enemies.Bug:
+			var instance = BUG.instantiate()
+			instance.position = map.map_to_local(pos)
+			add_child(instance)
+			enemies[pos] = instance
+	# remove after done
 	clear_fog_around_pos(pos)
 
 func select_unit(pos: Vector2i):
