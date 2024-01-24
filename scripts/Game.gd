@@ -22,9 +22,9 @@ const SHIP = preload("res://scenes/ship.tscn")
 const BUG = preload("res://scenes/bug.tscn")
 const NEST = preload("res://scenes/nest.tscn")
 
-enum Modes {Normal, Place, MoveUnit, UnitSelected, BuildingSelected, AttackWithUnit}
+enum Modes {Normal, Place, PlaceUnit, MoveUnit, UnitSelected, BuildingSelected, AttackWithUnit}
 enum Buildings {None, Slab, LargeSlab, Factory, Drill, Ship}
-enum Units {Infantry}
+enum Units {None,Infantry}
 enum Enemies {Bug, Nest}
 enum Resources {Copper, Stone, Iron, Coal}
 
@@ -54,6 +54,7 @@ var pollution_tile_counter: int = 0
 var ship
 
 signal building_placed
+signal unit_placed
 
 func toggle_pause():
 	if paused:
@@ -105,6 +106,7 @@ func _ready():
 	preview_atlas.atlas = tiles_texture
 	preview_tile.texture = preview_atlas
 	connect("building_placed",_on_building_placed)
+	connect("unit_placed",_on_unit_placed)
 	tiles = load_map()
 	var test_ship = SHIP.instantiate()
 	add_child(test_ship)
@@ -164,7 +166,12 @@ func _input(event):
 					var pos: Vector2i = map.local_to_map(get_global_mouse_position())
 					if ship.try_create_building(ship.selected_building,pos):
 						emit_signal("building_placed")
-
+		Modes.PlaceUnit:
+			if event is InputEventMouseButton:
+				if Input.is_action_pressed("place_tile") and not mouse_on_ui:
+					var pos: Vector2i = map.local_to_map(get_global_mouse_position())
+					if selected_building.try_spawn_unit(selected_building.selected_unit,pos):
+						emit_signal("unit_placed")
 		Modes.MoveUnit:
 			if event is InputEventMouseButton:
 				if Input.is_action_just_pressed("select_unit_location") and not mouse_on_ui:
@@ -228,6 +235,8 @@ func change_mode_to(next_mode: Modes):
 		Modes.Place:
 			mode = Modes.Place
 			show_building_preview()
+		Modes.PlaceUnit:
+			mode = Modes.PlaceUnit
 		Modes.MoveUnit:
 			mode = Modes.MoveUnit
 			hide_building_preview()
@@ -244,6 +253,9 @@ func change_mode_to(next_mode: Modes):
 
 func _on_building_placed():
 	ship.change_to_normal()
+
+func _on_unit_placed():
+	selected_building.change_to_normal()
 
 func _on_mouse_entered_ui():
 	mouse_on_ui = true

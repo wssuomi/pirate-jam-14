@@ -2,7 +2,7 @@ extends CanvasLayer
 
 const FACTORY = preload("res://scenes/factory.tscn")
 const DRILL = preload("res://scenes/drill.tscn")
-const POLLUTION_GENERATION = 1
+const POLLUTION_GENERATION = 2
 
 @onready var slab = $SideBar/BuildOptions/VBoxContainer/Slab
 @onready var large_slab = $SideBar/BuildOptions/VBoxContainer/LargeSlab
