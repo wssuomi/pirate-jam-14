@@ -24,12 +24,12 @@ const POLLUTION_GENERATION = 1
 	main.Buildings.Drill:[Vector2i(0,0)],
 	main.Buildings.Ship:[Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)],
 }
-#stone, iron, copper
+#stone, iron, copper, area
 @onready var build_costs: Dictionary = {
-	main.Buildings.Slab:[10,1,0],
-	main.Buildings.LargeSlab:[40,4,0],
-	main.Buildings.Factory:[10,20,20],
-	main.Buildings.Drill:[0,10,0],
+	main.Buildings.Slab:[10,1,0,"1x1 grass"],
+	main.Buildings.LargeSlab:[40,4,0,"2x2 grass"],
+	main.Buildings.Factory:[10,20,20,"2x2 slab"],
+	main.Buildings.Drill:[0,10,0,"1x1 ore"],
 }
 @onready var build_times: Dictionary = {
 	main.Buildings.Slab:1,
@@ -47,6 +47,7 @@ const POLLUTION_GENERATION = 1
 @onready var copper_label = $SideBar/Selected/VBoxContainer/HBoxContainer/VBoxContainer/Copper/CopperLabel
 @onready var stone_label = $SideBar/Selected/VBoxContainer/HBoxContainer/VBoxContainer/Stone/StoneLabel
 @onready var iron_label = $SideBar/Selected/VBoxContainer/HBoxContainer/VBoxContainer/Iron/IronLabel
+@onready var area_label = $SideBar/Selected/VBoxContainer/HBoxContainer/VBoxContainer/Area/AreaLabel
 @onready var build_timer = $SideBar/Selected/VBoxContainer/BuildTimer
 @onready var build_button = $SideBar/Selected/VBoxContainer/Button
 @onready var buildings = {
@@ -198,6 +199,7 @@ func change_selected_to(building):
 	copper_label.text = str(floor(costs[2]))
 	iron_label.text = str(floor(costs[1]))
 	stone_label.text = str(floor(costs[0]))
+	area_label.text = costs[3]
 
 func _on_build_button_pressed():
 	match build_state:
