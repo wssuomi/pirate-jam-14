@@ -19,11 +19,12 @@ const POLLUTION_SPREAD_RATE: float = 2.
 const fog_dict = preload("res://scripts/fog.gd").fog_dict
 const SHIP = preload("res://scenes/ship.tscn")
 const BUG = preload("res://scenes/bug.tscn")
+const NEST = preload("res://scenes/nest.tscn")
 
 enum Modes {Normal, Place, MoveUnit, UnitSelected, BuildingSelected}
 enum Buildings {None, Slab, LargeSlab, Factory, Drill, Ship}
 enum Units {Infantry}
-enum Enemies {Bug}
+enum Enemies {Bug, Nest}
 enum Resources {Copper, Stone, Iron, Coal}
 
 var tiles_texture = preload("res://assets/map_tiles.png")
@@ -114,6 +115,7 @@ func _ready():
 	spawn_unit(Units.Infantry, Vector2i(32,25))
 	spawn_unit(Units.Infantry, Vector2i(60,60))
 	spawn_enemy(Enemies.Bug, Vector2i(16,16))
+	spawn_enemy(Enemies.Nest, Vector2i(10,10))
 	enemies.values()[0].move_queue.append_array(find_path(Vector2i(16,16),Vector2i(0,0)))
 	enemies.values()[0].move_queue.append_array(find_path(Vector2i(0,0),Vector2i(10,0)))
 	enemies.values()[0].move_queue.append_array(find_path(Vector2i(10,0),Vector2i(16,10)))
@@ -249,6 +251,11 @@ func spawn_enemy(enemy_type: Enemies, pos: Vector2i):
 			instance.position = map.map_to_local(pos)
 			add_child(instance)
 			enemies[pos] = instance
+		Enemies.Nest:
+			var instance = NEST.instantiate()
+			instance.position = map.map_to_local(pos)
+			add_child(instance)
+			enemies[pos] = instance
 	# remove after done
 	clear_fog_around_pos(pos)
 
@@ -340,6 +347,9 @@ func is_walkable(tile: Tile):
 	if tile.building != Buildings.Slab and tile.building != Buildings.None and tile.building != Buildings.LargeSlab:
 		return false
 	for k in units.keys():
+		if k == tile.grid_position:
+			return false
+	for k in enemies.keys():
 		if k == tile.grid_position:
 			return false
 	return true

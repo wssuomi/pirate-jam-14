@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @onready var map = $"../Map"
 @onready var enemies: Dictionary = $"..".enemies
+@onready var units: Dictionary = $"..".units
 @onready var main = $".."
 @onready var bug_sprite = $BugSprite
 
@@ -19,7 +20,7 @@ func _process(delta):
 	match state:
 		States.Guard:
 			if move_queue != []:
-				if move_queue[0] not in enemies and main.is_walkable(main.tiles[move_queue[0]]):
+				if move_queue[0] not in enemies and move_queue[0] not in units and main.is_walkable(main.tiles[move_queue[0]]):
 					state = States.Walk
 					enemies.erase(map.local_to_map(global_position))
 					enemies[move_queue[0]] = self

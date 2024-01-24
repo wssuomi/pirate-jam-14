@@ -3,6 +3,7 @@ extends Node2D
 @onready var select_indicator = $SelectIndicator
 @onready var map = $"../Map"
 @onready var units: Dictionary = $"..".units
+@onready var enemies: Dictionary = $"..".enemies
 @onready var main = $".."
 @onready var unit_sprite = $UnitSprite
 
@@ -20,7 +21,7 @@ func _process(delta):
 	match state:
 		States.Guard:
 			if move_queue != []:
-				if move_queue[0] not in units and main.is_walkable(main.tiles[move_queue[0]]):
+				if move_queue[0] not in enemies and move_queue[0] not in units and main.is_walkable(main.tiles[move_queue[0]]):
 					state = States.Walk
 					units.erase(map.local_to_map(global_position))
 					units[move_queue[0]] = self
@@ -43,7 +44,7 @@ func _process(delta):
 							look_dir = Directions.Left
 				else:
 					if len(move_queue) != 1:
-						var path: Array[Vector2i] = main.find_path(map.local_to_map(global_position), move_queue[1])
+						var path: Array[Vector2i] = main.find_path(map.local_to_map(global_position), move_queue[-1])
 						move_queue = path
 					else:
 						move_queue = []

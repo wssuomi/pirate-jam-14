@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dmvp4vu1ndrrw"]
+
+[ext_resource type="Texture2D" uid="uid://jm1bhhp8ffsb" path="res://assets/map_tiles.png" id="1_8fv74"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pq4f5"]
+atlas = ExtResource("1_8fv74")
+region = Rect2(80, 0, 16, 16)
+
+[node name="Nest" type="Node2D"]
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = SubResource("AtlasTexture_pq4f5")
