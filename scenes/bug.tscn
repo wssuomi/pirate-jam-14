@@ -332,3 +332,9 @@ autoplay = "idle_down"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_sy38v")
+
+[node name="RandomWalkTimer" type="Timer" parent="."]
+wait_time = 9.0
+autostart = true
+
+[connection signal="timeout" from="RandomWalkTimer" to="." method="_on_random_walk_timer_timeout"]

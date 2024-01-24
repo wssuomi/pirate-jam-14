@@ -15,7 +15,7 @@ texture_filter = 1
 texture = SubResource("AtlasTexture_pq4f5")
 
 [node name="SpawnTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 60.0
 autostart = true
 
 [node name="CheckTimer" type="Timer" parent="."]

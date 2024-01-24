@@ -46,3 +46,7 @@ func _on_check_timer_timeout():
 		change_spawn_cooldown(SpawnCooldowns.MediumPollution)
 	if tile.pollution > 20:
 		change_spawn_cooldown(SpawnCooldowns.HighPollution)
+
+func _ready():
+	change_spawn_cooldown(SpawnCooldowns.Normal)
+	try_spawn_random()

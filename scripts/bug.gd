@@ -11,14 +11,16 @@ const SPEED = 15
 enum Directions {Up, UpRight, UpLeft, Down, DownLeft, DownRight, Left, Right}
 
 var move_queue: Array[Vector2i] = []
-var state: States = States.Guard
+var state: States = States.Idle
 var look_dir: Directions = Directions.Down
+var random_walk_range = 1
+var rng = RandomNumberGenerator.new()
 
-enum States {Guard, Walk, Attack}
+enum States {Idle, Walk, Attack}
 
 func _process(delta):
 	match state:
-		States.Guard:
+		States.Idle:
 			if move_queue != []:
 				if move_queue[0] not in enemies and move_queue[0] not in units and main.is_walkable(main.tiles[move_queue[0]]):
 					state = States.Walk
@@ -63,7 +65,7 @@ func _process(delta):
 			var destination = map.map_to_local(move_queue[0])
 			global_position = global_position.move_toward(destination, SPEED * delta)
 			if global_position == destination:
-				state = States.Guard
+				state = States.Idle
 				move_queue.remove_at(0)
 				match look_dir:
 					Directions.Up:
@@ -82,3 +84,16 @@ func _process(delta):
 						bug_sprite.play("idle_up_right")
 					Directions.DownRight:
 						bug_sprite.play("idle_down_right")
+
+func random_walk():
+	var pos = main.map.local_to_map(self.global_position)
+	var offset = Vector2i(rng.randi_range(-random_walk_range, random_walk_range), rng.randi_range(-random_walk_range,random_walk_range))
+	var tile_pos = pos + offset
+	if tile_pos.x >= 0 and tile_pos.x < main.GRID_WIDTH and tile_pos.y >= 0 and tile_pos.y < main.GRID_HEIGHT:
+		if tile_pos not in enemies and tile_pos not in units and main.is_walkable(main.tiles[tile_pos]):
+			return main.find_path(pos,tile_pos)
+	return []
+
+func _on_random_walk_timer_timeout():
+	if state == States.Idle:
+		move_queue.append_array(random_walk())
