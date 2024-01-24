@@ -55,7 +55,7 @@ func _process(delta):
 							look_dir = Directions.UpLeft
 				else:
 					if len(move_queue) != 1:
-						var path: Array[Vector2i] = main.find_path(map.local_to_map(global_position), move_queue[1])
+						var path: Array[Vector2i] = main.find_path(map.local_to_map(global_position), move_queue[-1])
 						move_queue = path
 					else:
 						move_queue = []
