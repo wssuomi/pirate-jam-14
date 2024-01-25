@@ -108,7 +108,7 @@ func take_damage(damage_amount):
 	if health <= 0:
 		var k = enemies.find_key(self)
 		if k != null:
-			units.erase(k)
+			enemies.erase(k)
 		self.queue_free()
 
 func attack():
