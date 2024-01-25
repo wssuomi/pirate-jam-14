@@ -25,7 +25,7 @@ var ground_tiles: Array[Vector2i] = [
 	Vector2i(0,2),Vector2i(1,2),Vector2i(2,2),Vector2i(3,2),
 	Vector2i(0,3),Vector2i(1,3),Vector2i(2,3),Vector2i(3,3)
 	]
-var resource_tiles: Array[Vector2i] = [Vector2i(4,2),Vector2i(5,2),Vector2i(6,2)]
+var resource_tiles: Array[Vector2i] = [Vector2i(4,2),Vector2i(5,2),Vector2i(6,2),Vector2i(7,2)]
 var decoration_tiles: Array[Vector2i] = [
 	Vector2i(4,0),Vector2i(4,1),Vector2i(5,1),
 	Vector2i(6,1),Vector2i(4,3),Vector2i(5,3)

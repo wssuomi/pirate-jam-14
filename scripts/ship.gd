@@ -57,7 +57,7 @@ const POLLUTION_GENERATION = 2
 @onready var selected_picture = $SideBar/Selected/VBoxContainer/HBoxContainer/Picture
 
 var building_layer: int = 3
-var resource_sprites: Array[Vector2i] = [Vector2i(4,2),Vector2i(5,2),Vector2i(6,2)]
+var resource_sprites: Array[Vector2i] = [Vector2i(4,2),Vector2i(5,2),Vector2i(6,2),Vector2i(7,2)]
 var slab_sprites = [Vector2i(0,4),Vector2i(0,5),Vector2i(0,6),Vector2i(1,5),Vector2i(1,6)]
 var build_state = BuildState.None
 var tiles_texture = preload("res://assets/map_tiles.png")
