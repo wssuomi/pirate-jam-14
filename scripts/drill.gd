@@ -47,6 +47,5 @@ func take_damage(damage_amount):
 			main.tiles[t].building_sprite = Vector2i(-1,-1)
 			main.map.erase_cell(3,t)
 		if k != null:
-			print("building removed")
 			buildings.erase(k)
 		self.queue_free()

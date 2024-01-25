@@ -179,11 +179,11 @@ func _on_menu_pressed():
 	toggle_pause()
 	
 func _input(event):
-	if Input.is_action_just_pressed("select_unit"):
-		print(map.local_to_map(get_global_mouse_position()))
 	if event is InputEventKey:
 		if Input.is_action_just_pressed("pause"):
 			toggle_pause()
+	if paused:
+		return
 	match mode:
 		Modes.Normal:
 			if event is InputEventMouseButton and not mouse_on_ui:

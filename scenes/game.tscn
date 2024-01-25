@@ -1,9 +1,11 @@
-[gd_scene load_steps=21 format=3 uid="uid://6uwpprnvngbp"]
+[gd_scene load_steps=27 format=3 uid="uid://6uwpprnvngbp"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_astxb"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="2_d63gu"]
 [ext_resource type="PackedScene" uid="uid://c0un25vuo1nmm" path="res://scenes/pause_menu.tscn" id="2_nbn5r"]
 [ext_resource type="Texture2D" uid="uid://jm1bhhp8ffsb" path="res://assets/map_tiles.png" id="3_ee80l"]
+[ext_resource type="Texture2D" uid="uid://dr6yxo7p8kuw" path="res://assets/side_menu_background.png" id="4_ngtp2"]
+[ext_resource type="Texture2D" uid="uid://bu4mn6i8vavn" path="res://assets/menu_title_background.png" id="5_lnuxy"]
 [ext_resource type="Texture2D" uid="uid://b4r4fhn87fmlj" path="res://assets/top_bar.png" id="5_wedu5"]
 [ext_resource type="StyleBox" uid="uid://bytjq71w8uwm1" path="res://assets/resource.tres" id="6_c0pvi"]
 [ext_resource type="Texture2D" uid="uid://k75m7nff1uar" path="res://assets/iron_icon.png" id="7_fomvy"]
@@ -12,6 +14,18 @@
 [ext_resource type="Texture2D" uid="uid://dnxkeswg4ckue" path="res://assets/pause_menu_button.png" id="8_etsvh"]
 [ext_resource type="Texture2D" uid="uid://bw6yl05yv6j1w" path="res://assets/copper_icon_0.png" id="10_58yyy"]
 [ext_resource type="Texture2D" uid="uid://bdo11j8h0vwei" path="res://assets/pause_menu_button_pushed.png" id="12_n2fay"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q1l4m"]
+texture = ExtResource("4_ngtp2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xwix6"]
+texture = ExtResource("5_lnuxy")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e25ev"]
+texture = ExtResource("5_lnuxy")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_htcwj"]
+texture = ExtResource("5_lnuxy")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2p2xj"]
 texture = ExtResource("5_wedu5")
@@ -146,13 +160,6 @@ script = ExtResource("2_d63gu")
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("2_nbn5r")]
 visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
@@ -167,36 +174,41 @@ offset_bottom = 645.0
 mouse_filter = 1
 
 [node name="Panel" type="Panel" parent="CanvasLayer/SideBarUnitAction"]
+texture_filter = 1
 layout_mode = 0
 offset_right = 190.0
 offset_bottom = 605.0
 mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxTexture_q1l4m")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SideBarUnitAction"]
 layout_mode = 0
-offset_left = 3.0
-offset_top = 3.0
-offset_right = 187.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 186.0
 offset_bottom = 40.0
 
 [node name="Panel" type="Panel" parent="CanvasLayer/SideBarUnitAction/MarginContainer"]
+texture_filter = 1
 layout_mode = 2
 mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxTexture_xwix6")
 
 [node name="Label" type="Label" parent="CanvasLayer/SideBarUnitAction/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 1
-text = "Action"
+text = "Unit"
 
 [node name="Actions" type="MarginContainer" parent="CanvasLayer/SideBarUnitAction"]
 layout_mode = 0
-offset_left = 3.0
+offset_left = 4.0
 offset_top = 43.0
-offset_right = 187.0
+offset_right = 186.0
 offset_bottom = 602.0
 
 [node name="Panel" type="Panel" parent="CanvasLayer/SideBarUnitAction/Actions"]
+visible = false
 layout_mode = 2
 mouse_filter = 1
 
@@ -204,13 +216,19 @@ mouse_filter = 1
 layout_mode = 2
 
 [node name="Move" type="Button" parent="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxTexture_e25ev")
 text = "Move"
 
 [node name="Attack" type="Button" parent="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxTexture_htcwj")
 text = "Attack"
 
 [node name="TopBar" type="Control" parent="CanvasLayer"]
