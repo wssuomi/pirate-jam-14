@@ -8,6 +8,7 @@ extends CanvasLayer
 @onready var copper_label = $SideBar/Selected/VBoxContainer/HBoxContainer/VBoxContainer/Copper/CopperLabel
 @onready var stone_label = $SideBar/Selected/VBoxContainer/HBoxContainer/VBoxContainer/Stone/StoneLabel
 @onready var iron_label = $SideBar/Selected/VBoxContainer/HBoxContainer/VBoxContainer/Iron/IronLabel
+@onready var coal_label = $SideBar/Selected/VBoxContainer/HBoxContainer/VBoxContainer/Coal/CoalLabel
 @onready var build_timer = $SideBar/Selected/VBoxContainer/BuildTimer
 @onready var build_button = $SideBar/Selected/VBoxContainer/Button
 @onready var units = {
@@ -15,11 +16,12 @@ extends CanvasLayer
 	#main.Units.Tank:TANK,
 }
 @onready var selected_picture = $SideBar/Selected/VBoxContainer/HBoxContainer/Picture
+#stone, iron, copper, coal
 @onready var build_costs: Dictionary = {
-	main.Units.Infantry:[1,1,0],
+	main.Units.Infantry:[0,5,5,3],
 }
 @onready var build_times: Dictionary = {
-	main.Units.Infantry:2,
+	main.Units.Infantry:5,
 }
 @onready var buildings: Dictionary = $"..".buildings
 # per tile
@@ -31,7 +33,7 @@ enum BuildState {None, Building, Finished, Placing}
 var build_state = BuildState.None
 var tiles_texture = preload("res://assets/map_tiles.png")
 var selected_atlas: AtlasTexture = AtlasTexture.new()
-var health: int = 10
+var health: int = 20
 
 func show_menu():
 	side_bar.show()
@@ -93,6 +95,7 @@ func _on_build_button_pressed():
 				main.copper -= cost[2]
 				main.iron -= cost[1]
 				main.stone -= cost[0]
+				main.coal -= cost[3]
 				main.update_labels()
 				build_state = BuildState.Building
 				build_timer.wait_time = build_times[selected_unit]
@@ -108,7 +111,7 @@ func _on_build_button_pressed():
 			main.change_mode_to(main.Modes.BuildingSelected)
 
 func check_resources(cost: Array):
-	if main.copper >= cost[2] and main.iron >= cost[1] and main.stone >= cost[0]:
+	if main.copper >= cost[2] and main.iron >= cost[1] and main.stone >= cost[0] and main.coal >= cost[3]:
 		return true
 	return false
 
@@ -118,6 +121,7 @@ func change_selected_to(unit):
 	copper_label.text = str(floor(costs[2]))
 	iron_label.text = str(floor(costs[1]))
 	stone_label.text = str(floor(costs[0]))
+	coal_label.text = str(floor(costs[3]))
 
 func _ready():
 	change_selected_to(main.Units.Infantry)

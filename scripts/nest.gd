@@ -8,7 +8,7 @@ extends Node
 var rng = RandomNumberGenerator.new()
 var spawn_range = 2
 var state = States.Normal
-var health: int = 3
+var health: int = 15
 
 enum SpawnCooldowns {Normal, LowPollution, MediumPollution, HighPollution, Alert}
 enum States {Normal, Alert}

@@ -28,9 +28,9 @@ const POLLUTION_GENERATION = 2
 @onready var build_costs: Dictionary = {
 	main.Buildings.Slab:[10,1,0,"1x1 grass"],
 	main.Buildings.LargeSlab:[40,4,0,"2x2 grass"],
-	main.Buildings.Factory:[10,20,20,"2x2 slab"],
+	main.Buildings.Factory:[10,25,20,"2x2 slab"],
 	main.Buildings.Drill:[0,10,0,"1x1 ore"],
-	main.Buildings.Ship:[10,10,10,"End Demo"],
+	main.Buildings.Ship:[40,400,200,"End Demo"],
 }
 @onready var build_times: Dictionary = {
 	main.Buildings.Slab:1,

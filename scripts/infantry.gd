@@ -16,7 +16,7 @@ var state: States = States.Guard
 var look_dir: Directions = Directions.Down
 var attack_target: Vector2i = Vector2i(-1,-1)
 var health: int = 10
-var attack_damage = 1
+var attack_damage = 3
 var search_range = 2
 
 enum States {Guard, Walk, Attack}

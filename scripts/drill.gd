@@ -8,7 +8,7 @@ const POLLUTION_GENERATION: int = 1
 const RESOURCE_GENERATION = 10/60. * 5
 
 var resource_type
-var health: int = 10
+var health: int = 15
 
 func show_menu():
 	side_bar.show()
