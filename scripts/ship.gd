@@ -121,6 +121,9 @@ func create_ship(pos, building_type, building):
 func able_to_build(building_type, pos: Vector2i):
 	if not (pos.x >= 0 and pos.x < main.GRID_WIDTH and pos.y >= 0 and pos.y < main.GRID_HEIGHT):
 		return false
+	var fog = main.map.get_cell_atlas_coords(4, pos) 
+	if fog != Vector2i(-1,-1):
+		return false
 	var tile = main.tiles[pos]
 	match building_type:
 		main.Buildings.Slab:

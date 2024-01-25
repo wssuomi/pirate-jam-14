@@ -106,7 +106,6 @@ func _on_random_walk_timer_timeout():
 func take_damage(damage_amount):
 	health -= damage_amount
 	if health <= 0:
-		#enemies.erase(main.map.local_to_map(global_position))
 		var k = enemies.find_key(self)
 		if k != null:
 			units.erase(k)

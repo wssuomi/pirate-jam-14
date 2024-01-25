@@ -62,6 +62,9 @@ func try_spawn_unit(unit_type, pos: Vector2i):
 func able_to_spawn(_unit_type, pos):
 	if not (pos.x >= 0 and pos.x < main.GRID_WIDTH and pos.y >= 0 and pos.y < main.GRID_HEIGHT):
 		return false
+	var fog = main.map.get_cell_atlas_coords(4, pos) 
+	if fog != Vector2i(-1,-1):
+		return false
 	var tile = main.tiles[pos]
 	if tile.building != main.Buildings.Slab and tile.building != main.Buildings.None and tile.building != main.Buildings.LargeSlab:
 		return false
