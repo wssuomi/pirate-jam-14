@@ -62,6 +62,7 @@ var slab_sprites = [Vector2i(0,4),Vector2i(0,5),Vector2i(0,6),Vector2i(1,5),Vect
 var build_state = BuildState.None
 var tiles_texture = preload("res://assets/map_tiles.png")
 var selected_atlas: AtlasTexture = AtlasTexture.new()
+var health = 100
 
 enum BuildState {None, Building, Finished, Placing}
 
@@ -260,3 +261,18 @@ func check_units(pos):
 	if pos in main.units.keys():
 		return true
 	return false
+
+func take_damage(damage_amount):
+	health -= damage_amount
+	if health <= 0:
+		if main.selected_building == self:
+			main.selected_building = null
+			main.change_mode_to(main.Modes.Normal)
+		var k = buildings.find_key(self)
+		for t in k:
+			main.tiles[t].building_sprite = Vector2i(-1,-1)
+			main.map.erase_cell(3,t)
+		if k != null:
+			print("building removed")
+			buildings.erase(k)
+		self.queue_free()
