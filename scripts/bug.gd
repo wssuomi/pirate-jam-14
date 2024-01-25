@@ -3,6 +3,7 @@ extends CharacterBody2D
 @onready var map = $"../Map"
 @onready var enemies: Dictionary = $"..".enemies
 @onready var units: Dictionary = $"..".units
+@onready var buildings: Dictionary = $"..".buildings
 @onready var main = $".."
 @onready var bug_sprite = $BugSprite
 
@@ -114,7 +115,7 @@ func attack():
 	if attack_target == Vector2i(-1,-1):
 		return
 	var pos = main.map.local_to_map(self.global_position)
-	if main.get_distance(main.tiles[pos], main.tiles[attack_target]) >= 14:
+	if main.get_distance(main.tiles[pos], main.tiles[attack_target]) > 14:
 		return
 	if attack_target in units.keys():
 		if is_instance_valid(units[attack_target]):
@@ -122,7 +123,14 @@ func attack():
 		else:
 			attack_target = Vector2i(-1,-1)
 	else:
-		attack_target = Vector2i(-1,-1)
+		for k in buildings:
+			if attack_target in k:
+				if is_instance_valid(buildings[k]):
+					buildings[k].take_damage(attack_damage)
+					print("building attacked")
+				else:
+					attack_target = Vector2i(-1,-1)
+				break
 
 func _on_attack_timer_timeout():
 	attack()
@@ -143,3 +151,20 @@ func _on_search_timer_timeout():
 						var path = main.find_attack_path(main.map.local_to_map(global_position),attack_target,14)
 						move_queue = path
 				return
+			else:
+				for k in buildings:
+					if pos in k:
+						if not is_instance_valid(buildings[k]):
+							continue
+						attack_target = pos
+						if main.get_distance(main.tiles[main.map.local_to_map(global_position)], main.tiles[attack_target]) > 14:
+							if move_queue != []:
+								var path = main.find_attack_path(move_queue[0],attack_target,14)
+								var tmp: Array[Vector2i] = [move_queue[0]]
+								tmp.append_array(path)
+								move_queue = tmp
+							else:
+								var path = main.find_attack_path(main.map.local_to_map(global_position),attack_target,14)
+								move_queue = path
+							print("pathfinding to building")
+						return

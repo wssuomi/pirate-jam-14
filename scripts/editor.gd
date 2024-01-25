@@ -34,7 +34,7 @@ var building_tiles: Array[Vector2i] = [Vector2i(0,4),Vector2i(0,7),Vector2i(1,7)
 var selected_tiles: Array[Vector2i] = ground_tiles
 
 func _on_quit_pressed():
-	get_tree().quit()
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 
 func _input(event):
 	if event is InputEventMouseMotion or event is InputEventMouseButton:
