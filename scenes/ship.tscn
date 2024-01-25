@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d05g5icburkn7"]
+[gd_scene load_steps=16 format=3 uid="uid://d05g5icburkn7"]
 
 [ext_resource type="Script" path="res://scripts/ship.gd" id="1_s7wpo"]
 [ext_resource type="Texture2D" uid="uid://dr6yxo7p8kuw" path="res://assets/side_menu_background.png" id="2_cea1g"]
@@ -33,6 +33,10 @@ region = Rect2(0, 112, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_sodkg"]
 atlas = ExtResource("4_smtok")
 region = Rect2(32, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lvl8a"]
+atlas = ExtResource("4_smtok")
+region = Rect2(32, 79, 32, 32)
 
 [node name="Ship" type="CanvasLayer"]
 script = ExtResource("1_s7wpo")
@@ -274,6 +278,28 @@ text = "Select"
 [node name="Timer" type="Timer" parent="SideBar/BuildOptions/VBoxContainer/Drill"]
 one_shot = true
 
+[node name="RepairShip" type="HBoxContainer" parent="SideBar/BuildOptions/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Picture" type="TextureRect" parent="SideBar/BuildOptions/VBoxContainer/RepairShip"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_lvl8a")
+
+[node name="Button" type="Button" parent="SideBar/BuildOptions/VBoxContainer/RepairShip"]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+mouse_filter = 1
+text = "Select"
+
+[node name="Timer" type="Timer" parent="SideBar/BuildOptions/VBoxContainer/RepairShip"]
+one_shot = true
+
 [connection signal="mouse_entered" from="SideBar" to="." method="_on_side_bar_mouse_entered"]
 [connection signal="mouse_exited" from="SideBar" to="." method="_on_side_bar_mouse_exited"]
 [connection signal="timeout" from="SideBar/Selected/VBoxContainer/BuildTimer" to="." method="_on_build_timer_timeout"]
@@ -282,3 +308,4 @@ one_shot = true
 [connection signal="pressed" from="SideBar/BuildOptions/VBoxContainer/LargeSlab/Button" to="." method="_on_large_button_pressed"]
 [connection signal="pressed" from="SideBar/BuildOptions/VBoxContainer/Factory/Button" to="." method="_on_factory_button_pressed"]
 [connection signal="pressed" from="SideBar/BuildOptions/VBoxContainer/Drill/Button" to="." method="_on_drill_button_pressed"]
+[connection signal="pressed" from="SideBar/BuildOptions/VBoxContainer/RepairShip/Button" to="." method="_on_repair_ship_button_pressed"]

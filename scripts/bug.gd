@@ -129,7 +129,6 @@ func attack():
 			if attack_target in k:
 				if is_instance_valid(buildings[k]):
 					buildings[k].take_damage(attack_damage)
-					print("building attacked")
 				else:
 					attack_target = Vector2i(-1,-1)
 				break
@@ -168,5 +167,4 @@ func _on_search_timer_timeout():
 							else:
 								var path = main.find_attack_path(main.map.local_to_map(global_position),attack_target,14)
 								move_queue = path
-							print("pathfinding to building")
 						return

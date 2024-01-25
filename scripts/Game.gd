@@ -151,21 +151,13 @@ func _ready():
 	ship.create_ship(pos,Buildings.Ship,ship)
 	draw_map_tiles()
 	update_labels()
-	#spawn_unit(Units.Infantry, Vector2i(10,15))
-	#spawn_unit(Units.Infantry, Vector2i(32,25))
-	#spawn_unit(Units.Infantry, Vector2i(60,60))
-	#spawn_enemy(Enemies.Bug, Vector2i(16,16))
-	#spawn_enemy(Enemies.Nest, Vector2i(10,10))
-	#enemies.values()[0].move_queue.append_array(find_path(Vector2i(16,16),Vector2i(0,0)))
-	#enemies.values()[0].move_queue.append_array(find_path(Vector2i(0,0),Vector2i(10,0)))
-	#enemies.values()[0].move_queue.append_array(find_path(Vector2i(10,0),Vector2i(16,10)))
 	for n in nests:
 		spawn_enemy(Enemies.Nest, n)
 	for b in start_bugs:
 		spawn_enemy(Enemies.Bug, b)
 	for u in start_units:
 		spawn_unit(Units.Infantry, u)
-	ship.try_create_building(Buildings.Drill, Vector2i(35,35))
+	ship.try_create_building(Buildings.Drill, Vector2i(35,35), true)
 	
 func draw_map_tiles() -> void:
 	for tile in tiles.values():
@@ -330,8 +322,6 @@ func spawn_enemy(enemy_type: Enemies, pos: Vector2i):
 			instance.position = map.map_to_local(pos)
 			add_child(instance)
 			enemies[pos] = instance
-	# remove after done
-	#clear_fog_around_pos(pos)
 
 func select_unit(pos: Vector2i):
 	selected_unit = units[pos]

@@ -30,18 +30,21 @@ const POLLUTION_GENERATION = 2
 	main.Buildings.LargeSlab:[40,4,0,"2x2 grass"],
 	main.Buildings.Factory:[10,20,20,"2x2 slab"],
 	main.Buildings.Drill:[0,10,0,"1x1 ore"],
+	main.Buildings.Ship:[10,10,10,"End Demo"],
 }
 @onready var build_times: Dictionary = {
 	main.Buildings.Slab:1,
 	main.Buildings.LargeSlab:4,
 	main.Buildings.Factory:3,
 	main.Buildings.Drill:2,
+	main.Buildings.Ship:2,
 }
 @onready var preview_sizes: Dictionary = {
 	main.Buildings.Slab:16,
 	main.Buildings.LargeSlab:32,
 	main.Buildings.Factory:32,
 	main.Buildings.Drill:16,
+	main.Buildings.Ship:32,
 }
 @onready var selected_building = main.Buildings.None
 @onready var copper_label = $SideBar/Selected/VBoxContainer/HBoxContainer/VBoxContainer/Copper/CopperLabel
@@ -72,12 +75,12 @@ func show_menu():
 func hide_menu():
 	side_bar.hide()
 
-func try_create_building(building_type, pos: Vector2i):
+func try_create_building(building_type, pos: Vector2i, ignore_fog=false):
 	var required_offsets = tile_requirements[building_type]
 	var building_pos = []
 	for tile_offset in required_offsets:
 		var tile_pos = pos + tile_offset
-		if not able_to_build(building_type, tile_pos):
+		if not able_to_build(building_type, tile_pos, ignore_fog):
 			return false
 		if check_units(tile_pos):
 			return false
@@ -118,11 +121,11 @@ func create_ship(pos, building_type, building):
 		main.map.set_cell(building_layer, tile.grid_position, 0, tile.building_sprite)
 	main.buildings[building_pos] = building
 
-func able_to_build(building_type, pos: Vector2i):
+func able_to_build(building_type, pos: Vector2i, ignore_fog=false):
 	if not (pos.x >= 0 and pos.x < main.GRID_WIDTH and pos.y >= 0 and pos.y < main.GRID_HEIGHT):
 		return false
 	var fog = main.map.get_cell_atlas_coords(4, pos) 
-	if fog != Vector2i(-1,-1):
+	if fog != Vector2i(-1,-1) and not ignore_fog:
 		return false
 	var tile = main.tiles[pos]
 	match building_type:
@@ -143,6 +146,8 @@ func able_to_build(building_type, pos: Vector2i):
 				return false
 			if not tile.resource_sprite in resource_sprites:
 				return false
+			return true
+		main.Buildings.Ship:
 			return true
 		_:
 			print("Unknown Building")
@@ -243,6 +248,8 @@ func check_resources(cost: Array):
 	return false
 
 func _on_build_timer_timeout():
+	if selected_building == main.Buildings.Ship:
+		get_tree().change_scene_to_file("res://scenes/end_screen.tscn")
 	build_button.text = "Place"
 	build_state = BuildState.Finished
 
@@ -276,6 +283,16 @@ func take_damage(damage_amount):
 			main.tiles[t].building_sprite = Vector2i(-1,-1)
 			main.map.erase_cell(3,t)
 		if k != null:
-			print("building removed")
 			buildings.erase(k)
 		self.queue_free()
+
+func _on_repair_ship_button_pressed():
+	if build_state == BuildState.None:
+		var building_type = main.Buildings.Ship
+		var size = preview_sizes[building_type]
+		selected_atlas.region = Rect2(
+			building_sprites[building_type][0].x * 16,
+			building_sprites[building_type][0].y * 16,
+			size,size
+		)
+		change_selected_to(main.Buildings.Ship)
