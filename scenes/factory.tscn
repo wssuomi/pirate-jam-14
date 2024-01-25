@@ -32,6 +32,7 @@ region = Rect2(0, 0, 16, 16)
 script = ExtResource("1_hivjp")
 
 [node name="SideBar" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 959.0
