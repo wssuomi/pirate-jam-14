@@ -153,7 +153,8 @@ border_color = Color(0, 0, 0, 1)
 script = ExtResource("1_astxb")
 
 [node name="Camera" type="Camera2D" parent="."]
-position = Vector2(576, 324)
+position = Vector2(548, 532)
+zoom = Vector2(3, 3)
 script = ExtResource("2_d63gu")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
