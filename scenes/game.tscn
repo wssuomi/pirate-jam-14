@@ -231,6 +231,14 @@ mouse_filter = 1
 theme_override_styles/normal = SubResource("StyleBoxTexture_htcwj")
 text = "Attack"
 
+[node name="Guard" type="Button" parent="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxTexture_htcwj")
+text = "Guard"
+
 [node name="TopBar" type="Control" parent="CanvasLayer"]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 3
@@ -443,6 +451,7 @@ autostart = true
 [connection signal="mouse_exited" from="CanvasLayer/SideBarUnitAction" to="." method="_on_mouse_exited_ui"]
 [connection signal="pressed" from="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/Move" to="." method="_on_move_pressed"]
 [connection signal="pressed" from="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/Attack" to="." method="_on_attack_pressed"]
+[connection signal="pressed" from="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/Guard" to="." method="_on_guard_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/TopBar" to="." method="_on_mouse_entered_ui"]
 [connection signal="mouse_exited" from="CanvasLayer/TopBar" to="." method="_on_mouse_exited_ui"]
 [connection signal="pressed" from="CanvasLayer/TopBar/Menu" to="." method="_on_menu_pressed"]

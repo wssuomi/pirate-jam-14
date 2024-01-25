@@ -138,6 +138,8 @@ func load_map():
 	return loaded_tiles
 
 func _ready():
+	paused = false
+	Engine.time_scale = 1
 	fill_fog()
 	var pos = Vector2i(int(GRID_WIDTH / 2.),int(GRID_HEIGHT / 2.))
 	preview_atlas.atlas = tiles_texture
@@ -581,3 +583,10 @@ func _on_attack_pressed():
 		Modes.MoveUnit:
 			change_mode_to(Modes.UnitSelected)
 			attack.text = "Attack"
+
+func _on_guard_pressed():
+	match mode:
+		Modes.UnitSelected:
+			selected_unit.attack_target = Vector2i(-1,-1)
+			if selected_unit.move_queue != []:
+				selected_unit.move_queue = [selected_unit.move_queue[0]]

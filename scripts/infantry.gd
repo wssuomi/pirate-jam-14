@@ -11,7 +11,7 @@ const SPEED = 10
 
 enum Directions {Up, Down, Left, Right}
 
-var move_queue: Array[Vector2i] = []
+var move_queue: Array = []
 var state: States = States.Guard
 var look_dir: Directions = Directions.Down
 var attack_target: Vector2i = Vector2i(-1,-1)
