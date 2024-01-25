@@ -38,10 +38,10 @@ var ground_layer: int = 0
 var decoration_layer: int = 1
 var resource_layer: int = 2
 var building_layer: int = 3
-var copper = 99
-var coal = 99
-var stone = 99
-var iron = 99
+var copper = 10
+var coal = 10
+var stone = 10
+var iron = 10
 var mode = 0
 var mouse_on_ui: bool = false
 var selected_unit = null
@@ -52,6 +52,43 @@ var tiles_need_update: Array[Tile] = []
 var tiles_with_pollution: Dictionary = {}
 var pollution_tile_counter: int = 0
 var ship
+var start_units = [
+Vector2i(34, 31),
+Vector2i(32, 35),
+Vector2i(36, 33),
+Vector2i(31, 32)
+]
+var start_bugs = [
+Vector2i(43, 38),
+Vector2i(39, 29),
+Vector2i(27, 27),
+Vector2i(23, 36),
+Vector2i(33, 43)
+]
+var nests = [
+Vector2i(6, 8),
+Vector2i(9, 14),
+Vector2i(12, 12),
+Vector2i(27, 9),
+Vector2i(39, 10),
+Vector2i(54, 8),
+Vector2i(11, 22),
+Vector2i(24, 19),
+Vector2i(36, 22),
+Vector2i(54, 21),
+Vector2i(14, 31),
+Vector2i(50, 30),
+Vector2i(7, 44),
+Vector2i(50, 43),
+Vector2i(9, 52),
+Vector2i(18, 50),
+Vector2i(39, 51),
+Vector2i(58, 54),
+Vector2i(9, 58),
+Vector2i(14, 61),
+Vector2i(24, 60),
+Vector2i(50, 61),
+]
 
 signal building_placed
 signal unit_placed
@@ -114,14 +151,21 @@ func _ready():
 	ship.create_ship(pos,Buildings.Ship,ship)
 	draw_map_tiles()
 	update_labels()
-	spawn_unit(Units.Infantry, Vector2i(10,15))
-	spawn_unit(Units.Infantry, Vector2i(32,25))
-	spawn_unit(Units.Infantry, Vector2i(60,60))
-	spawn_enemy(Enemies.Bug, Vector2i(16,16))
-	spawn_enemy(Enemies.Nest, Vector2i(10,10))
-	enemies.values()[0].move_queue.append_array(find_path(Vector2i(16,16),Vector2i(0,0)))
-	enemies.values()[0].move_queue.append_array(find_path(Vector2i(0,0),Vector2i(10,0)))
-	enemies.values()[0].move_queue.append_array(find_path(Vector2i(10,0),Vector2i(16,10)))
+	#spawn_unit(Units.Infantry, Vector2i(10,15))
+	#spawn_unit(Units.Infantry, Vector2i(32,25))
+	#spawn_unit(Units.Infantry, Vector2i(60,60))
+	#spawn_enemy(Enemies.Bug, Vector2i(16,16))
+	#spawn_enemy(Enemies.Nest, Vector2i(10,10))
+	#enemies.values()[0].move_queue.append_array(find_path(Vector2i(16,16),Vector2i(0,0)))
+	#enemies.values()[0].move_queue.append_array(find_path(Vector2i(0,0),Vector2i(10,0)))
+	#enemies.values()[0].move_queue.append_array(find_path(Vector2i(10,0),Vector2i(16,10)))
+	for n in nests:
+		spawn_enemy(Enemies.Nest, n)
+	for b in start_bugs:
+		spawn_enemy(Enemies.Bug, b)
+	for u in start_units:
+		spawn_unit(Units.Infantry, u)
+	ship.try_create_building(Buildings.Drill, Vector2i(35,35))
 	
 func draw_map_tiles() -> void:
 	for tile in tiles.values():
@@ -143,6 +187,8 @@ func _on_menu_pressed():
 	toggle_pause()
 	
 func _input(event):
+	if Input.is_action_just_pressed("select_unit"):
+		print(map.local_to_map(get_global_mouse_position()))
 	if event is InputEventKey:
 		if Input.is_action_just_pressed("pause"):
 			toggle_pause()
@@ -285,7 +331,7 @@ func spawn_enemy(enemy_type: Enemies, pos: Vector2i):
 			add_child(instance)
 			enemies[pos] = instance
 	# remove after done
-	clear_fog_around_pos(pos)
+	#clear_fog_around_pos(pos)
 
 func select_unit(pos: Vector2i):
 	selected_unit = units[pos]

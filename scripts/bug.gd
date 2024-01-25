@@ -34,7 +34,7 @@ func _process(delta):
 					var angle = Vector2(map.local_to_map(global_position)).angle_to_point(move_queue[0])
 					angle = int(angle * 180 / PI) + 135
 					angle = int((((angle - 0) * (8 - 0)) / (360. - 0)) + 0)
-					main.clear_fog_around_pos(move_queue[0])
+					#main.clear_fog_around_pos(move_queue[0])
 					match angle:
 						1:
 							bug_sprite.play("walk_up")
@@ -106,7 +106,10 @@ func _on_random_walk_timer_timeout():
 func take_damage(damage_amount):
 	health -= damage_amount
 	if health <= 0:
-		enemies.erase(main.map.local_to_map(global_position))
+		#enemies.erase(main.map.local_to_map(global_position))
+		var k = enemies.find_key(self)
+		if k != null:
+			units.erase(k)
 		self.queue_free()
 
 func attack():

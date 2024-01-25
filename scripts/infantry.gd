@@ -96,7 +96,9 @@ func take_damage(damage_amount):
 		if main.selected_unit == self:
 			main.deselect_unit()
 			main.change_mode_to(main.Modes.Normal)
-		units.erase(main.map.local_to_map(global_position))
+		var k = units.find_key(self)
+		if k != null:
+			units.erase(k)
 		self.queue_free()
 
 func _on_attack_timer_timeout():
