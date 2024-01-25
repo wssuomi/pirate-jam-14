@@ -475,7 +475,7 @@ func spread_single_tile_pollution(delta):
 			pollution_tile_counter = 0
 		var tile: Tile = tiles_with_pollution.values()[pollution_tile_counter]
 		pollution_tile_counter += 1
-		if tile.pollution < 4:
+		if tile.pollution < 1:
 			return
 		var possible_neighbors = [
 			tile.grid_position + Vector2i(-1,0),
@@ -488,12 +488,12 @@ func spread_single_tile_pollution(delta):
 			var spread_to_tile: Tile = tiles[spread_to_pos]
 			if spread_to_tile.pollution < tile.pollution:
 				var spread_amount = int(tile.pollution / POLLUTION_SPREAD_RATE) * delta
-				spread_to_tile.pollution += spread_amount
+				spread_to_tile.pollution += spread_amount * 10
 				tile.pollution -= spread_amount
 				if spread_to_tile not in tiles_with_pollution:
 					tiles_with_pollution[spread_to_pos] = spread_to_tile
 				#print("spreading ", spread_amount, " from ", tile.grid_position, " to ", spread_to_tile.grid_position)	
-		if tile.pollution >= 5 and tile.pollution < 20 and tile.ground_sprite.y != 1:
+		if tile.pollution > 0 and tile.pollution < 20 and tile.ground_sprite.y != 1:
 			tile.ground_sprite.y = 1
 			if tile not in tiles_need_update:
 				tiles_need_update.append(tile)
