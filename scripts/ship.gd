@@ -265,7 +265,15 @@ func update_preview_tile(building_type):
 func _ready():
 	selected_atlas.atlas = tiles_texture
 	selected_picture.texture = selected_atlas
-	change_selected_to(main.Buildings.Slab)
+	if build_state == BuildState.None:
+		var building_type = main.Buildings.Slab
+		var size = preview_sizes[building_type]
+		selected_atlas.region = Rect2(
+			building_sprites[building_type][0].x * 16,
+			building_sprites[building_type][0].y * 16,
+			size,size
+		)
+		change_selected_to(main.Buildings.Slab)
 
 func check_units(pos):
 	if pos in main.units.keys():
