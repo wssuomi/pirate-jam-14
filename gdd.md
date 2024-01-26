@@ -28,7 +28,7 @@ creatures that are not happy with the player's base and will try to destroy it.
 
 ## Platform
 
-The game is developed for Windows
+The game is developed for Windows and Linux
 
 ## Development Software
 
