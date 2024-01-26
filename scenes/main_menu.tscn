@@ -1,28 +1,35 @@
-[gd_scene load_steps=16 format=3 uid="uid://cim2u0ygu4p7r"]
+[gd_scene load_steps=19 format=3 uid="uid://cim2u0ygu4p7r"]
 
 [ext_resource type="Script" path="res://scripts/MainMenu.gd" id="1_kyg05"]
 [ext_resource type="Texture2D" uid="uid://bu4mn6i8vavn" path="res://assets/menu_title_background.png" id="2_66mmp"]
 [ext_resource type="Texture2D" uid="uid://jm1bhhp8ffsb" path="res://assets/map_tiles.png" id="2_ylp3d"]
 [ext_resource type="Texture2D" uid="uid://blbghw1potmm" path="res://assets/unit_spritesheet.png" id="3_bxwhw"]
+[ext_resource type="Texture2D" uid="uid://thvbtjv8n7yc" path="res://assets/button_pressed.png" id="3_deitt"]
 [ext_resource type="Texture2D" uid="uid://dbvaqb4vb16xc" path="res://assets/bug_spritesheet.png" id="4_kytr4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mfyxn"]
 texture = ExtResource("2_66mmp")
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3sbyr"]
+texture = ExtResource("3_deitt")
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wg76m"]
-texture = ExtResource("2_66mmp")
+texture = ExtResource("3_deitt")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l3g4u"]
-texture = ExtResource("2_66mmp")
+texture = ExtResource("3_deitt")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vg4lc"]
 texture = ExtResource("2_66mmp")
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3i2c5"]
+texture = ExtResource("3_deitt")
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rd5bq"]
-texture = ExtResource("2_66mmp")
+texture = ExtResource("3_deitt")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sxna6"]
-texture = ExtResource("2_66mmp")
+texture = ExtResource("3_deitt")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_aqpwj"]
 texture = ExtResource("2_ylp3d")
@@ -204,6 +211,7 @@ custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 mouse_filter = 1
 theme_override_styles/normal = SubResource("StyleBoxTexture_mfyxn")
+theme_override_styles/hover = SubResource("StyleBoxTexture_3sbyr")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_wg76m")
 theme_override_styles/focus = SubResource("StyleBoxTexture_l3g4u")
 text = "Play"
@@ -221,6 +229,7 @@ custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 mouse_filter = 1
 theme_override_styles/normal = SubResource("StyleBoxTexture_vg4lc")
+theme_override_styles/hover = SubResource("StyleBoxTexture_3i2c5")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_rd5bq")
 theme_override_styles/focus = SubResource("StyleBoxTexture_sxna6")
 text = "Quit"

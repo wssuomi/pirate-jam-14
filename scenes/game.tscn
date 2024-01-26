@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://6uwpprnvngbp"]
+[gd_scene load_steps=37 format=3 uid="uid://6uwpprnvngbp"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_astxb"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="2_d63gu"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bu4mn6i8vavn" path="res://assets/menu_title_background.png" id="5_lnuxy"]
 [ext_resource type="Texture2D" uid="uid://b4r4fhn87fmlj" path="res://assets/top_bar.png" id="5_wedu5"]
 [ext_resource type="StyleBox" uid="uid://bytjq71w8uwm1" path="res://assets/resource.tres" id="6_c0pvi"]
+[ext_resource type="Texture2D" uid="uid://thvbtjv8n7yc" path="res://assets/button_pressed.png" id="6_wpa6q"]
 [ext_resource type="Texture2D" uid="uid://k75m7nff1uar" path="res://assets/iron_icon.png" id="7_fomvy"]
 [ext_resource type="Texture2D" uid="uid://bb4qt77gf68jt" path="res://assets/bush_icon_0.png" id="7_lvbrs"]
 [ext_resource type="Texture2D" uid="uid://drcew5y3os6os" path="res://assets/copper_icon_1.png" id="8_e2mof"]
@@ -24,8 +25,35 @@ texture = ExtResource("5_lnuxy")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e25ev"]
 texture = ExtResource("5_lnuxy")
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a07yq"]
+texture = ExtResource("6_wpa6q")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uyq2u"]
+texture = ExtResource("6_wpa6q")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kharl"]
+texture = ExtResource("6_wpa6q")
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_htcwj"]
 texture = ExtResource("5_lnuxy")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rrrlj"]
+texture = ExtResource("6_wpa6q")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8fvch"]
+texture = ExtResource("6_wpa6q")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a7s4n"]
+texture = ExtResource("6_wpa6q")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b4wy7"]
+texture = ExtResource("6_wpa6q")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xqwpl"]
+texture = ExtResource("6_wpa6q")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1x8de"]
+texture = ExtResource("6_wpa6q")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2p2xj"]
 texture = ExtResource("5_wedu5")
@@ -222,6 +250,9 @@ custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 mouse_filter = 1
 theme_override_styles/normal = SubResource("StyleBoxTexture_e25ev")
+theme_override_styles/hover = SubResource("StyleBoxTexture_a07yq")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_uyq2u")
+theme_override_styles/focus = SubResource("StyleBoxTexture_kharl")
 text = "Move"
 
 [node name="Attack" type="Button" parent="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer"]
@@ -230,6 +261,9 @@ custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 mouse_filter = 1
 theme_override_styles/normal = SubResource("StyleBoxTexture_htcwj")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rrrlj")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_8fvch")
+theme_override_styles/focus = SubResource("StyleBoxTexture_a7s4n")
 text = "Attack"
 
 [node name="Guard" type="Button" parent="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer"]
@@ -238,6 +272,9 @@ custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 mouse_filter = 1
 theme_override_styles/normal = SubResource("StyleBoxTexture_htcwj")
+theme_override_styles/hover = SubResource("StyleBoxTexture_b4wy7")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_xqwpl")
+theme_override_styles/focus = SubResource("StyleBoxTexture_1x8de")
 text = "Guard"
 
 [node name="TopBar" type="Control" parent="CanvasLayer"]

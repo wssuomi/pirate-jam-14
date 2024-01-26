@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d05g5icburkn7"]
+[gd_scene load_steps=32 format=3 uid="uid://d05g5icburkn7"]
 
 [ext_resource type="Script" path="res://scripts/ship.gd" id="1_s7wpo"]
 [ext_resource type="Texture2D" uid="uid://dr6yxo7p8kuw" path="res://assets/side_menu_background.png" id="2_cea1g"]
@@ -7,6 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://drcew5y3os6os" path="res://assets/copper_icon_1.png" id="5_f17nr"]
 [ext_resource type="Texture2D" uid="uid://bb4qt77gf68jt" path="res://assets/bush_icon_0.png" id="6_my45h"]
 [ext_resource type="Texture2D" uid="uid://k75m7nff1uar" path="res://assets/iron_icon.png" id="7_sxacv"]
+[ext_resource type="Texture2D" uid="uid://uj2ksrgqe2uy" path="res://assets/build_button.png" id="8_7xxvr"]
+[ext_resource type="Texture2D" uid="uid://dqjvyc8hfkiv6" path="res://assets/build_button_pushed.png" id="9_uhuxs"]
+[ext_resource type="Texture2D" uid="uid://c1uypf7pnj8xh" path="res://assets/select_button.png" id="10_nwr4g"]
+[ext_resource type="Texture2D" uid="uid://b2jlfcsy4cjow" path="res://assets/select_button_pushed.png" id="11_ng4le"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ahim5"]
 texture = ExtResource("2_cea1g")
@@ -22,9 +26,45 @@ region = Rect2(0, 64, 16, 16)
 atlas = ExtResource("4_smtok")
 region = Rect2(0, 64, 16, 16)
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_60ppj"]
+texture = ExtResource("8_7xxvr")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4txou"]
+texture = ExtResource("9_uhuxs")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s6w1r"]
+texture = ExtResource("9_uhuxs")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oip40"]
+texture = ExtResource("9_uhuxs")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ko4rn"]
+texture = ExtResource("10_nwr4g")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fw284"]
+texture = ExtResource("11_ng4le")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rxcgy"]
+texture = ExtResource("11_ng4le")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5powj"]
+texture = ExtResource("11_ng4le")
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_2x318"]
 atlas = ExtResource("4_smtok")
 region = Rect2(0, 80, 32, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mu8xd"]
+texture = ExtResource("10_nwr4g")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i7ly3"]
+texture = ExtResource("11_ng4le")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mdmnk"]
+texture = ExtResource("11_ng4le")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e0llc"]
+texture = ExtResource("11_ng4le")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_it00u"]
 atlas = ExtResource("4_smtok")
@@ -176,8 +216,14 @@ text = "2x2"
 one_shot = true
 
 [node name="Button" type="Button" parent="SideBar/Selected/VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 31)
 layout_mode = 2
 mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxTexture_60ppj")
+theme_override_styles/hover = SubResource("StyleBoxTexture_4txou")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_s6w1r")
+theme_override_styles/focus = SubResource("StyleBoxTexture_oip40")
 text = "Build"
 
 [node name="BuildOptions" type="MarginContainer" parent="SideBar"]
@@ -204,9 +250,14 @@ size_flags_vertical = 4
 texture = SubResource("AtlasTexture_gn310")
 
 [node name="Button" type="Button" parent="SideBar/BuildOptions/VBoxContainer/Slab"]
+texture_filter = 1
 custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
 mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxTexture_ko4rn")
+theme_override_styles/hover = SubResource("StyleBoxTexture_fw284")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_rxcgy")
+theme_override_styles/focus = SubResource("StyleBoxTexture_5powj")
 text = "Select"
 
 [node name="Timer" type="Timer" parent="SideBar/BuildOptions/VBoxContainer/Slab"]
@@ -226,9 +277,14 @@ size_flags_vertical = 4
 texture = SubResource("AtlasTexture_2x318")
 
 [node name="Button" type="Button" parent="SideBar/BuildOptions/VBoxContainer/LargeSlab"]
+texture_filter = 1
 custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
 mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxTexture_mu8xd")
+theme_override_styles/hover = SubResource("StyleBoxTexture_i7ly3")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_mdmnk")
+theme_override_styles/focus = SubResource("StyleBoxTexture_e0llc")
 text = "Select"
 
 [node name="Timer" type="Timer" parent="SideBar/BuildOptions/VBoxContainer/LargeSlab"]
@@ -248,9 +304,14 @@ size_flags_vertical = 4
 texture = SubResource("AtlasTexture_it00u")
 
 [node name="Button" type="Button" parent="SideBar/BuildOptions/VBoxContainer/Factory"]
+texture_filter = 1
 custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
 mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxTexture_mu8xd")
+theme_override_styles/hover = SubResource("StyleBoxTexture_i7ly3")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_mdmnk")
+theme_override_styles/focus = SubResource("StyleBoxTexture_e0llc")
 text = "Select"
 
 [node name="Timer" type="Timer" parent="SideBar/BuildOptions/VBoxContainer/Factory"]
@@ -270,9 +331,14 @@ size_flags_vertical = 4
 texture = SubResource("AtlasTexture_sodkg")
 
 [node name="Button" type="Button" parent="SideBar/BuildOptions/VBoxContainer/Drill"]
+texture_filter = 1
 custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
 mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxTexture_mu8xd")
+theme_override_styles/hover = SubResource("StyleBoxTexture_i7ly3")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_mdmnk")
+theme_override_styles/focus = SubResource("StyleBoxTexture_e0llc")
 text = "Select"
 
 [node name="Timer" type="Timer" parent="SideBar/BuildOptions/VBoxContainer/Drill"]
@@ -292,9 +358,14 @@ size_flags_vertical = 4
 texture = SubResource("AtlasTexture_lvl8a")
 
 [node name="Button" type="Button" parent="SideBar/BuildOptions/VBoxContainer/RepairShip"]
+texture_filter = 1
 custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
 mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxTexture_mu8xd")
+theme_override_styles/hover = SubResource("StyleBoxTexture_i7ly3")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_mdmnk")
+theme_override_styles/focus = SubResource("StyleBoxTexture_e0llc")
 text = "Select"
 
 [node name="Timer" type="Timer" parent="SideBar/BuildOptions/VBoxContainer/RepairShip"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c0un25vuo1nmm"]
+[gd_scene load_steps=13 format=3 uid="uid://c0un25vuo1nmm"]
 
 [ext_resource type="Script" path="res://scripts/PauseMenu.gd" id="1_npk1t"]
 [ext_resource type="Texture2D" uid="uid://bu4mn6i8vavn" path="res://assets/menu_title_background.png" id="2_mnvcc"]
+[ext_resource type="Texture2D" uid="uid://thvbtjv8n7yc" path="res://assets/button_pressed.png" id="3_81lti"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q5h4u"]
 texture = ExtResource("2_mnvcc")
@@ -9,8 +10,26 @@ texture = ExtResource("2_mnvcc")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ptxyc"]
 texture = ExtResource("2_mnvcc")
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wv33d"]
+texture = ExtResource("3_81lti")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y1u38"]
+texture = ExtResource("3_81lti")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vmv6s"]
+texture = ExtResource("3_81lti")
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hr246"]
 texture = ExtResource("2_mnvcc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5vcmg"]
+texture = ExtResource("3_81lti")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_amxwm"]
+texture = ExtResource("3_81lti")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p6pvy"]
+texture = ExtResource("3_81lti")
 
 [node name="PauseMenu" type="Control"]
 layout_mode = 3
@@ -69,6 +88,9 @@ layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 1
 theme_override_styles/normal = SubResource("StyleBoxTexture_ptxyc")
+theme_override_styles/hover = SubResource("StyleBoxTexture_wv33d")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_y1u38")
+theme_override_styles/focus = SubResource("StyleBoxTexture_vmv6s")
 text = "Main Menu"
 
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
@@ -78,6 +100,9 @@ layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 1
 theme_override_styles/normal = SubResource("StyleBoxTexture_hr246")
+theme_override_styles/hover = SubResource("StyleBoxTexture_5vcmg")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_amxwm")
+theme_override_styles/focus = SubResource("StyleBoxTexture_p6pvy")
 text = "Quit"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Continue" to="." method="_on_continue_pressed"]
