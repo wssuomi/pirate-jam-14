@@ -580,7 +580,8 @@ func _on_attack_pressed():
 		Modes.UnitSelected:
 			change_mode_to(Modes.AttackWithUnit)
 			attack.text = "Cancel"
-		Modes.MoveUnit:
+		Modes.AttackWithUnit:
+			print("cancelling")
 			change_mode_to(Modes.UnitSelected)
 			attack.text = "Attack"
 
