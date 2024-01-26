@@ -1,8 +1,10 @@
-[gd_scene load_steps=47 format=3 uid="uid://crg3fixuwquxk"]
+[gd_scene load_steps=49 format=3 uid="uid://crg3fixuwquxk"]
 
 [ext_resource type="Texture2D" uid="uid://blbghw1potmm" path="res://assets/unit_spritesheet.png" id="1_0nlkj"]
 [ext_resource type="Script" path="res://scripts/infantry.gd" id="1_5qvgc"]
 [ext_resource type="Texture2D" uid="uid://cen52okurn46p" path="res://assets/selected_unit_spritesheet.png" id="3_6lbyc"]
+[ext_resource type="AudioStream" uid="uid://d1f2adv08ykxv" path="res://assets/hitHurt.wav" id="4_670dy"]
+[ext_resource type="AudioStream" uid="uid://cilym54y4l8xl" path="res://assets/laserShoot.wav" id="5_1g1ai"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c3psy"]
 atlas = ExtResource("1_0nlkj")
@@ -394,6 +396,12 @@ autostart = true
 [node name="IdleTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_670dy")
+
+[node name="Shoot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_1g1ai")
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="SearchTimer" to="." method="_on_search_timer_timeout"]

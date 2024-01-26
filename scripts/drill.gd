@@ -3,6 +3,8 @@ extends CanvasLayer
 @onready var main = $".."
 @onready var side_bar = $SideBar
 @onready var buildings: Dictionary = $"..".buildings
+@onready var destroyed = $destroyed
+@onready var hit = $Hit
 
 const POLLUTION_GENERATION: int = 1
 const RESOURCE_GENERATION = 10/60. * 5
@@ -47,5 +49,8 @@ func take_damage(damage_amount):
 			main.tiles[t].building_sprite = Vector2i(-1,-1)
 			main.map.erase_cell(3,t)
 		if k != null:
-			buildings.erase(k)
+			main.buildings.erase(k)
+		destroyed.play()
 		self.queue_free()
+	else:
+		hit.play()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dj2xxodlriqlb"]
+[gd_scene load_steps=29 format=3 uid="uid://dj2xxodlriqlb"]
 
 [ext_resource type="Script" path="res://scripts/factory.gd" id="1_hivjp"]
 [ext_resource type="Texture2D" uid="uid://dr6yxo7p8kuw" path="res://assets/side_menu_background.png" id="2_lbbah"]
@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://dqjvyc8hfkiv6" path="res://assets/build_button_pushed.png" id="10_i3yhp"]
 [ext_resource type="Texture2D" uid="uid://c1uypf7pnj8xh" path="res://assets/select_button.png" id="11_4guok"]
 [ext_resource type="Texture2D" uid="uid://b2jlfcsy4cjow" path="res://assets/select_button_pushed.png" id="12_uvbaa"]
+[ext_resource type="AudioStream" uid="uid://cbscw1wfv443r" path="res://assets/explosion.wav" id="14_hijdd"]
+[ext_resource type="AudioStream" uid="uid://sbw5wausvfns" path="res://assets/explosion_2.wav" id="15_g6s6b"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tndy0"]
 texture = ExtResource("2_lbbah")
@@ -268,6 +270,12 @@ text = "Select"
 
 [node name="Timer" type="Timer" parent="SideBar/BuildOptions/VBoxContainer/Tank"]
 one_shot = true
+
+[node name="destroyed" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_hijdd")
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_g6s6b")
 
 [connection signal="mouse_entered" from="SideBar" to="." method="_on_side_bar_mouse_entered"]
 [connection signal="mouse_exited" from="SideBar" to="." method="_on_side_bar_mouse_exited"]

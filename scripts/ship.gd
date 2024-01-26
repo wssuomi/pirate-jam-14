@@ -58,6 +58,8 @@ const POLLUTION_GENERATION = 2
 	main.Buildings.Drill:DRILL,
 }
 @onready var selected_picture = $SideBar/Selected/VBoxContainer/HBoxContainer/Picture
+@onready var destroyed = $destroyed
+@onready var hit = $Hit
 
 var building_layer: int = 3
 var resource_sprites: Array[Vector2i] = [Vector2i(4,2),Vector2i(5,2),Vector2i(6,2),Vector2i(7,2)]
@@ -65,7 +67,7 @@ var slab_sprites = [Vector2i(0,4),Vector2i(0,5),Vector2i(0,6),Vector2i(1,5),Vect
 var build_state = BuildState.None
 var tiles_texture = preload("res://assets/map_tiles.png")
 var selected_atlas: AtlasTexture = AtlasTexture.new()
-var health = 100
+var health = 10
 
 enum BuildState {None, Building, Finished, Placing}
 
@@ -109,6 +111,7 @@ func try_create_building(building_type, pos: Vector2i, ignore_fog=false):
 	return true
 
 func create_ship(pos, building_type, building):
+	print(pos)
 	var required_offsets = tile_requirements[building_type]
 	var building_pos = []
 	for tile_offset in required_offsets:
@@ -120,6 +123,7 @@ func create_ship(pos, building_type, building):
 		main.clear_fog_around_pos(tile.grid_position)
 		main.map.set_cell(building_layer, tile.grid_position, 0, tile.building_sprite)
 	main.buildings[building_pos] = building
+	print(main.buildings.find_key(self))
 
 func able_to_build(building_type, pos: Vector2i, ignore_fog=false):
 	if not (pos.x >= 0 and pos.x < main.GRID_WIDTH and pos.y >= 0 and pos.y < main.GRID_HEIGHT):
@@ -286,13 +290,16 @@ func take_damage(damage_amount):
 		if main.selected_building == self:
 			main.selected_building = null
 			main.change_mode_to(main.Modes.Normal)
-		var k = buildings.find_key(self)
-		for t in k:
-			main.tiles[t].building_sprite = Vector2i(-1,-1)
-			main.map.erase_cell(3,t)
+		var k = main.buildings.find_key(self)
 		if k != null:
-			buildings.erase(k)
+			main.buildings.erase(k)
+			for t in k:
+				main.tiles[t].building_sprite = Vector2i(-1,-1)
+				main.map.erase_cell(3,t)
+		destroyed.play()
 		self.queue_free()
+	else:
+		hit.play()
 
 func _on_repair_ship_button_pressed():
 	if build_state == BuildState.None:

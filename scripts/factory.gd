@@ -24,6 +24,9 @@ extends CanvasLayer
 	main.Units.Infantry:5,
 }
 @onready var buildings: Dictionary = $"..".buildings
+@onready var destroyed = $destroyed
+@onready var hit = $Hit
+
 # per tile
 const POLLUTION_GENERATION: int = 3
 const INFANTRY = preload("res://scenes/infantry.tscn")
@@ -149,11 +152,13 @@ func take_damage(damage_amount):
 		if main.selected_building == self:
 			main.selected_building = null
 			main.change_mode_to(main.Modes.Normal)
-		var k = buildings.find_key(self)
+		var k = main.buildings.find_key(self)
 		for t in k:
 			main.tiles[t].building_sprite = Vector2i(-1,-1)
 			main.map.erase_cell(3,t)
 		if k != null:
-			print("building removed")
-			buildings.erase(k)
+			main.buildings.erase(k)
+		destroyed.play()
 		self.queue_free()
+	else:
+		hit.play()

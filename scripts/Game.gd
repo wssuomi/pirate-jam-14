@@ -157,8 +157,10 @@ func _ready():
 		spawn_enemy(Enemies.Nest, n)
 	for b in start_bugs:
 		spawn_enemy(Enemies.Bug, b)
+	#for u in start_units:
+		#spawn_unit(Units.Infantry, u)
 	for u in start_units:
-		spawn_unit(Units.Infantry, u)
+		spawn_enemy(Enemies.Bug, u)
 	ship.try_create_building(Buildings.Drill, Vector2i(35,35), true)
 	
 func draw_map_tiles() -> void:
@@ -465,9 +467,10 @@ func add_pollution():
 			24:
 				for p in k:
 					var tile: Tile = tiles[p]
-					tile.pollution += buildings[k].POLLUTION_GENERATION
-					if tile not in tiles_with_pollution:
-						tiles_with_pollution[p] = tile
+					if is_instance_valid(buildings[k]):
+						tile.pollution += buildings[k].POLLUTION_GENERATION
+						if tile not in tiles_with_pollution:
+							tiles_with_pollution[p] = tile
 
 func spread_single_tile_pollution(delta):
 	if tiles_with_pollution.size() != 0:

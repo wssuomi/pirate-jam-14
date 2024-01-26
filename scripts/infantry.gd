@@ -7,6 +7,8 @@ extends Node2D
 @onready var main = $".."
 @onready var unit_sprite = $UnitSprite
 @onready var idle_timer = $IdleTimer
+@onready var hit = $Hit
+@onready var shoot = $Shoot
 
 const SPEED = 10
 
@@ -97,6 +99,7 @@ func attack():
 
 func take_damage(damage_amount):
 	health -= damage_amount
+	hit.play()
 	if health <= 0:
 		if main.selected_unit == self:
 			main.deselect_unit()
@@ -122,6 +125,7 @@ func _on_search_timer_timeout():
 	search_for_enemies()
 
 func play_attack(angle):
+	shoot.play()
 	match angle:
 		1:
 			unit_sprite.play("attack_up")
