@@ -205,7 +205,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack_down",
-"speed": 5.0
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -216,7 +216,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack_left",
-"speed": 5.0
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -227,7 +227,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack_right",
-"speed": 5.0
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -238,7 +238,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack_up",
-"speed": 4.0
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -404,7 +404,7 @@ script = ExtResource("1_dudvo")
 [node name="BugSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_rwv4a")
-animation = &"attack_right"
+animation = &"attack_down"
 autoplay = "idle_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
