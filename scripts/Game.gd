@@ -456,7 +456,8 @@ func is_walkable(tile: Tile):
 			return false
 	for k in enemies.keys():
 		if k == tile.grid_position:
-			return false
+			if map.get_cell_atlas_coords(4,tile.grid_position) == Vector2i(-1,-1):
+				return false
 	return true
 
 func add_pollution():
