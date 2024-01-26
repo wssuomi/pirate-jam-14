@@ -157,10 +157,8 @@ func _ready():
 		spawn_enemy(Enemies.Nest, n)
 	for b in start_bugs:
 		spawn_enemy(Enemies.Bug, b)
-	#for u in start_units:
-		#spawn_unit(Units.Infantry, u)
 	for u in start_units:
-		spawn_enemy(Enemies.Bug, u)
+		spawn_unit(Units.Infantry, u)
 	ship.try_create_building(Buildings.Drill, Vector2i(35,35), true)
 	
 func draw_map_tiles() -> void:

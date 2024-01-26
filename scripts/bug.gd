@@ -142,7 +142,9 @@ func attack():
 				else:
 					attack_target = Vector2i(-1,-1)
 					play_idle()
-				break
+				return
+		attack_target = Vector2i(-1,-1)
+		play_idle()
 
 func _on_attack_timer_timeout():
 	attack()

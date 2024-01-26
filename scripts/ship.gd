@@ -111,7 +111,6 @@ func try_create_building(building_type, pos: Vector2i, ignore_fog=false):
 	return true
 
 func create_ship(pos, building_type, building):
-	print(pos)
 	var required_offsets = tile_requirements[building_type]
 	var building_pos = []
 	for tile_offset in required_offsets:
@@ -123,7 +122,6 @@ func create_ship(pos, building_type, building):
 		main.clear_fog_around_pos(tile.grid_position)
 		main.map.set_cell(building_layer, tile.grid_position, 0, tile.building_sprite)
 	main.buildings[building_pos] = building
-	print(main.buildings.find_key(self))
 
 func able_to_build(building_type, pos: Vector2i, ignore_fog=false):
 	if not (pos.x >= 0 and pos.x < main.GRID_WIDTH and pos.y >= 0 and pos.y < main.GRID_HEIGHT):
