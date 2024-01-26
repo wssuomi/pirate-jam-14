@@ -6,7 +6,7 @@
 
 ## Game Summary Pitch
 
-Spread of the smog is an rts game you build a base and manage pollution 
+Spread of the smog is an rts game where you build a base and manage pollution 
 on a new planet.
 
 ## Inpiration
@@ -32,13 +32,13 @@ The game is developed for Windows and Linux
 
 ## Development Software
 
-- Engine: Godot
+- Engine: Godot 4.2.1
 - Graphics: Krita
 - Sound: sfxr
 
 ## Genre
 
-rts, management, tower defense, building
+rts, management, building
 
 ## Target Audience
 
@@ -68,12 +68,12 @@ Different machines can be built to grow the base and progress in the game.
 
 ### Enemies
 
-Enemies will attack units and different parts of the base to stop 
+Enemies will attack units and parts of the base to stop 
 the pollution.
 
 ### Resources
 
-Resources need to be gathered to build the base. Different resources will be
+Resources need to be gathered to build the base. Different resources can be
 found around the map.
 
 ### Pollution
@@ -108,9 +108,7 @@ gray and a slightly futuristic design.
 
 ## Sound Effects
 
-Actions like selecting units or interacting with a building will have
-a unique sound that plays when done. Timers have small bells to indicate
-them finishing.
+Units, enemies, and buildings will have sound effects when damaged.
 
 # Game Experience
 
