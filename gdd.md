@@ -151,8 +151,8 @@ Esc: Pause
 - [x] **22.1.2024** Pollution
 - [x] **23.1.2024** Enemies
 - [x] **24.1.2024** Fog of war
-- [ ] **25.1.2024** Sound effects
-- [ ] **27.1.2024** Polish things
+- [x] **25.1.2024** Sound effects
+- [x] **27.1.2024** Polish things
 - [ ] **27.1.2024** Submit
 
 ## Extra
