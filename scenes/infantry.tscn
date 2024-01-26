@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://crg3fixuwquxk"]
+[gd_scene load_steps=47 format=3 uid="uid://crg3fixuwquxk"]
 
 [ext_resource type="Texture2D" uid="uid://blbghw1potmm" path="res://assets/unit_spritesheet.png" id="1_0nlkj"]
 [ext_resource type="Script" path="res://scripts/infantry.gd" id="1_5qvgc"]
@@ -19,6 +19,38 @@ region = Rect2(16, 0, 8, 8)
 [sub_resource type="AtlasTexture" id="AtlasTexture_6450o"]
 atlas = ExtResource("1_0nlkj")
 region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dvoht"]
+atlas = ExtResource("1_0nlkj")
+region = Rect2(0, 48, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yvnru"]
+atlas = ExtResource("1_0nlkj")
+region = Rect2(8, 48, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tlefy"]
+atlas = ExtResource("1_0nlkj")
+region = Rect2(0, 40, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fgi3n"]
+atlas = ExtResource("1_0nlkj")
+region = Rect2(8, 40, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tnen7"]
+atlas = ExtResource("1_0nlkj")
+region = Rect2(16, 40, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pedpn"]
+atlas = ExtResource("1_0nlkj")
+region = Rect2(24, 40, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smo7i"]
+atlas = ExtResource("1_0nlkj")
+region = Rect2(24, 48, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_epfs3"]
+atlas = ExtResource("1_0nlkj")
+region = Rect2(16, 48, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wwgr2"]
 atlas = ExtResource("1_0nlkj")
@@ -118,6 +150,50 @@ animations = [{
 "loop": true,
 "name": &"Spin",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dvoht")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yvnru")
+}],
+"loop": true,
+"name": &"attack_down",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tlefy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fgi3n")
+}],
+"loop": true,
+"name": &"attack_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tnen7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pedpn")
+}],
+"loop": true,
+"name": &"attack_right",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smo7i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_epfs3")
+}],
+"loop": true,
+"name": &"attack_up",
+"speed": 1.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -295,7 +371,7 @@ script = ExtResource("1_5qvgc")
 [node name="UnitSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_xjdlf")
-animation = &"idle_down"
+animation = &"attack_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
@@ -315,5 +391,10 @@ autostart = true
 wait_time = 0.5
 autostart = true
 
+[node name="IdleTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="SearchTimer" to="." method="_on_search_timer_timeout"]
+[connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]

@@ -6,6 +6,7 @@ extends Node2D
 @onready var enemies: Dictionary = $"..".enemies
 @onready var main = $".."
 @onready var unit_sprite = $UnitSprite
+@onready var idle_timer = $IdleTimer
 
 const SPEED = 10
 
@@ -85,6 +86,10 @@ func attack():
 	if attack_target in enemies.keys():
 		if is_instance_valid(enemies[attack_target]):
 			enemies[attack_target].take_damage(attack_damage)
+			var angle = Vector2(map.local_to_map(global_position)).angle_to_point(attack_target)
+			angle = int(angle * 180 / PI) + 135
+			angle = int((((angle - 0) * (8 - 0)) / (360. - 0)) + 0)
+			play_attack(angle)
 		else:
 			attack_target = Vector2i(-1,-1)
 	else:
@@ -115,3 +120,33 @@ func search_for_enemies():
 
 func _on_search_timer_timeout():
 	search_for_enemies()
+
+func play_attack(angle):
+	match angle:
+		1:
+			unit_sprite.play("attack_up")
+			look_dir = Directions.Up
+		5:
+			unit_sprite.play("attack_down")
+			look_dir = Directions.Down
+		2,3,4:
+			unit_sprite.play("attack_right")
+			look_dir = Directions.Right
+		6,7,0:
+			unit_sprite.play("attack_left")
+			look_dir = Directions.Left
+	idle_timer.start()
+
+func play_idle():
+	match look_dir:
+		Directions.Up:
+			unit_sprite.play("idle_up")
+		Directions.Down:
+			unit_sprite.play("idle_down")
+		Directions.Left:
+			unit_sprite.play("idle_left")
+		Directions.Right:
+			unit_sprite.play("idle_right")
+
+func _on_idle_timer_timeout():
+	play_idle()
