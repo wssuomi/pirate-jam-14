@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var buildings: Dictionary = $"..".buildings
 @onready var main = $".."
 @onready var bug_sprite = $BugSprite
+@onready var idle_timer: Timer = $IdleTimer
 
 const SPEED = 15
 
@@ -122,15 +123,25 @@ func attack():
 	if attack_target in units.keys():
 		if is_instance_valid(units[attack_target]):
 			units[attack_target].take_damage(attack_damage)
+			var angle = Vector2(map.local_to_map(global_position)).angle_to_point(attack_target)
+			angle = int(angle * 180 / PI) + 135
+			angle = int((((angle - 0) * (8 - 0)) / (360. - 0)) + 0)
+			play_attack(angle)
 		else:
 			attack_target = Vector2i(-1,-1)
+			play_idle()
 	else:
 		for k in buildings:
 			if attack_target in k:
 				if is_instance_valid(buildings[k]):
 					buildings[k].take_damage(attack_damage)
+					var angle = Vector2(map.local_to_map(global_position)).angle_to_point(attack_target)
+					angle = int(angle * 180 / PI) + 135
+					angle = int((((angle - 0) * (8 - 0)) / (360. - 0)) + 0)
+					play_attack(angle)
 				else:
 					attack_target = Vector2i(-1,-1)
+					play_idle()
 				break
 
 func _on_attack_timer_timeout():
@@ -168,3 +179,55 @@ func _on_search_timer_timeout():
 								var path = main.find_attack_path(main.map.local_to_map(global_position),attack_target,14)
 								move_queue = path
 						return
+
+func play_attack(angle):
+	print("play attack")
+	match angle:
+		1:
+			bug_sprite.play("attack_up")
+			look_dir = Directions.Up
+		2:
+			bug_sprite.play("attack_right")
+			look_dir = Directions.UpRight
+		3:
+			bug_sprite.play("attack_right")
+			look_dir = Directions.Right
+		4:
+			bug_sprite.play("attack_right")
+			look_dir = Directions.DownRight
+		5:
+			bug_sprite.play("attack_down")
+			look_dir = Directions.Down
+		6:
+			bug_sprite.play("attack_left")
+			look_dir = Directions.DownLeft
+		7:
+			bug_sprite.play("attack_left")
+			look_dir = Directions.Left
+		0:
+			bug_sprite.play("attack_left")
+			look_dir = Directions.UpLeft
+	idle_timer.start()
+
+func play_idle():
+	print("play idle")
+	match look_dir:
+		Directions.Up:
+			bug_sprite.play("idle_up")
+		Directions.Down:
+			bug_sprite.play("idle_down")
+		Directions.Left:
+			bug_sprite.play("idle_left")
+		Directions.Right:
+			bug_sprite.play("idle_right")
+		Directions.UpLeft:
+			bug_sprite.play("idle_up_left")
+		Directions.DownLeft:
+			bug_sprite.play("idle_down_left")
+		Directions.UpRight:
+			bug_sprite.play("idle_up_right")
+		Directions.DownRight:
+			bug_sprite.play("idle_down_right")
+
+func _on_idle_timer_timeout():
+	play_idle()
