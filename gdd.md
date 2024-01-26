@@ -1,12 +1,13 @@
 # Spread of the smog
 
-### Walsu, R4smR, TosRen
+### Walsu, R4smR
 
 # Introduction
 
 ## Game Summary Pitch
 
-Spread of the smog is a rts game you build a base manage pollution on a new planet
+Spread of the smog is an rts game you build a base and manage pollution 
+on a new planet.
 
 ## Inpiration
 
@@ -33,7 +34,6 @@ The game is developed for Windows
 
 - Engine: Godot
 - Graphics: Krita
-- Music: BeepBox
 - Sound: sfxr
 
 ## Genre
@@ -49,25 +49,27 @@ and enjoy managing a base.
 
 ## Gameplay Overview
 
-The game starts with a single unit. The goal is to build a rocket to leave the
-planet. The player needs to start gathering resources and building a base to
-survive. Eventually the native species notice the player and attack the base.
+The game starts with only a few units. The goal is to repair the spacecraft to 
+leave the planet. The player needs to start gathering resources and building 
+a base in order to survive. Eventually the planet's creatures notice the player 
+and attack the base.
 
 ## Theme Interpretation (It's spreading)
 
-The player needs to become stronger in order to survive and leave the planet.
-However this doesn't come without a cost. The environment will suffer from the
-machines and fast spreading pollution coming out of the machines.
+The player needs to become stronger to survive and leave the planet. However 
+this doesn't come without a cost. The environment will suffer from the
+machines and fast spreading pollution coming from them.
 
 ## Primary Mechanics
 
 ### Base building
 
-Different machines can be built to grow the base.
+Different machines can be built to grow the base and progress in the game.
 
 ### Enemies
 
-Enemies will attack different parts of the base to stop the pollution.
+Enemies will attack units and different parts of the base to stop 
+the pollution.
 
 ### Resources
 
@@ -81,23 +83,18 @@ the creatures living on the planet.
 
 ## Secondary Mechanics
 
-### Running out of resources
-
-There are limited resources on the planet. Spending them incorrectly will slow
-down or even doom the player.
-
 ### Damaged environment
 
-Environment will start absorbing the pollution. Grass and trees will eventually
-die near the base.
+Environment will start absorbing the pollution. Grass and flowers will 
+eventually die near the base.
 
 # Art
 
 ## Theme Interpretation
 
-The planet will have nice green grass and big forests. This will start
+The planet will have nice green grass and plants. This will start
 changing over time when the player spreads the pollution and builds their base.
-Plants will start looking dead, trees will drop leaves and the grass will turn
+Plants will start looking dead, flowers will drop petals and the grass will turn
 brown.
 
 ## Design
@@ -109,10 +106,6 @@ gray and a slightly futuristic design.
 
 # Audio
 
-## Music
-
-TBD
-
 ## Sound Effects
 
 Actions like selecting units or interacting with a building will have
@@ -123,20 +116,24 @@ them finishing.
 
 ## UI
 
-Design of the UI follows similar rules as the machines and
+Design of the UI follows similar design as the machines and
 other player built things.
 
 ## Controls
 
 ### Mouse
 
-Left click, Right click, Middle click
+Left click: Interact
+Middle click, Right click: Move camera
+Scrollwheel: Zoom in/out
 
 ### Keyboard
 
-Esc
+Esc: Pause
 
-# Development Timeline
+# Minimum Viable Product
+
+## Development Timeline
 
 - [x] **14.1.2024** Design document
 - [x] **15.1.2024** Empty Godot project
@@ -157,8 +154,6 @@ Esc
 - [ ] **25.1.2024** Sound effects
 - [ ] **27.1.2024** Polish things
 - [ ] **27.1.2024** Submit
-
-## Minimum Viable Product
 
 ## Extra
 
