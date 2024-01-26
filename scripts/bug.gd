@@ -181,7 +181,6 @@ func _on_search_timer_timeout():
 						return
 
 func play_attack(angle):
-	print("play attack")
 	match angle:
 		1:
 			bug_sprite.play("attack_up")
@@ -210,7 +209,6 @@ func play_attack(angle):
 	idle_timer.start()
 
 func play_idle():
-	print("play idle")
 	match look_dir:
 		Directions.Up:
 			bug_sprite.play("idle_up")

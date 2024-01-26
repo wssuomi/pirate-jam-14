@@ -495,14 +495,20 @@ func spread_single_tile_pollution(delta):
 				#print("spreading ", spread_amount, " from ", tile.grid_position, " to ", spread_to_tile.grid_position)	
 		if tile.pollution > 0 and tile.pollution < 20 and tile.ground_sprite.y != 1:
 			tile.ground_sprite.y = 1
+			if tile.decoration_sprite != Vector2i(-1,-1):
+				tile.decoration_sprite.x = 4
 			if tile not in tiles_need_update:
 				tiles_need_update.append(tile)
 		elif tile.pollution >= 20 and tile.pollution > 200 and tile.ground_sprite.y != 2:
 			tile.ground_sprite.y = 2
+			if tile.decoration_sprite != Vector2i(-1,-1):
+				tile.decoration_sprite.x = 5
 			if tile not in tiles_need_update:
 				tiles_need_update.append(tile)
 		elif tile.pollution >= 200 and tile.pollution > 600 and tile.ground_sprite.y != 3:
 			tile.ground_sprite.y = 3
+			if tile.decoration_sprite != Vector2i(-1,-1):
+				tile.decoration_sprite.x = 6
 			if tile not in tiles_need_update:
 				tiles_need_update.append(tile)
 
@@ -581,7 +587,6 @@ func _on_attack_pressed():
 			change_mode_to(Modes.AttackWithUnit)
 			attack.text = "Cancel"
 		Modes.AttackWithUnit:
-			print("cancelling")
 			change_mode_to(Modes.UnitSelected)
 			attack.text = "Attack"
 
