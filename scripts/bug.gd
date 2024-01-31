@@ -183,7 +183,7 @@ func search_for_targets():
 				if dst < dist_to_closest:
 					attack_target = pos
 					dist_to_closest = dst
-				if dist_to_closest < 14:
+				if dist_to_closest <= 14:
 					return
 			if pos not in units.keys():
 				continue
@@ -198,7 +198,7 @@ func search_for_targets():
 			if dst < dist_to_closest:
 				attack_target = pos
 				dist_to_closest = dst
-			if dist_to_closest < 14:
+			if dist_to_closest <= 14:
 				return
 	if attack_target == Vector2i(-1,-1):
 		return
