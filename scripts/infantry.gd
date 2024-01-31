@@ -9,6 +9,7 @@ extends Node2D
 @onready var idle_timer = $IdleTimer
 @onready var hit = $Hit
 @onready var shoot = $Shoot
+@onready var attack_timer = $AttackTimer
 
 const SPEED = 10
 
@@ -21,6 +22,7 @@ var attack_target: Vector2i = Vector2i(-1,-1)
 var health: int = 10
 var attack_damage = 3
 var search_range = 2
+var can_attack = false
 
 enum States {Guard, Walk, Attack}
 
@@ -55,12 +57,15 @@ func _process(delta):
 						move_queue = path
 					else:
 						move_queue = []
+			else:
+				attack()
 		States.Walk:
 			var destination = map.map_to_local(move_queue[0])
 			global_position = global_position.move_toward(destination, SPEED * delta)
 			if global_position == destination:
 				state = States.Guard
 				move_queue.remove_at(0)
+				search_for_enemies()
 				match look_dir:
 					Directions.Up:
 						unit_sprite.play("idle_up")
@@ -78,6 +83,8 @@ func deselect():
 	select_indicator.hide()
 
 func attack():
+	if not can_attack:
+		return
 	if state == States.Walk:
 		return
 	if attack_target == Vector2i(-1,-1):
@@ -85,44 +92,64 @@ func attack():
 	var pos = main.map.local_to_map(self.global_position)
 	if main.get_distance(main.tiles[pos], main.tiles[attack_target]) >= 28:
 		return
-	if attack_target in enemies.keys():
-		if is_instance_valid(enemies[attack_target]):
-			enemies[attack_target].take_damage(attack_damage)
-			var angle = Vector2(map.local_to_map(global_position)).angle_to_point(attack_target)
-			angle = int(angle * 180 / PI) + 135
-			angle = int((((angle - 0) * (8 - 0)) / (360. - 0)) + 0)
-			play_attack(angle)
-		else:
-			attack_target = Vector2i(-1,-1)
-	else:
-		attack_target = Vector2i(-1,-1)
+	if attack_target not in enemies.keys():
+		return
+	enemies[attack_target].take_damage(attack_damage)
+	can_attack = false
+	attack_timer.start()
+	var angle = Vector2(map.local_to_map(global_position)).angle_to_point(attack_target)
+	angle = int(angle * 180 / PI) + 135
+	angle = int((((angle - 0) * (8 - 0)) / (360. - 0)) + 0)
+	play_attack(angle)
 
 func take_damage(damage_amount):
 	health -= damage_amount
 	hit.play()
-	if health <= 0:
-		if main.selected_unit == self:
-			main.deselect_unit()
-			main.change_mode_to(main.Modes.Normal)
-		var k = units.find_key(self)
-		if k != null:
-			units.erase(k)
-		self.queue_free()
+	if health > 0:
+		return
+	if main.selected_unit == self:
+		main.deselect_unit()
+		main.change_mode_to(main.Modes.Normal)
+	var k = units.find_key(self)
+	if k != null:
+		units.erase(k)
+	else:
+		print("trying to attack null")
+	self.queue_free()
 
 func _on_attack_timer_timeout():
-	attack()
+	can_attack = true
 
 func search_for_enemies():
+	var closest = Vector2i(-1,-1)
+	var dist_to_closest = INF
+	var grid_pos = main.map.local_to_map(global_position)
 	for y in range(-search_range,search_range):
 		for x in range(-search_range,search_range):
-			var pos = main.map.local_to_map(global_position) + Vector2i(x,y)
-			if pos in enemies.keys():
-				if is_instance_valid(enemies[pos]):
-					attack_target = pos
-					return
+			var pos = grid_pos + Vector2i(x,y)
+			if pos not in enemies.keys():
+				continue
+			if not is_instance_valid(enemies[pos]):
+				print("found invalid enemy")
+				continue
+			if closest == Vector2i(-1,-1):
+				attack_target = pos
+				dist_to_closest = get_distance(grid_pos,pos)
+				continue
+			var dst = get_distance(grid_pos, pos)
+			if dst < dist_to_closest:
+				attack_target = pos
+
+func get_distance(start: Vector2i, end: Vector2i):
+	var dst_x = abs(start.x - end.x)
+	var dst_y = abs(start.y - end.y)
+	if dst_x > dst_y:
+		return 14*dst_y + 10 * (dst_x-dst_y)
+	return 14*dst_x + 10 * (dst_y-dst_x)
 
 func _on_search_timer_timeout():
-	search_for_enemies()
+	if state == States.Guard:
+		search_for_enemies()
 
 func play_attack(angle):
 	shoot.play()

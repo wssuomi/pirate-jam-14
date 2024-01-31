@@ -289,6 +289,7 @@ func _process(delta):
 			move_target_indicator.position = map.map_to_local(map.local_to_map(get_global_mouse_position()))
 		Modes.AttackWithUnit:
 			attack_target_indicator.position = map.map_to_local(map.local_to_map(get_global_mouse_position()))
+
 func check_resources(cost: Array[int]):
 	if copper >= cost[0] and iron >= cost[1] and stone >= cost[2]:
 		return true
