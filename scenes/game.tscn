@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://6uwpprnvngbp"]
+[gd_scene load_steps=48 format=3 uid="uid://6uwpprnvngbp"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_astxb"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="2_d63gu"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://dnxkeswg4ckue" path="res://assets/pause_menu_button.png" id="8_etsvh"]
 [ext_resource type="Texture2D" uid="uid://bw6yl05yv6j1w" path="res://assets/copper_icon_0.png" id="10_58yyy"]
 [ext_resource type="Texture2D" uid="uid://bdo11j8h0vwei" path="res://assets/pause_menu_button_pushed.png" id="12_n2fay"]
+[ext_resource type="Texture2D" uid="uid://q1cpbporo2pa" path="res://assets/move_target.png" id="17_rnd4w"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q1l4m"]
 texture = ExtResource("4_ngtp2")
@@ -177,6 +178,70 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_awep8"]
+atlas = ExtResource("17_rnd4w")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f4lml"]
+atlas = ExtResource("17_rnd4w")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_07icu"]
+atlas = ExtResource("17_rnd4w")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hlxhj"]
+atlas = ExtResource("17_rnd4w")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l6dbl"]
+atlas = ExtResource("17_rnd4w")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0m33"]
+atlas = ExtResource("17_rnd4w")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_okwrg"]
+atlas = ExtResource("17_rnd4w")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pslsh"]
+atlas = ExtResource("17_rnd4w")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uy640"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_awep8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f4lml")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_07icu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hlxhj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l6dbl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w0m33")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_okwrg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pslsh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_astxb")
@@ -486,6 +551,13 @@ autostart = true
 [node name="PollutionUpdateTimer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
+
+[node name="MoveTargetIndicator" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = 2
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_uy640")
+autoplay = "default"
 
 [connection signal="mouse_entered" from="CanvasLayer/PauseMenu" to="." method="_on_mouse_entered_ui"]
 [connection signal="mouse_exited" from="CanvasLayer/PauseMenu" to="." method="_on_mouse_exited_ui"]

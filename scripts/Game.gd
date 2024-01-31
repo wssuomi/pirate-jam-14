@@ -11,6 +11,7 @@ extends Node2D
 @onready var move = $CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/Move
 @onready var side_bar_unit_action = $CanvasLayer/SideBarUnitAction
 @onready var attack = $CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/Attack
+@onready var move_target_indicator = $MoveTargetIndicator
 
 const GRID_WIDTH = 64
 const GRID_HEIGHT = 64
@@ -283,7 +284,8 @@ func _process(delta):
 			pass
 		Modes.Place:
 			preview_tile.position = map.map_to_local(map.local_to_map(get_global_mouse_position())) - Vector2(8,8)
-
+		Modes.MoveUnit:
+			move_target_indicator.position = map.map_to_local(map.local_to_map(get_global_mouse_position()))
 func check_resources(cost: Array[int]):
 	if copper >= cost[0] and iron >= cost[1] and stone >= cost[2]:
 		return true
@@ -304,9 +306,11 @@ func change_mode_to(next_mode: Modes):
 		Modes.MoveUnit:
 			mode = Modes.MoveUnit
 			hide_building_preview()
+			move_target_indicator.show()
 		Modes.UnitSelected:
 			mode = Modes.UnitSelected
 			hide_building_preview()
+			move_target_indicator.hide()
 		Modes.BuildingSelected:
 			mode = Modes.BuildingSelected
 			hide_building_preview()
