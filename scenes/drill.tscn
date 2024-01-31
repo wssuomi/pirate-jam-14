@@ -84,7 +84,7 @@ one_shot = true
 layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 1
-text = "ore: +10/m"
+text = "ore: +10/min"
 
 [node name="MineTimer" type="Timer" parent="."]
 wait_time = 5.0

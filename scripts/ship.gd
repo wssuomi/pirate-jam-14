@@ -218,8 +218,13 @@ func _on_build_button_pressed():
 			var cost = build_costs[selected_building]
 			var can_build = false
 			for t in main.tiles.values():
-				if able_to_build(selected_building, t.grid_position):
+				var c = 0
+				for r in tile_requirements[selected_building]:
+					if able_to_build(selected_building, t.grid_position + r):
+						c += 1
+				if c == len(tile_requirements[selected_building]):
 					can_build = true
+					break
 			if check_resources(cost) and can_build:
 				main.copper -= cost[2]
 				main.iron -= cost[1]
