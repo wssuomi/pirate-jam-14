@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c0un25vuo1nmm"]
+[gd_scene load_steps=16 format=3 uid="uid://c0un25vuo1nmm"]
 
 [ext_resource type="Script" path="res://scripts/PauseMenu.gd" id="1_npk1t"]
 [ext_resource type="Texture2D" uid="uid://bu4mn6i8vavn" path="res://assets/menu_title_background.png" id="2_mnvcc"]
@@ -6,6 +6,15 @@
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q5h4u"]
 texture = ExtResource("2_mnvcc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t0uyp"]
+texture = ExtResource("3_81lti")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kdv66"]
+texture = ExtResource("3_81lti")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g380m"]
+texture = ExtResource("3_81lti")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ptxyc"]
 texture = ExtResource("2_mnvcc")
@@ -72,13 +81,15 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="Continue" type="Button" parent="MarginContainer/VBoxContainer"]
-visible = false
 texture_filter = 1
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 1
 theme_override_styles/normal = SubResource("StyleBoxTexture_q5h4u")
+theme_override_styles/hover = SubResource("StyleBoxTexture_t0uyp")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_kdv66")
+theme_override_styles/focus = SubResource("StyleBoxTexture_g380m")
 text = "Continue"
 
 [node name="MainMenu" type="Button" parent="MarginContainer/VBoxContainer"]
