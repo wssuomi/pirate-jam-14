@@ -1,10 +1,11 @@
-[gd_scene load_steps=49 format=3 uid="uid://crg3fixuwquxk"]
+[gd_scene load_steps=59 format=3 uid="uid://crg3fixuwquxk"]
 
 [ext_resource type="Texture2D" uid="uid://blbghw1potmm" path="res://assets/unit_spritesheet.png" id="1_0nlkj"]
 [ext_resource type="Script" path="res://scripts/infantry.gd" id="1_5qvgc"]
 [ext_resource type="Texture2D" uid="uid://cen52okurn46p" path="res://assets/selected_unit_spritesheet.png" id="3_6lbyc"]
 [ext_resource type="AudioStream" uid="uid://d1f2adv08ykxv" path="res://assets/hitHurt.wav" id="4_670dy"]
 [ext_resource type="AudioStream" uid="uid://cilym54y4l8xl" path="res://assets/laserShoot.wav" id="5_1g1ai"]
+[ext_resource type="Texture2D" uid="uid://yu4mjtc3xbve" path="res://assets/attack_target.png" id="6_srp2w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c3psy"]
 atlas = ExtResource("1_0nlkj")
@@ -365,6 +366,70 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_444mt"]
+atlas = ExtResource("6_srp2w")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ox2m6"]
+atlas = ExtResource("6_srp2w")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwp3p"]
+atlas = ExtResource("6_srp2w")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hj4x7"]
+atlas = ExtResource("6_srp2w")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqccl"]
+atlas = ExtResource("6_srp2w")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p4brn"]
+atlas = ExtResource("6_srp2w")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gikdb"]
+atlas = ExtResource("6_srp2w")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qpwui"]
+atlas = ExtResource("6_srp2w")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jh5ts"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_444mt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ox2m6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iwp3p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hj4x7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xqccl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p4brn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gikdb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qpwui")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="Infantry" type="CharacterBody2D"]
 collision_layer = 0
 collision_mask = 0
@@ -403,6 +468,13 @@ stream = ExtResource("4_670dy")
 
 [node name="Shoot" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_1g1ai")
+
+[node name="AttackTargetIndicator" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = 2
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_jh5ts")
+autoplay = "default"
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="SearchTimer" to="." method="_on_search_timer_timeout"]

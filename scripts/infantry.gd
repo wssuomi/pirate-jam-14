@@ -10,6 +10,7 @@ extends Node2D
 @onready var hit = $Hit
 @onready var shoot = $Shoot
 @onready var attack_timer = $AttackTimer
+@onready var attack_target_indicator = $AttackTargetIndicator
 
 const SPEED = 10
 
@@ -24,10 +25,13 @@ var attack_damage = 3
 var attack_target_set_by_player = false
 var search_range = 2
 var can_attack = false
+var selected = false
 
 enum States {Guard, Walk, Attack}
 
 func _process(delta):
+	if attack_target != Vector2i(-1,-1) and selected:
+		attack_target_indicator.global_position = main.map.map_to_local(attack_target)
 	match state:
 		States.Guard:
 			if move_queue != []:
@@ -79,9 +83,14 @@ func _process(delta):
 
 func select():
 	select_indicator.show()
+	if attack_target != Vector2i(-1,-1):
+		attack_target_indicator.show()
+	selected = true
 
 func deselect():
 	select_indicator.hide()
+	attack_target_indicator.hide()
+	selected = false
 
 func attack():
 	if not can_attack:
@@ -91,7 +100,7 @@ func attack():
 	if attack_target == Vector2i(-1,-1):
 		return
 	var pos = main.map.local_to_map(self.global_position)
-	if main.get_distance(main.tiles[pos], main.tiles[attack_target]) >= 28:
+	if main.get_distance(main.tiles[pos], main.tiles[attack_target]) > 28:
 		return
 	if attack_target not in enemies.keys():
 		attack_target = Vector2i(-1,-1)
@@ -144,6 +153,10 @@ func search_for_enemies():
 			var dst = get_distance(grid_pos, pos)
 			if dst < dist_to_closest:
 				attack_target = pos
+	if selected and attack_target != Vector2i(-1,-1):
+		attack_target_indicator.show()
+		return
+	attack_target_indicator.hide()
 
 func get_distance(start: Vector2i, end: Vector2i):
 	var dst_x = abs(start.x - end.x)

@@ -229,6 +229,9 @@ func _input(event):
 						else:
 							selected_unit.move_queue.append_array(find_path(map.local_to_map(selected_unit.global_position),pos))
 						change_mode_to(Modes.UnitSelected)
+						selected_unit.attack_target = Vector2i(-1,-1)
+						selected_unit.attack_target_set_by_player = false
+						selected_unit.attack_target_indicator.hide()
 						move.text = "Move"
 		Modes.UnitSelected:
 			if event is InputEventMouseButton and not mouse_on_ui:
@@ -277,6 +280,7 @@ func _input(event):
 						selected_unit.move_queue.append_array(find_attack_path(map.local_to_map(selected_unit.global_position),pos,28))
 					selected_unit.attack_target = pos
 					selected_unit.attack_target_set_by_player = true
+					selected_unit.attack_target_indicator.show()
 					change_mode_to(Modes.UnitSelected)
 					attack.text = "Attack"
 
@@ -633,5 +637,6 @@ func _on_guard_pressed():
 		Modes.UnitSelected:
 			selected_unit.attack_target = Vector2i(-1,-1)
 			selected_unit.attack_target_set_by_player = false
+			selected_unit.attack_target_indicator.hide()
 			if selected_unit.move_queue != []:
 				selected_unit.move_queue = [selected_unit.move_queue[0]]
