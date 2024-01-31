@@ -485,6 +485,7 @@ wait_time = 3.0
 autostart = true
 
 [connection signal="mouse_entered" from="CanvasLayer/PauseMenu" to="." method="_on_mouse_entered_ui"]
+[connection signal="mouse_exited" from="CanvasLayer/PauseMenu" to="." method="_on_mouse_exited_ui"]
 [connection signal="mouse_entered" from="CanvasLayer/SideBarUnitAction" to="." method="_on_mouse_entered_ui"]
 [connection signal="mouse_exited" from="CanvasLayer/SideBarUnitAction" to="." method="_on_mouse_exited_ui"]
 [connection signal="pressed" from="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/Move" to="." method="_on_move_pressed"]
