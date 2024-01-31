@@ -231,12 +231,31 @@ func _input(event):
 						deselect_unit()
 						select_unit(pos)
 						change_mode_to(Modes.UnitSelected)
-					else:
-						deselect_unit()
-						change_mode_to(Modes.Normal)
+						return
+					for k in buildings.keys():
+						if pos in k:
+							selected_building = buildings[k]
+							deselect_unit()
+							change_mode_to(Modes.BuildingSelected)
+							return
+					deselect_unit()
+					change_mode_to(Modes.Normal)
 		Modes.BuildingSelected:
 			if event is InputEventMouseButton and not mouse_on_ui:
-				if Input.is_action_just_pressed("select_unit"):
+				if Input.is_action_just_pressed("interact_with_building"):
+					var pos: Vector2i = map.local_to_map(get_global_mouse_position())
+					if pos in units.keys():
+						change_mode_to(Modes.Normal)
+						selected_building = null
+						select_unit(pos)
+						change_mode_to(Modes.UnitSelected)
+						return
+					for k in buildings.keys():
+						if pos in k:
+							change_mode_to(Modes.Normal)
+							selected_building = buildings[k]
+							change_mode_to(Modes.BuildingSelected)
+							return
 					change_mode_to(Modes.Normal)
 					selected_building = null
 		Modes.AttackWithUnit:
