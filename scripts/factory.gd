@@ -11,6 +11,7 @@ extends CanvasLayer
 @onready var coal_label = $SideBar/Selected/VBoxContainer/HBoxContainer/VBoxContainer/Coal/CoalLabel
 @onready var build_timer = $SideBar/Selected/VBoxContainer/BuildTimer
 @onready var build_button = $SideBar/Selected/VBoxContainer/Button
+@onready var health_label = $SideBar/Selected/VBoxContainer/HBoxContainer2/HealthLabel
 @onready var units = {
 	main.Units.Infantry:INFANTRY,
 	#main.Units.Tank:TANK,
@@ -30,13 +31,14 @@ extends CanvasLayer
 # per tile
 const POLLUTION_GENERATION: int = 3
 const INFANTRY = preload("res://scenes/infantry.tscn")
+const MAX_HEALTH = 20
 
 enum BuildState {None, Building, Finished, Placing}
 
 var build_state = BuildState.None
 var tiles_texture = preload("res://assets/map_tiles.png")
 var selected_atlas: AtlasTexture = AtlasTexture.new()
-var health: int = 20
+var health: int = MAX_HEALTH
 
 func show_menu():
 	side_bar.show()
@@ -128,6 +130,7 @@ func change_selected_to(unit):
 
 func _ready():
 	change_selected_to(main.Units.Infantry)
+	health_label.text = str(health) + "/" + str(MAX_HEALTH)
 	
 func _on_unit_button_pressed():
 	if build_state == BuildState.None:
@@ -159,6 +162,8 @@ func take_damage(damage_amount):
 		if k != null:
 			main.buildings.erase(k)
 		destroyed.play()
+		health_label.text = "0/" + str(MAX_HEALTH)
 		self.queue_free()
 	else:
+		health_label.text = str(health) + "/" + str(MAX_HEALTH)
 		hit.play()

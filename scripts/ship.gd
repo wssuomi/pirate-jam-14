@@ -3,6 +3,7 @@ extends CanvasLayer
 const FACTORY = preload("res://scenes/factory.tscn")
 const DRILL = preload("res://scenes/drill.tscn")
 const POLLUTION_GENERATION = 2
+const MAX_HEALTH = 100
 
 @onready var slab = $SideBar/BuildOptions/VBoxContainer/Slab
 @onready var large_slab = $SideBar/BuildOptions/VBoxContainer/LargeSlab
@@ -61,6 +62,7 @@ const POLLUTION_GENERATION = 2
 @onready var selected_picture = $SideBar/Selected/VBoxContainer/HBoxContainer/Picture
 @onready var destroyed = $destroyed
 @onready var hit = $Hit
+@onready var health_label = $SideBar/Selected/VBoxContainer/HBoxContainer2/HealthLabel
 
 var building_layer: int = 3
 var resource_sprites: Array[Vector2i] = [Vector2i(4,2),Vector2i(5,2),Vector2i(6,2),Vector2i(7,2)]
@@ -68,7 +70,7 @@ var slab_sprites = [Vector2i(0,4),Vector2i(0,5),Vector2i(0,6),Vector2i(1,5),Vect
 var build_state = BuildState.None
 var tiles_texture = preload("res://assets/map_tiles.png")
 var selected_atlas: AtlasTexture = AtlasTexture.new()
-var health = 10
+var health = MAX_HEALTH
 
 enum BuildState {None, Building, Finished, Placing}
 
@@ -271,6 +273,7 @@ func update_preview_tile(building_type):
 	main.preview_tile.get_child(0).size = Vector2i(size+2,size+2)
 
 func _ready():
+	health_label.text = str(health) + "/" + str(MAX_HEALTH)
 	selected_atlas.atlas = tiles_texture
 	selected_picture.texture = selected_atlas
 	if build_state == BuildState.None:
@@ -305,6 +308,7 @@ func take_damage(damage_amount):
 		main.alive = false
 		self.queue_free()
 	else:
+		health_label.text = str(health) + "/" + str(MAX_HEALTH)
 		hit.play()
 
 func _on_repair_ship_button_pressed():

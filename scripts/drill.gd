@@ -5,12 +5,17 @@ extends CanvasLayer
 @onready var buildings: Dictionary = $"..".buildings
 @onready var destroyed = $destroyed
 @onready var hit = $Hit
+@onready var health_label = $SideBar/Content/VBoxContainer/HBoxContainer/HealthLabel
 
 const POLLUTION_GENERATION: int = 1
 const RESOURCE_GENERATION = 10/60. * 5
+const MAX_HEALTH = 15
 
 var resource_type
-var health: int = 15
+var health: int = MAX_HEALTH
+
+func _ready():
+	health_label.text = str(health) + "/" + str(MAX_HEALTH)
 
 func show_menu():
 	side_bar.show()
@@ -52,5 +57,7 @@ func take_damage(damage_amount):
 			main.buildings.erase(k)
 		destroyed.play()
 		self.queue_free()
+		health_label.text = "0/" + str(MAX_HEALTH)
 	else:
+		health_label.text = str(health) + "/" + str(MAX_HEALTH)
 		hit.play()

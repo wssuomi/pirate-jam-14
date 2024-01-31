@@ -136,6 +136,16 @@ mouse_filter = 1
 [node name="VBoxContainer" type="VBoxContainer" parent="SideBar/Selected"]
 layout_mode = 2
 
+[node name="HBoxContainer2" type="HBoxContainer" parent="SideBar/Selected/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SideBar/Selected/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Health: "
+
+[node name="HealthLabel" type="Label" parent="SideBar/Selected/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
 [node name="HBoxContainer" type="HBoxContainer" parent="SideBar/Selected/VBoxContainer"]
 layout_mode = 2
 
@@ -231,9 +241,9 @@ text = "Build"
 [node name="BuildOptions" type="MarginContainer" parent="SideBar"]
 layout_mode = 0
 offset_left = 6.0
-offset_top = 187.0
+offset_top = 213.0
 offset_right = 184.0
-offset_bottom = 623.0
+offset_bottom = 649.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SideBar/BuildOptions"]
 layout_mode = 2
