@@ -17,4 +17,7 @@ func _input(event):
 		return
 	if event is InputEventMouseMotion:
 		if Input.is_action_pressed("move_camera"):
-			position -= event.relative / zoom.x
+			var new_pos = position - event.relative / zoom.x
+			new_pos.x = clamp(new_pos.x,0.0,main.GRID_WIDTH * 16.0)
+			new_pos.y = clamp(new_pos.y,0.0,main.GRID_HEIGHT * 16.0)
+			position = new_pos
