@@ -51,6 +51,7 @@ var buildings: Dictionary = {}
 var tiles_need_update: Array[Tile] = []
 var tiles_with_pollution: Dictionary = {}
 var pollution_tile_counter: int = 0
+var alive = true
 var ship
 var start_units = [
 Vector2i(34, 31),
@@ -178,9 +179,13 @@ func update_labels():
 	stone_label.text = str(floor(stone))
 	
 func _on_menu_pressed():
+	if not alive:
+		return
 	toggle_pause()
 	
 func _input(event):
+	if not alive:
+		return
 	if event is InputEventKey:
 		if Input.is_action_just_pressed("pause"):
 			toggle_pause()

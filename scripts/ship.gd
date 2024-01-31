@@ -9,6 +9,7 @@ const POLLUTION_GENERATION = 2
 @onready var factory = $SideBar/BuildOptions/VBoxContainer/Factory
 @onready var drill = $SideBar/BuildOptions/VBoxContainer/Drill
 @onready var main = $".."
+@onready var lose_screen = $"../CanvasLayer/LoseScreen"
 @onready var side_bar = $SideBar
 @onready var building_sprites: Dictionary = {
 	main.Buildings.Slab:[Vector2i(0,4)],
@@ -300,6 +301,8 @@ func take_damage(damage_amount):
 				main.tiles[t].building_sprite = Vector2i(-1,-1)
 				main.map.erase_cell(3,t)
 		destroyed.play()
+		lose_screen.show()
+		main.alive = false
 		self.queue_free()
 	else:
 		hit.play()

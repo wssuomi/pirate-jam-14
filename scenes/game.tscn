@@ -1,9 +1,10 @@
-[gd_scene load_steps=37 format=3 uid="uid://6uwpprnvngbp"]
+[gd_scene load_steps=38 format=3 uid="uid://6uwpprnvngbp"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_astxb"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="2_d63gu"]
 [ext_resource type="PackedScene" uid="uid://c0un25vuo1nmm" path="res://scenes/pause_menu.tscn" id="2_nbn5r"]
 [ext_resource type="Texture2D" uid="uid://jm1bhhp8ffsb" path="res://assets/map_tiles.png" id="3_ee80l"]
+[ext_resource type="PackedScene" uid="uid://dir5iixhy40d2" path="res://scenes/lose_screen.tscn" id="4_glkw7"]
 [ext_resource type="Texture2D" uid="uid://dr6yxo7p8kuw" path="res://assets/side_menu_background.png" id="4_ngtp2"]
 [ext_resource type="Texture2D" uid="uid://bu4mn6i8vavn" path="res://assets/menu_title_background.png" id="5_lnuxy"]
 [ext_resource type="Texture2D" uid="uid://b4r4fhn87fmlj" path="res://assets/top_bar.png" id="5_wedu5"]
@@ -191,6 +192,8 @@ script = ExtResource("2_d63gu")
 visible = false
 size_flags_horizontal = 4
 size_flags_vertical = 4
+
+[node name="LoseScreen" parent="CanvasLayer" instance=ExtResource("4_glkw7")]
 
 [node name="SideBarUnitAction" type="Control" parent="CanvasLayer"]
 visible = false
@@ -486,6 +489,8 @@ autostart = true
 
 [connection signal="mouse_entered" from="CanvasLayer/PauseMenu" to="." method="_on_mouse_entered_ui"]
 [connection signal="mouse_exited" from="CanvasLayer/PauseMenu" to="." method="_on_mouse_exited_ui"]
+[connection signal="mouse_entered" from="CanvasLayer/LoseScreen" to="." method="_on_mouse_entered_ui"]
+[connection signal="mouse_exited" from="CanvasLayer/LoseScreen" to="." method="_on_mouse_exited_ui"]
 [connection signal="mouse_entered" from="CanvasLayer/SideBarUnitAction" to="." method="_on_mouse_entered_ui"]
 [connection signal="mouse_exited" from="CanvasLayer/SideBarUnitAction" to="." method="_on_mouse_exited_ui"]
 [connection signal="pressed" from="CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/Move" to="." method="_on_move_pressed"]

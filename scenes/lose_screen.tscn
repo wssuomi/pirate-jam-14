@@ -1,0 +1,135 @@
+[gd_scene load_steps=16 format=3 uid="uid://dir5iixhy40d2"]
+
+[ext_resource type="Script" path="res://scripts/lose_screen.gd" id="1_mmoop"]
+[ext_resource type="Texture2D" uid="uid://bu4mn6i8vavn" path="res://assets/menu_title_background.png" id="2_emg2r"]
+[ext_resource type="Texture2D" uid="uid://thvbtjv8n7yc" path="res://assets/button_pressed.png" id="3_h3fg0"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n2nha"]
+texture = ExtResource("2_emg2r")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vedum"]
+texture = ExtResource("3_h3fg0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r0mwd"]
+texture = ExtResource("3_h3fg0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eqnoj"]
+texture = ExtResource("3_h3fg0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kyt83"]
+texture = ExtResource("2_emg2r")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ihcxk"]
+texture = ExtResource("3_h3fg0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xxrm8"]
+texture = ExtResource("3_h3fg0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w3qim"]
+texture = ExtResource("3_h3fg0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kji7w"]
+texture = ExtResource("2_emg2r")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nr8a5"]
+texture = ExtResource("3_h3fg0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_svx2t"]
+texture = ExtResource("3_h3fg0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y6wbh"]
+texture = ExtResource("3_h3fg0")
+
+[node name="LoseScreen" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mmoop")
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = -578.0
+offset_top = -326.0
+offset_right = 578.0
+offset_bottom = 326.0
+mouse_filter = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Restart" type="Button" parent="MarginContainer/VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(150, 32)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxTexture_n2nha")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vedum")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_r0mwd")
+theme_override_styles/focus = SubResource("StyleBoxTexture_eqnoj")
+text = "Restart"
+
+[node name="MainMenu" type="Button" parent="MarginContainer/VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(128, 32)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxTexture_kyt83")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ihcxk")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_xxrm8")
+theme_override_styles/focus = SubResource("StyleBoxTexture_w3qim")
+text = "Main Menu"
+
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxTexture_kji7w")
+theme_override_styles/hover = SubResource("StyleBoxTexture_nr8a5")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_svx2t")
+theme_override_styles/focus = SubResource("StyleBoxTexture_y6wbh")
+text = "Quit"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -95.0
+offset_top = -92.0
+offset_right = 95.0
+offset_bottom = -69.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Your spaceship was destroyed"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
