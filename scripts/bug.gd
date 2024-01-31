@@ -7,6 +7,7 @@ extends CharacterBody2D
 @onready var main = $".."
 @onready var bug_sprite = $BugSprite
 @onready var idle_timer: Timer = $IdleTimer
+@onready var attack_timer: Timer = $AttackTimer
 
 const SPEED = 15
 
@@ -21,6 +22,7 @@ var health: int = 2
 var attack_damage: int = 1
 var attack_target: Vector2i = Vector2i(-1,-1)
 var search_range: int = 3
+var can_attack = false
 
 enum States {Idle, Walk, Attack}
 
@@ -67,6 +69,8 @@ func _process(delta):
 						move_queue = path
 					else:
 						move_queue = []
+			else:
+				attack()
 		States.Walk:
 			var destination = map.map_to_local(move_queue[0])
 			global_position = global_position.move_toward(destination, SPEED * delta)
@@ -113,6 +117,8 @@ func take_damage(damage_amount):
 		self.queue_free()
 
 func attack():
+	if not can_attack:
+		return
 	if state == States.Walk:
 		return
 	if attack_target == Vector2i(-1,-1):
@@ -120,67 +126,96 @@ func attack():
 	var pos = main.map.local_to_map(self.global_position)
 	if main.get_distance(main.tiles[pos], main.tiles[attack_target]) > 14:
 		return
-	if attack_target in units.keys():
-		if is_instance_valid(units[attack_target]):
-			units[attack_target].take_damage(attack_damage)
-			var angle = Vector2(map.local_to_map(global_position)).angle_to_point(attack_target)
-			angle = int(angle * 180 / PI) + 135
-			angle = int((((angle - 0) * (8 - 0)) / (360. - 0)) + 0)
-			play_attack(angle)
-		else:
+	for k in buildings:
+		if attack_target not in k:
+			continue
+		if not is_instance_valid(buildings[k]):
+			print("found invalid building")
 			attack_target = Vector2i(-1,-1)
-			play_idle()
-	else:
-		for k in buildings:
-			if attack_target in k:
-				if is_instance_valid(buildings[k]):
-					buildings[k].take_damage(attack_damage)
-					var angle = Vector2(map.local_to_map(global_position)).angle_to_point(attack_target)
-					angle = int(angle * 180 / PI) + 135
-					angle = int((((angle - 0) * (8 - 0)) / (360. - 0)) + 0)
-					play_attack(angle)
-				else:
-					attack_target = Vector2i(-1,-1)
-					play_idle()
-				return
-		attack_target = Vector2i(-1,-1)
-		play_idle()
+			continue
+		buildings[k].take_damage(attack_damage)
+		var angle = Vector2(map.local_to_map(global_position)).angle_to_point(attack_target)
+		angle = int(angle * 180 / PI) + 135
+		angle = int((((angle - 0) * (8 - 0)) / (360. - 0)) + 0)
+		play_attack(angle)
+		can_attack = false
+		attack_timer.start()
+		return
+	if attack_target in units.keys():
+		if not is_instance_valid(units[attack_target]):
+			attack_target = Vector2i(-1,-1)
+			print("found invalid unit")
+			return
+		units[attack_target].take_damage(attack_damage)
+		var angle = Vector2(map.local_to_map(global_position)).angle_to_point(attack_target)
+		angle = int(angle * 180 / PI) + 135
+		angle = int((((angle - 0) * (8 - 0)) / (360. - 0)) + 0)
+		play_attack(angle)
+		can_attack = false
+		attack_timer.start()
+		return
 
 func _on_attack_timer_timeout():
-	attack()
+	can_attack = true
 
 func _on_search_timer_timeout():
+	search_for_targets()
+	
+func search_for_targets():
+	var grid_pos = main.map.local_to_map(global_position)
+	var closest = Vector2i(-1,-1)
+	var dist_to_closest = INF
+	var dst = INF
 	for y in range(-search_range,search_range):
 		for x in range(-search_range,search_range):
-			var pos = main.map.local_to_map(global_position) + Vector2i(x,y)
-			if pos in units.keys():
+			var pos = grid_pos + Vector2i(x,y)
+			for k in buildings:
+				if pos not in k:
+					continue
+				if not is_instance_valid(buildings[k]):
+					print("found invalid building")
+					continue
+				if closest == Vector2i(-1,-1):
+					attack_target = pos
+					dist_to_closest = get_distance(grid_pos,pos)
+					continue
+				dst = get_distance(grid_pos, pos)
+				if dst < dist_to_closest:
+					attack_target = pos
+				if dist_to_closest < 14:
+					return
+			if pos not in units.keys():
+				continue
+			if not is_instance_valid(units[pos]):
+				print("found invalid unit")
+				continue
+			if closest == Vector2i(-1,-1):
 				attack_target = pos
-				if main.get_distance(main.tiles[main.map.local_to_map(global_position)], main.tiles[attack_target]) > 14:
-					if move_queue != []:
-						var path = main.find_attack_path(move_queue[0],attack_target,14)
-						var tmp: Array[Vector2i] = [move_queue[0]]
-						tmp.append_array(path)
-						move_queue = tmp
-					else:
-						var path = main.find_attack_path(main.map.local_to_map(global_position),attack_target,14)
-						move_queue = path
-				return
-			else:
-				for k in buildings:
-					if pos in k:
-						if not is_instance_valid(buildings[k]):
-							continue
-						attack_target = pos
-						if main.get_distance(main.tiles[main.map.local_to_map(global_position)], main.tiles[attack_target]) > 14:
-							if move_queue != []:
-								var path = main.find_attack_path(move_queue[0],attack_target,14)
-								var tmp: Array[Vector2i] = [move_queue[0]]
-								tmp.append_array(path)
-								move_queue = tmp
-							else:
-								var path = main.find_attack_path(main.map.local_to_map(global_position),attack_target,14)
-								move_queue = path
-						return
+				dist_to_closest = get_distance(grid_pos,pos)
+				continue
+			dst = get_distance(grid_pos, pos)
+			if dst < dist_to_closest:
+				attack_target = pos
+			if dist_to_closest < 14:
+					return
+	if attack_target == Vector2i(-1,-1):
+		return
+	if get_distance(grid_pos, attack_target) > 14:
+		if move_queue != []:
+			var path = main.find_attack_path(move_queue[0],attack_target,14)
+			var tmp: Array[Vector2i] = [move_queue[0]]
+			tmp.append_array(path)
+			move_queue = tmp
+		else:
+			var path = main.find_attack_path(main.map.local_to_map(global_position),attack_target,14)
+			move_queue = path
+
+func get_distance(start: Vector2i, end: Vector2i):
+	var dst_x = abs(start.x - end.x)
+	var dst_y = abs(start.y - end.y)
+	if dst_x > dst_y:
+		return 14*dst_y + 10 * (dst_x-dst_y)
+	return 14*dst_x + 10 * (dst_y-dst_x)
 
 func play_attack(angle):
 	match angle:
@@ -230,4 +265,5 @@ func play_idle():
 			bug_sprite.play("idle_down_right")
 
 func _on_idle_timer_timeout():
-	play_idle()
+	if state != States.Walk:
+		play_idle()
