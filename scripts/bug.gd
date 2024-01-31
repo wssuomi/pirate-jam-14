@@ -182,6 +182,7 @@ func search_for_targets():
 				dst = get_distance(grid_pos, pos)
 				if dst < dist_to_closest:
 					attack_target = pos
+					dist_to_closest = dst
 				if dist_to_closest < 14:
 					return
 			if pos not in units.keys():
@@ -196,8 +197,9 @@ func search_for_targets():
 			dst = get_distance(grid_pos, pos)
 			if dst < dist_to_closest:
 				attack_target = pos
+				dist_to_closest = dst
 			if dist_to_closest < 14:
-					return
+				return
 	if attack_target == Vector2i(-1,-1):
 		return
 	if get_distance(grid_pos, attack_target) > 14:

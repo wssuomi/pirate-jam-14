@@ -152,6 +152,7 @@ func search_for_enemies():
 				continue
 			var dst = get_distance(grid_pos, pos)
 			if dst < dist_to_closest:
+				dist_to_closest = dst
 				attack_target = pos
 	if selected and attack_target != Vector2i(-1,-1):
 		attack_target_indicator.show()
