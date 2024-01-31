@@ -269,14 +269,16 @@ func _input(event):
 			if event is InputEventMouseButton:
 				if Input.is_action_just_pressed("select_unit_location") and not mouse_on_ui:
 					var pos: Vector2i = map.local_to_map(get_global_mouse_position())
-					if pos.x >= 0 and pos.x < GRID_WIDTH and pos.y >= 0 and pos.y < GRID_HEIGHT:
-						if selected_unit.move_queue != []:
-							selected_unit.move_queue.append_array(find_attack_path(selected_unit.move_queue[-1],pos,28))
-						else:
-							selected_unit.move_queue.append_array(find_attack_path(map.local_to_map(selected_unit.global_position),pos,28))
-						selected_unit.attack_target = pos
-						change_mode_to(Modes.UnitSelected)
-						attack.text = "Attack"
+					if not (pos.x >= 0 and pos.x < GRID_WIDTH and pos.y >= 0 and pos.y < GRID_HEIGHT):
+						return
+					if selected_unit.move_queue != []:
+						selected_unit.move_queue.append_array(find_attack_path(selected_unit.move_queue[-1],pos,28))
+					else:
+						selected_unit.move_queue.append_array(find_attack_path(map.local_to_map(selected_unit.global_position),pos,28))
+					selected_unit.attack_target = pos
+					selected_unit.attack_target_set_by_player = true
+					change_mode_to(Modes.UnitSelected)
+					attack.text = "Attack"
 
 func _process(delta):
 	spread_single_tile_pollution(delta)
@@ -630,5 +632,6 @@ func _on_guard_pressed():
 	match mode:
 		Modes.UnitSelected:
 			selected_unit.attack_target = Vector2i(-1,-1)
+			selected_unit.attack_target_set_by_player = false
 			if selected_unit.move_queue != []:
 				selected_unit.move_queue = [selected_unit.move_queue[0]]

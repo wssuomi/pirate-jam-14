@@ -21,6 +21,7 @@ var look_dir: Directions = Directions.Down
 var attack_target: Vector2i = Vector2i(-1,-1)
 var health: int = 10
 var attack_damage = 3
+var attack_target_set_by_player = false
 var search_range = 2
 var can_attack = false
 
@@ -93,6 +94,8 @@ func attack():
 	if main.get_distance(main.tiles[pos], main.tiles[attack_target]) >= 28:
 		return
 	if attack_target not in enemies.keys():
+		attack_target = Vector2i(-1,-1)
+		attack_target_set_by_player = false
 		return
 	enemies[attack_target].take_damage(attack_damage)
 	can_attack = false
@@ -121,6 +124,8 @@ func _on_attack_timer_timeout():
 	can_attack = true
 
 func search_for_enemies():
+	if attack_target_set_by_player:
+		return
 	var closest = Vector2i(-1,-1)
 	var dist_to_closest = INF
 	var grid_pos = main.map.local_to_map(global_position)
