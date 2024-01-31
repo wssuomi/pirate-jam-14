@@ -11,8 +11,9 @@ extends Node2D
 @onready var shoot = $Shoot
 @onready var attack_timer = $AttackTimer
 @onready var attack_target_indicator = $AttackTargetIndicator
-
+@onready var health_label = $"../CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/HBoxContainer2/HealthLabel"
 const SPEED = 10
+const MAX_HEALTH = 10
 
 enum Directions {Up, Down, Left, Right}
 
@@ -20,7 +21,7 @@ var move_queue: Array = []
 var state: States = States.Guard
 var look_dir: Directions = Directions.Down
 var attack_target: Vector2i = Vector2i(-1,-1)
-var health: int = 10
+var health: int = MAX_HEALTH
 var attack_damage = 3
 var attack_target_set_by_player = false
 var search_range = 2
@@ -117,6 +118,8 @@ func attack():
 func take_damage(damage_amount):
 	health -= damage_amount
 	hit.play()
+	if selected:
+		health_label.text = str(health) + "/" + str(MAX_HEALTH)
 	if health > 0:
 		return
 	if main.selected_unit == self:

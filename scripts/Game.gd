@@ -13,6 +13,7 @@ extends Node2D
 @onready var attack = $CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/Attack
 @onready var move_target_indicator = $MoveTargetIndicator
 @onready var attack_target_indicator = $AttackTargetIndicator
+@onready var health_label = $CanvasLayer/SideBarUnitAction/Actions/VBoxContainer/HBoxContainer2/HealthLabel
 
 const GRID_WIDTH = 64
 const GRID_HEIGHT = 64
@@ -369,6 +370,7 @@ func select_unit(pos: Vector2i):
 	selected_unit = units[pos]
 	selected_unit.select()
 	side_bar_unit_action.show()
+	health_label.text = str(selected_unit.health) + "/" + str(selected_unit.MAX_HEALTH)
 
 func deselect_unit():
 	if selected_unit != null:
